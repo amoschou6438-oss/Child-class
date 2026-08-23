@@ -574,9 +574,12 @@
           <button type="button" onclick="confirmClearAll();" style="padding:7px 18px;background:#6a1b9a;color:white;border:none;border-radius:20px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;display:flex;align-items:center;gap:4px;white-space:nowrap;">🔄 清除出席記錄</button>
           <button type="button" class="btn-add-member" onclick="goToManagePage()" style="margin-left:0;background:var(--gold);color:var(--ink);font-weight:700;">⚙️ 資料輸入及編輯</button>
           <button type="button" onclick="toggleMembersExcelPanel();" style="padding:7px 18px;background:#0f6e3a;color:white;border:none;border-radius:20px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;display:flex;align-items:center;gap:4px;white-space:nowrap;">📊 匯入參班名單</button>
+          <button type="button" onclick="exportMembersList()" style="padding:7px 18px;background:#1565c0;color:white;border:none;border-radius:20px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;display:flex;align-items:center;gap:4px;white-space:nowrap;">💾 人員名單備份</button>
+          <button type="button" onclick="triggerImportMembersList()" style="padding:7px 18px;background:#c9a84c;color:white;border:none;border-radius:20px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;display:flex;align-items:center;gap:4px;white-space:nowrap;">📥 人員名單恢復</button>
         </div>
       </div>
     </div>
+    <div id="members-excel-result" style="margin:0.4rem 0 0.4rem;font-size:0.8rem;line-height:1.8;"></div>
 
     <!-- Excel 匯入面板（嵌入人員名單頁） -->
     <div class="photo-panel" id="members-excel-panel" style="border-color:#c8e6c9;margin-bottom:1rem;">
@@ -966,6 +969,114 @@ function saveData() {
     noBentoNames: document.getElementById('no-bento-names')?.value || ''
   };
   localStorage.setItem(LS_KEY_QSB, JSON.stringify(data));
+}
+
+// ══════════════════════════════════════════
+// 人員名單 備份／恢復（完整資料匯出成檔案／從檔案還原）
+// ══════════════════════════════════════════
+function exportMembersList() {
+  const memberList = allMembers.map(m => ({
+    name: m.name, role: m.role, gender: m.gender,
+    area: m.area, code: m.code, family: m.family,
+    familyOrder: m.familyOrder ?? 1, attend: m.attend, noBento: m.noBento ?? false
+  }));
+  const data = {
+    exportType: 'tmb_members_backup',
+    exportVersion: 2,
+    exportDate: new Date().toISOString(),
+    memberList,
+    staffNames:   document.getElementById('meal-staff-names')?.value || '',
+    noBentoNames: document.getElementById('no-bento-names')?.value || ''
+  };
+  const json = JSON.stringify(data, null, 2);
+  const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const now = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  const stamp = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}`;
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `張氏童蒙班人員名單備份_${stamp}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  const resultEl = document.getElementById('members-excel-result');
+  if (resultEl) resultEl.innerHTML = `<span style="color:#1565c0;font-weight:700;">✅ 已完成人員名單備份，共 ${allMembers.length} 筆資料（各區）</span>`;
+}
+
+function triggerImportMembersList() {
+  const resultEl = document.getElementById('members-excel-result');
+  if (resultEl) resultEl.innerHTML = '';
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json,application/json';
+  input.onchange = handleImportMembersList;
+  input.click();
+}
+
+function handleImportMembersList(event) {
+  const file = event.target.files[0];
+  const resultEl = document.getElementById('members-excel-result');
+  if (!file) return;
+  if (resultEl) resultEl.innerHTML = `<span style="color:#c9a84c;">⏳ 讀取備份檔案中，請稍候...</span>`;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const d = JSON.parse(e.target.result);
+      if (!d || !Array.isArray(d.memberList) || d.memberList.length === 0) {
+        throw new Error('檔案格式不正確，找不到人員名單資料');
+      }
+      const ok = confirm(`確定要恢復此備份嗎？\n共 ${d.memberList.length} 筆人員資料，恢復後將覆蓋目前所有人員名單（含姓名、出席等所有資訊）。`);
+      if (!ok) {
+        if (resultEl) resultEl.innerHTML = '';
+        event.target.value = '';
+        return;
+      }
+
+      allMembers.length = 0;
+      d.memberList.forEach(saved => {
+        allMembers.push({
+          no: 0,
+          name:        saved.name,
+          role:        saved.role,
+          gender:      saved.gender,
+          area:        saved.area,
+          code:        saved.code,
+          family:      saved.family,
+          familyOrder: typeof saved.familyOrder === 'number' ? saved.familyOrder : (parseInt(saved.familyOrder,10)||1),
+          attend:      !!saved.attend,
+          noBento:     !!saved.noBento
+        });
+      });
+      allMembers.forEach(m => { if (m.familyOrder == null) m.familyOrder = 1; });
+
+      if (typeof d.staffNames === 'string') {
+        const el = document.getElementById('meal-staff-names');
+        if (el) el.value = d.staffNames;
+      }
+      if (typeof d.noBentoNames === 'string') {
+        const el = document.getElementById('no-bento-names');
+        if (el) el.value = d.noBentoNames;
+      }
+
+      saveData();
+      if (typeof syncAll === 'function') syncAll();
+      renderMembers();
+
+      const timeInfo = d.exportDate ? `（備份時間：${new Date(d.exportDate).toLocaleString('zh-TW')}）` : '';
+      if (resultEl) resultEl.innerHTML = `<span style="color:#0f6e3a;font-weight:700;">✅ 已完成人員名單恢復，共 ${allMembers.length} 筆資料 ${timeInfo}</span>`;
+    } catch (err) {
+      if (resultEl) resultEl.innerHTML = `<span style="color:#c0392b;font-weight:700;">❌ 匯入失敗：${err.message}</span>`;
+    }
+    event.target.value = '';
+  };
+  reader.onerror = function() {
+    if (resultEl) resultEl.innerHTML = `<span style="color:#c0392b;font-weight:700;">❌ 讀取檔案失敗</span>`;
+  };
+  reader.readAsText(file, 'utf-8');
 }
 
 function loadData() {
