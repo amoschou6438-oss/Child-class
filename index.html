@@ -15,6 +15,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
   :root {
     --ink: #1a1a2e;
@@ -601,7 +602,10 @@
 
   <!-- ══ PAGE 3: ATTENDANCE ══ -->
   <div class="page" id="page-attendance">
-    <div class="section-title"><span id="date-attend"></span><span onclick="openDateEdit()" title="點擊修改日期" style="cursor:pointer;font-size:0.75rem;margin-left:6px;opacity:0.55;vertical-align:middle;">✏️</span> 報名人員統計表</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.7rem;margin-bottom:1.2rem;">
+      <div class="section-title" style="margin-bottom:0;"><span id="date-attend"></span><span onclick="openDateEdit()" title="點擊修改日期" style="cursor:pointer;font-size:0.75rem;margin-left:6px;opacity:0.55;vertical-align:middle;">✏️</span> 報名人員統計表</div>
+      <button type="button" onclick="exportAttendanceImage(this)" style="padding:7px 18px;background:#1565c0;color:white;border:none;border-radius:20px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;display:flex;align-items:center;gap:4px;white-space:nowrap;">🖼️ 參加名單匯出</button>
+    </div>
     <div class="attend-grid-wrap">
       <table class="attend-grid-table">
         <thead>
@@ -619,18 +623,21 @@
 
   <!-- ══ PAGE 4: BENTO ══ -->
   <div class="page" id="page-bento">
-    <div class="section-title"><span id="date-bento"></span><span onclick="openDateEdit()" title="點擊修改日期" style="cursor:pointer;font-size:0.75rem;margin-left:6px;opacity:0.55;vertical-align:middle;">✏️</span> 便當分配表　<span id="bento-area-badge-wrap" style="position:relative;display:inline-block;vertical-align:middle;">
-      <span id="bento-area-badge"
-        onclick="toggleAreaDropdown(event)"
-        title="點擊切換本月負責區"
-        style="font-size:0.85rem;font-weight:600;background:var(--gold);color:var(--ink);padding:3px 14px;border-radius:20px;cursor:pointer;user-select:none;display:inline-flex;align-items:center;gap:6px;"></span>
-      <div id="bento-area-dropdown"
-        style="display:none;position:absolute;top:calc(100% + 6px);left:0;min-width:130px;
-               background:white;border-radius:10px;box-shadow:0 6px 24px rgba(26,26,46,0.18);
-               border:1px solid var(--border);z-index:999;overflow:hidden;font-family:'Noto Sans TC',sans-serif;">
-        <div id="bento-area-options"></div>
-      </div>
-    </span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.7rem;margin-bottom:0.2rem;">
+      <div class="section-title" style="margin-bottom:0;"><span id="date-bento"></span><span onclick="openDateEdit()" title="點擊修改日期" style="cursor:pointer;font-size:0.75rem;margin-left:6px;opacity:0.55;vertical-align:middle;">✏️</span> 便當分配表　<span id="bento-area-badge-wrap" style="position:relative;display:inline-block;vertical-align:middle;">
+        <span id="bento-area-badge"
+          onclick="toggleAreaDropdown(event)"
+          title="點擊切換本月負責區"
+          style="font-size:0.85rem;font-weight:600;background:var(--gold);color:var(--ink);padding:3px 14px;border-radius:20px;cursor:pointer;user-select:none;display:inline-flex;align-items:center;gap:6px;"></span>
+        <div id="bento-area-dropdown"
+          style="display:none;position:absolute;top:calc(100% + 6px);left:0;min-width:130px;
+                 background:white;border-radius:10px;box-shadow:0 6px 24px rgba(26,26,46,0.18);
+                 border:1px solid var(--border);z-index:999;overflow:hidden;font-family:'Noto Sans TC',sans-serif;">
+          <div id="bento-area-options"></div>
+        </div>
+      </span></div>
+      <button type="button" onclick="exportBentoImage(this)" style="padding:7px 18px;background:#1565c0;color:white;border:none;border-radius:20px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;display:flex;align-items:center;gap:4px;white-space:nowrap;">🖼️ 便當名單匯出</button>
+    </div>
     <div class="table-wrap">
       <div class="table-header-row">
         <h3>便當領取明細</h3>
@@ -1298,6 +1305,61 @@ function updateDashboard() {
 // ══════════════════════════════════════════
 // ATTENDANCE GRID
 // ══════════════════════════════════════════
+// ══════════════════════════════════════════
+// 出席名單（報名人員統計表）匯出（單一圖片）
+// ══════════════════════════════════════════
+function exportAttendanceImage(btn) {
+  if (typeof html2canvas !== 'function') {
+    alert('圖片匯出功能尚未載入完成，請稍候再試一次');
+    return;
+  }
+  const originalText = btn ? btn.innerHTML : '';
+  if (btn) { btn.innerHTML = '⏳ 產生圖片中...'; btn.disabled = true; }
+
+  const dateLabel = document.getElementById('date-attend')?.textContent || '';
+  const gridWrap = document.querySelector('#page-attendance .attend-grid-wrap');
+  const noteBox = document.querySelector('#page-attendance .note-box');
+
+  const holder = document.createElement('div');
+  holder.style.position = 'fixed';
+  holder.style.left = '-99999px';
+  holder.style.top = '0';
+  holder.style.background = '#ffffff';
+  holder.style.padding = '20px';
+  holder.style.display = 'inline-block';
+  holder.style.fontFamily = "'Noto Sans TC', sans-serif";
+  holder.innerHTML = `<div style="font-family:'Noto Serif TC',serif;font-size:1.15rem;font-weight:900;color:#1a1a2e;margin-bottom:14px;">📋 ${dateLabel} 報名人員統計表</div>`;
+  if (gridWrap) { const g = gridWrap.cloneNode(true); g.style.marginBottom = '1.2rem'; holder.appendChild(g); }
+  if (noteBox) holder.appendChild(noteBox.cloneNode(true));
+  document.body.appendChild(holder);
+
+  html2canvas(holder, {
+    backgroundColor: '#ffffff',
+    scale: 2,
+    useCORS: true
+  }).then(canvas => {
+    canvas.toBlob(blob => {
+      const url = URL.createObjectURL(blob);
+      const now = new Date();
+      const pad = n => String(n).padStart(2, '0');
+      const stamp = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}`;
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `童蒙班參加名單_${stamp}.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      document.body.removeChild(holder);
+      if (btn) { btn.innerHTML = originalText; btn.disabled = false; }
+    }, 'image/png');
+  }).catch(err => {
+    document.body.removeChild(holder);
+    alert('圖片匯出失敗：' + err.message);
+    if (btn) { btn.innerHTML = originalText; btn.disabled = false; }
+  });
+}
+
 function renderAttendGrid() {
   const attending = allMembers.filter(m => m.attend);
   const codes = areaDefs.map(a => a.code);
@@ -1372,6 +1434,95 @@ function calcBentoTotal() {
     });
   }
   return bentoBase + staffTotal;
+}
+
+// ══════════════════════════════════════════
+// 便當名單匯出（單一圖片）
+// ══════════════════════════════════════════
+function exportBentoImage(btn) {
+  if (typeof html2canvas !== 'function') {
+    alert('圖片匯出功能尚未載入完成，請稍候再試一次');
+    return;
+  }
+  const originalText = btn ? btn.innerHTML : '';
+  if (btn) { btn.innerHTML = '⏳ 產生圖片中...'; btn.disabled = true; }
+
+  const dateLabel = document.getElementById('date-bento')?.textContent || '';
+  const areaLabel = document.getElementById('bento-area-badge')?.textContent || '';
+  const wrap = document.querySelector('#page-bento .table-wrap');
+
+  const holder = document.createElement('div');
+  holder.style.position = 'fixed';
+  holder.style.left = '-99999px';
+  holder.style.top = '0';
+  holder.style.background = '#ffffff';
+  holder.style.padding = '20px';
+  holder.style.display = 'inline-block';
+  holder.style.fontFamily = "'Noto Sans TC', sans-serif";
+  holder.innerHTML = `<div style="font-family:'Noto Serif TC',serif;font-size:1.15rem;font-weight:900;color:#1a1a2e;margin-bottom:14px;">🍱 ${dateLabel} 便當分配表${areaLabel ? `　<span style="font-size:0.85rem;font-weight:600;background:#c9a84c;color:#1a1a2e;padding:3px 14px;border-radius:20px;">${areaLabel}</span>` : ''}</div>`;
+
+  if (wrap) {
+    const clone = wrap.cloneNode(true);
+
+    // 篩選按鈕在圖片中無作用，移除
+    const filterBar = clone.querySelector('#bento-filter-bar');
+    if (filterBar) filterBar.remove();
+
+    // 「確認並過濾名單」按鈕在圖片中無作用，移除
+    clone.querySelectorAll('button').forEach(b => b.remove());
+
+    // textarea 的即時輸入值不會被 cloneNode 帶入，改用純文字呈現
+    const staffTextarea = document.getElementById('meal-staff-names');
+    const cloneStaffTextarea = clone.querySelector('#meal-staff-names');
+    if (cloneStaffTextarea) {
+      const div = document.createElement('div');
+      div.style.cssText = cloneStaffTextarea.getAttribute('style') || '';
+      div.style.whiteSpace = 'pre-wrap';
+      div.style.minHeight = '2.2em';
+      div.style.boxSizing = 'border-box';
+      div.textContent = staffTextarea ? staffTextarea.value : '';
+      cloneStaffTextarea.replaceWith(div);
+    }
+    const noBentoTextarea = document.getElementById('no-bento-names');
+    const cloneNoBentoTextarea = clone.querySelector('#no-bento-names');
+    if (cloneNoBentoTextarea) {
+      const div = document.createElement('div');
+      div.style.cssText = cloneNoBentoTextarea.getAttribute('style') || '';
+      div.style.whiteSpace = 'pre-wrap';
+      div.style.minHeight = '2.2em';
+      div.style.boxSizing = 'border-box';
+      div.textContent = noBentoTextarea ? noBentoTextarea.value : '';
+      cloneNoBentoTextarea.replaceWith(div);
+    }
+    holder.appendChild(clone);
+  }
+  document.body.appendChild(holder);
+
+  html2canvas(holder, {
+    backgroundColor: '#ffffff',
+    scale: 2,
+    useCORS: true
+  }).then(canvas => {
+    canvas.toBlob(blob => {
+      const url = URL.createObjectURL(blob);
+      const now = new Date();
+      const pad = n => String(n).padStart(2, '0');
+      const stamp = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}`;
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `童蒙班便當名單_${stamp}.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      document.body.removeChild(holder);
+      if (btn) { btn.innerHTML = originalText; btn.disabled = false; }
+    }, 'image/png');
+  }).catch(err => {
+    document.body.removeChild(holder);
+    alert('圖片匯出失敗：' + err.message);
+    if (btn) { btn.innerHTML = originalText; btn.disabled = false; }
+  });
 }
 
 function renderBento() {
@@ -2568,6 +2719,52 @@ function getFilteredRecordMembers() {
   });
 }
 
+// ══════════════════════════════════════════
+// 全勤名單（彈窗 ＋ LINE 回報）
+// ══════════════════════════════════════════
+function getFullAttendanceMembers() {
+  loadMonthlyRecord();
+  const members = getFilteredRecordMembers();
+  return members.filter(m => RECORD_MONTHS.every(mo => monthlyRecord[m.name]?.[mo.label]));
+}
+
+function buildFullAttendanceMessage() {
+  const fullList = getFullAttendanceMembers();
+  const namesText = fullList.length ? fullList.map(m => m.name).join('、') : '（目前尚無全勤學員）';
+  return `今年童蒙班全勤獎人員名單如下：\n${namesText}`;
+}
+
+function showFullAttendanceModal() {
+  const existing = document.getElementById('full-attendance-modal');
+  if (existing) existing.remove();
+
+  const fullList = getFullAttendanceMembers();
+  const listHtml = fullList.length
+    ? fullList.map((m,i) => `${i+1}. ${m.name}`).join('<br>')
+    : '（目前尚無全勤學員）';
+
+  const modal = document.createElement('div');
+  modal.id = 'full-attendance-modal';
+  modal.className = 'modal-overlay open';
+  modal.innerHTML = `
+    <div class="modal">
+      <div class="modal-title">🏆 全勤名單</div>
+      <div style="font-size:0.92rem;font-weight:700;color:var(--ink);margin-bottom:0.8rem;">今年童蒙班全勤獎人員名單如下：</div>
+      <div style="font-size:0.9rem;line-height:1.9;color:#c0392b;font-weight:700;background:#fdf3f2;border:1px solid #f0d5d2;border-radius:10px;padding:0.8rem 1rem;margin-bottom:1.2rem;max-height:40vh;overflow-y:auto;">${listHtml}</div>
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" onclick="document.getElementById('full-attendance-modal').remove()">關閉</button>
+        <button type="button" class="btn-confirm" style="background:#06c755;" onclick="shareFullAttendanceToLine()">📱 開啟LINE回報</button>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+}
+
+function shareFullAttendanceToLine() {
+  const message = buildFullAttendanceMessage();
+  const url = 'https://line.me/R/msg/text/?' + encodeURIComponent(message);
+  window.open(url, '_blank');
+}
+
 function renderRecord() {
   loadMonthlyRecord();
   const members = getFilteredRecordMembers();
@@ -2578,6 +2775,7 @@ function renderRecord() {
 
   let html = `<div class="record-filter-bar">
     <span style="font-size:0.82rem;color:var(--muted);">僅列學員（小學輔、資輔、學輔、家長不計入此表）。各月欄位請手動勾選，與「參班」無連動。</span>
+    <button type="button" class="record-export-btn" onclick="showFullAttendanceModal()" style="background:#c0392b;">🏆 全勤名單</button>
     <button type="button" class="record-export-btn" onclick="clearMonthlyRecord()" style="background:#6a1b9a;">🔄 清除本表月份勾選</button>
     <button class="record-export-btn" onclick="exportRecordCSV()" style="margin-left:auto;">📥 匯出CSV</button>
   </div>
@@ -2601,6 +2799,7 @@ function renderRecord() {
     idx++;
     const safeName = m.name.replace(/[^\u4e00-\u9fff\w]/g,'_');
     const total = RECORD_MONTHS.filter(mo => monthlyRecord[m.name]?.[mo.label]).length;
+    const isFullAttend = total === RECORD_MONTHS.length;
     const genderColor = m.gender==='乾道'?'#1565c0':'#c2185b';
 
     html += `<tr>
@@ -2614,7 +2813,7 @@ function renderRecord() {
       html += `<td><input type="checkbox" class="rec-check" ${checked} onchange="toggleRecord('${m.name}','${mo.label}')" title="${m.name} ${mo.label}"></td>`;
     });
 
-    html += `<td class="total-col" id="rec-total-${safeName}" style="color:${total>0?'var(--teal)':'var(--muted)'};">${total||'—'}</td></tr>`;
+    html += `<td class="total-col" id="rec-total-${safeName}" style="color:${isFullAttend?'#c0392b':(total>0?'var(--teal)':'var(--muted)')};font-weight:${isFullAttend?900:700};">${total||'—'}</td></tr>`;
   });
 
   html += `<tr><td colspan="4" style="background:var(--ink);color:white;font-weight:700;font-size:0.8rem;text-align:left;padding-left:0.6rem;border:none;">合計人次</td>`;
