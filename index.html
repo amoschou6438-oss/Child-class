@@ -97,6 +97,26 @@
   .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.4rem; font-weight: 500; }
 
   .area-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+
+  /* 主畫面：左右二個功能鈕 */
+  .home-fn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+  .home-fn-card {
+    background: var(--white); border-radius: 16px; box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border); padding: 1.6rem 1.2rem;
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.7rem;
+  }
+  /* 卡片總數為奇數時，最後一張撐滿整列並置中，不單獨卡在左邊 */
+  .home-fn-grid > .home-fn-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1; max-width: 420px; margin: 0 auto; width: 100%;
+  }
+  @media (max-width: 600px) {
+    .home-fn-grid { gap: 0.7rem; }
+    .home-fn-card { padding: 1.1rem 0.7rem; gap: 0.5rem; }
+    .home-fn-card > div:first-child { font-size: 1.6rem; }
+    .home-fn-card > div:nth-child(2) { font-size: 0.85rem; }
+    .home-fn-card > div:nth-child(3) { font-size: 0.7rem; }
+    .home-fn-card button { font-size: 0.72rem; padding: 7px 0; }
+  }
   .area-card { background: var(--white); border-radius: 10px; padding: 1.2rem; box-shadow: var(--shadow); border-left: 4px solid var(--teal); }
   .area-name { font-family: 'Noto Serif TC', serif; font-size: 1rem; font-weight: 700; color: var(--teal); margin-bottom: 0.6rem; }
   .area-breakdown { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 8px; }
@@ -108,19 +128,6 @@
 
   .table-wrap { background: var(--white); border-radius: 12px; box-shadow: var(--shadow); overflow-x: auto; margin-bottom: 2rem; }
   #members-table-wrap { overflow-x: auto; }
-  #members-table thead th { padding: 0.45rem 0.3rem; }
-  #members-table td { padding: 0.4rem 0.3rem; }
-  #members-table .badge { padding: 1px 6px; }
-  #members-table .toggle-btn { padding: 2px 8px; }
-  #members-table th:nth-child(1), #members-table td:nth-child(1) { width: 32px; }
-  #members-table th:nth-child(2), #members-table td:nth-child(2) { width: 48px; }
-  #members-table th:nth-child(3), #members-table td:nth-child(3) { width: 44px; }
-  #members-table th:nth-child(4), #members-table td:nth-child(4) { width: 36px; }
-  #members-table th:nth-child(5), #members-table td:nth-child(5) { width: 34px; }
-  #members-table th:nth-child(6), #members-table td:nth-child(6) { width: 46px; }
-  #members-table th:nth-child(7), #members-table td:nth-child(7) { width: 58px; }
-  #members-table th:nth-child(8), #members-table td:nth-child(8) { width: 46px; }
-  #members-table th:nth-child(9), #members-table td:nth-child(9) { width: 58px; }
   .table-header-row {
     display: flex; align-items: center; flex-wrap: wrap;
     padding: 1rem 1.4rem; border-bottom: 1px solid var(--border); gap: 0.5rem;
@@ -140,19 +147,31 @@
 
   table { width: 100%; border-collapse: collapse; }
   thead tr { background: var(--teal); }
-  thead th { font-size: 0.78rem; font-weight: 600; color: rgba(255,255,255,0.9); padding: 0.5rem 0.5rem; text-align: left; letter-spacing: 0; }
+  thead th { font-size: 0.72rem; font-weight: 600; color: rgba(255,255,255,0.9); padding: 0.5rem 0.4rem; text-align: left; letter-spacing: 0; }
+  #members-table thead th { padding: 0.45rem 0.3rem; }
+  #members-table th:nth-child(1), #members-table td:nth-child(1) { width: 32px; }   /* 序號 */
+  #members-table th:nth-child(2), #members-table td:nth-child(2) { width: 48px; }   /* 職位 */
+  #members-table th:nth-child(3), #members-table td:nth-child(3) { width: 44px; }   /* 乾坤 */
+  #members-table th:nth-child(4), #members-table td:nth-child(4) { width: 36px; }   /* 地區 */
+  #members-table th:nth-child(5), #members-table td:nth-child(5) { width: 34px; }   /* 代號 */
+  #members-table th:nth-child(6), #members-table td:nth-child(6) { width: 46px; }   /* 姓名 */
+  #members-table th:nth-child(7), #members-table td:nth-child(7) { width: 58px; }   /* 參班 */
+  #members-table th:nth-child(9), #members-table td:nth-child(9) { width: 46px; }   /* 家庭 */
+  #members-table th:nth-child(10), #members-table td:nth-child(10) { width: 58px; } /* 操作 */
   tbody tr { border-bottom: 1px solid #f0e8d8; transition: background 0.15s; }
   tbody tr:hover { background: #fdf8f0; }
   tbody tr:last-child { border-bottom: none; }
   td { font-size: 0.82rem; padding: 0.45rem 0.5rem; color: var(--ink); }
+  #members-table td { padding: 0.4rem 0.3rem; }
   td.name { font-weight: 700; font-size: 0.9rem; }
 
   .badge { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 2px 9px; border-radius: 20px; letter-spacing: 0.03em; }
+  #members-table .badge { padding: 1px 6px; }
+  .badge-小學輔 { background: #e0f7fa; color: #00838f; }
   .badge-資輔 { background: #f3e5f5; color: var(--purple); }
   .badge-學輔 { background: #e3f2fd; color: var(--blue); }
-  .badge-學員  { background: #e8f5e9; color: var(--green); }
-  .badge-小學輔 { background: #e0f7fa; color: #00838f; }
-  .badge-家長  { background: #fff3e0; color: #e65100; }
+  .badge-學員 { background: #e8f5e9; color: var(--green); }
+  .badge-家長 { background: #fff3e0; color: #e65100; }
   .badge-乾道 { background: #fff3e0; color: #e65100; }
   .badge-坤道 { background: #fce4ec; color: #c2185b; }
 
@@ -163,6 +182,7 @@
     border: none; cursor: pointer; transition: all 0.18s;
     font-family: 'Noto Sans TC', sans-serif; white-space: nowrap;
   }
+  #members-table .toggle-btn { padding: 2px 8px; }
   .toggle-btn.on-attend  { background: #e8f5e9; color: var(--green); }
   .toggle-btn.off-attend { background: #f5f5f5; color: #9e9e9e; }
   .toggle-btn:hover { opacity: 0.8; transform: scale(1.04); }
@@ -177,7 +197,6 @@
   .attend-grid-table td { font-size: 0.8rem; padding: 0.6rem 0.7rem; border: 1px solid #eee; text-align: center; vertical-align: middle; }
   .attend-grid-table .row-label { font-weight: 700; color: white; text-align: justify; text-align-last: justify; white-space: nowrap; width: 4em; min-width: 4em; }
   .attend-grid-table .row-label.green  { background: var(--green); }
-  .attend-grid-table .row-label.teal   { background: var(--teal); }
   .attend-grid-table .row-label.blue   { background: var(--blue); }
   .attend-grid-table .row-label.purple { background: var(--purple); }
   .attend-grid-table .row-label.orange { background: #e65100; }
@@ -208,7 +227,7 @@
   .subtotal-num { font-family: 'Noto Serif TC', serif; font-size: 1.6rem; font-weight: 900; color: var(--teal); }
   .subtotal-label { font-size: 0.78rem; color: var(--muted); }
   .subtotal-divider { width: 1px; height: 30px; background: var(--border); }
-  .subtotal-item.total .subtotal-num { color: #b8860b; font-size: 2rem; }
+  .subtotal-item.total .subtotal-num { color: #b8860b; font-size: 1.6rem; }
 
   .bento-count { display: inline-flex; align-items: center; gap: 4px; background: var(--teal); color: white; border-radius: 20px; padding: 2px 10px; font-size: 0.75rem; font-weight: 700; }
   .bento-count.two   { background: var(--gold); color: var(--ink); }
@@ -278,14 +297,21 @@
     white-space: nowrap; transition: opacity 0.15s;
   }
   .btn-edit-member:hover { opacity: 0.85; }
+  .btn-bday-edit {
+    padding: 4px 12px; border-radius: 14px; border: 1px solid var(--teal);
+    background: transparent; color: var(--teal); cursor: pointer;
+    font-family: 'Noto Sans TC', sans-serif; font-size: 0.72rem; font-weight: 600;
+    white-space: nowrap; transition: all 0.15s;
+  }
+  .btn-bday-edit:hover { background: var(--teal); color: white; }
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: var(--cream); }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-  /* ══ 人員名單格（比照青少班，無茶會）══ */
+  /* ══ 新版人員名單 ══ */
   .roster-panels {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 1.2rem;
     margin-bottom: 2rem;
   }
@@ -347,16 +373,10 @@
   .roster-name-chip.attend-on {
     background: #1565c0; color: white; border-color: #1565c0;
   }
-  .members-toolbar {
-    background: var(--white);
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-    margin-bottom: 1rem;
-    overflow: hidden;
+  .roster-name-chip.delete-mode-chip {
+    border-color: #c0392b; color: #c0392b;
   }
-  .members-toolbar .table-header-row { border-bottom: 1px solid var(--border); margin: 0; }
-  .members-toolbar .table-header-row .search-box { margin-left: 0; }
-  .members-toolbar-actions { margin-left: auto; display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  .roster-name-chip.delete-mode-chip:hover { background: #ffebee; }
 
   @media (max-width: 768px) {
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -364,138 +384,9 @@
     .main { padding: 1rem; }
     .header-badge { display: none; }
     .roster-panels { grid-template-columns: 1fr; }
-    #manage-buttons-grid { grid-template-columns: 1fr 1fr !important; min-height: auto !important; }
   }
 
-  /* ── 資料輸入主按鈕 ── */
-  .btn-data-entry {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.6rem 1.4rem; border-radius: 24px;
-    background: linear-gradient(135deg, var(--gold) 0%, #8B6914 100%);
-    color: #5a3e00; border: none; cursor: pointer;
-    box-shadow: 0 3px 12px rgba(201,168,76,0.45);
-    font-size: 0.92rem; font-weight: 700;
-    font-family: 'Noto Sans TC', sans-serif;
-    transition: all 0.2s; white-space: nowrap; letter-spacing: 0.04em;
-    margin-bottom: 1rem;
-  }
-  .btn-data-entry:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(201,168,76,0.6); }
-
-  /* ── 資料輸入總覽介面 ── */
-  .data-panel-overlay {
-    display: none; position: fixed; inset: 0;
-    background: rgba(10,10,30,0.65); z-index: 400;
-    align-items: flex-end; justify-content: center;
-    backdrop-filter: blur(4px);
-  }
-  .data-panel-overlay.open { display: flex; }
-  .data-panel {
-    background: var(--white); border-radius: 20px 20px 0 0;
-    width: 100%; max-width: 680px; max-height: 92vh;
-    box-shadow: 0 -8px 40px rgba(0,0,0,0.25);
-    overflow-y: auto; padding-bottom: 2rem;
-    animation: slideUp 0.3s ease;
-  }
-  @keyframes slideUp { from { transform: translateY(100%); opacity:0; } to { transform: translateY(0); opacity:1; } }
-  .data-panel-header {
-    background: var(--ink); padding: 1rem 1.5rem;
-    border-radius: 20px 20px 0 0; position: sticky; top: 0; z-index: 10;
-    display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 2px solid var(--gold);
-  }
-  .data-panel-title {
-    font-family: 'Noto Serif TC', serif; font-size: 1.05rem; font-weight: 700;
-    color: var(--gold); display: flex; align-items: center; gap: 0.5rem;
-  }
-  .data-panel-close {
-    width: 32px; height: 32px; border-radius: 50%; border: none;
-    background: rgba(255,255,255,0.1); color: white; cursor: pointer;
-    font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
-    transition: background 0.15s;
-  }
-  .data-panel-close:hover { background: rgba(255,255,255,0.2); }
-  .data-panel-body { padding: 1.2rem 1.5rem; }
-  .data-panel-section {
-    background: var(--cream); border-radius: 14px; padding: 1.2rem;
-    margin-bottom: 1rem; border: 1px solid var(--border);
-  }
-  .data-panel-section-title {
-    font-family: 'Noto Serif TC', serif; font-size: 0.95rem; font-weight: 700;
-    color: var(--teal); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;
-  }
-  .feature-btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
-  .feature-btn {
-    padding: 0.75rem 1rem; border-radius: 12px; border: none; cursor: pointer;
-    font-family: 'Noto Sans TC', sans-serif; font-size: 0.82rem; font-weight: 700;
-    display: flex; align-items: center; gap: 0.5rem; transition: all 0.18s;
-    justify-content: center; text-align: center; line-height: 1.4;
-  }
-  .feature-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
-  .feature-btn.green { background: #e8f5e9; color: var(--green); }
-  .feature-btn.blue  { background: #e3f2fd; color: var(--blue); }
-  .feature-btn.red   { background: #ffebee; color: var(--red); }
-  .feature-btn.gold  { background: #fff8e1; color: #8B6914; }
-  .feature-btn.purple{ background: #f3e5f5; color: var(--purple); }
-  .feature-btn.dark  { background: var(--ink); color: white; }
-  .feature-btn.full  { grid-column: 1/-1; }
-
-  /* ── 語音辨識介面 ── */
-  .voice-panel {
-    display: none; background: var(--white); border-radius: 14px;
-    padding: 1.2rem; border: 2px solid #e3f2fd; margin-top: 0.7rem;
-  }
-  .voice-panel.open { display: block; }
-  .voice-status {
-    text-align: center; padding: 0.5rem 1rem;
-    font-size: 0.88rem; color: var(--muted); line-height: 1.6;
-  }
-  .voice-mic-btn {
-    width: 70px; height: 70px; border-radius: 50%; border: 3px solid var(--blue);
-    background: #e3f2fd; color: var(--blue); font-size: 1.8rem;
-    cursor: pointer; transition: all 0.2s; margin: 0.5rem auto;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .voice-mic-btn.listening {
-    background: var(--red); border-color: var(--red); color: white;
-    animation: pulse 1.2s ease-in-out infinite;
-  }
-  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(192,57,43,0.4); } 50% { box-shadow: 0 0 0 12px rgba(192,57,43,0); } }
-  .voice-result {
-    background: #f0f8ff; border-radius: 8px; padding: 0.7rem 1rem;
-    font-size: 0.9rem; color: var(--ink); min-height: 36px; margin: 0.5rem 0;
-    border: 1px dashed var(--blue); line-height: 1.6;
-  }
-
-  /* ── 照片辨識介面 ── */
-  .photo-panel {
-    display: none; background: var(--white); border-radius: 14px;
-    padding: 1.2rem; border: 2px solid #e8f5e9; margin-top: 0.7rem;
-  }
-  .photo-panel.open { display: block; }
-  .photo-drop-zone {
-    display: block; width: 100%; box-sizing: border-box;
-    border: 2.5px dashed var(--green); border-radius: 12px;
-    padding: 1.5rem; text-align: center; cursor: pointer;
-    transition: background 0.2s; background: #f9fffe;
-  }
-  .photo-drop-zone:hover, .photo-drop-zone.dragover { background: #e8f5e9; }
-  .photo-drop-icon { font-size: 2.5rem; margin-bottom: 0.5rem; display: block; }
-  .photo-preview { max-width: 100%; border-radius: 8px; margin: 0.8rem 0; display: none; max-height: 200px; object-fit: contain; }
-  .photo-match-item {
-    display: flex; align-items: center; gap: 0.6rem;
-    padding: 0.4rem 0.6rem; border-radius: 8px; margin-bottom: 0.4rem;
-    background: #f0f8ff; font-size: 0.85rem;
-  }
-  .photo-match-item.confirmed { background: #e8f5e9; }
-
-  /* 備餐&不要便當 inline panel */
-  .inline-panel {
-    display: none; background: var(--white); border-radius: 14px;
-    padding: 1.2rem; border: 2px solid var(--border); margin-top: 0.7rem;
-  }
-  .inline-panel.open { display: block; }
-
-  /* ── 出席記錄分頁（與青少班相同）── */
+  /* ── RECORD PAGE（與學人班相同）── */
   .record-wrap { background: var(--white); border-radius: 12px; box-shadow: var(--shadow); overflow-x: auto; margin-bottom: 2rem; }
   .record-table { width: 100%; border-collapse: collapse; min-width: 900px; }
   .record-table thead th { background: var(--teal); color: white; font-size: 0.75rem; font-weight: 600; padding: 0.55rem 0.5rem; text-align: center; border: 1px solid rgba(255,255,255,0.15); white-space: nowrap; }
@@ -522,23 +413,82 @@
 </div>
 
 <nav class="nav">
-  <button class="nav-btn active" onclick="showPage('dashboard',this)">📊 總覽</button>
-  <button class="nav-btn" onclick="showPage('members',this)">👥 人員名單</button>
-  <button class="nav-btn" onclick="showPage('attendance',this)">✅ 出席統計</button>
-  <button class="nav-btn" id="nav-bento" onclick="showPage('bento',this)">🍱 便當分配</button>
-  <button class="nav-btn" id="nav-manage" onclick="showPage('manage',this)">⚙️ 資料輸入及編輯</button>
-  <button class="nav-btn" id="nav-record" onclick="showPage('record',this);renderRecord()">📅 出席記錄</button>
+  <button class="nav-btn active" id="nav-btn-home" onclick="showPage('home',this)">🏠 主畫面</button>
+  <button class="nav-btn" id="nav-btn-dashboard" onclick="showPage('dashboard',this)">📊 總覽</button>
+  <button class="nav-btn" id="nav-btn-members" onclick="showPage('members',this)">👥 人員名單</button>
+  <button class="nav-btn" id="nav-btn-attendance" onclick="showPage('attendance',this)">✅ 出席統計</button>
+  <button class="nav-btn" id="nav-btn-bento" onclick="showPage('bento',this)">🍱 便當分配</button>
+  <button class="nav-btn" id="nav-btn-record" onclick="showPage('record',this);renderRecord()">📅 出席記錄</button>
+  <button class="nav-btn" id="nav-btn-birthday" onclick="showPage('birthday',this);renderBirthdayPage()">🎂 學員資料</button>
+  <button class="nav-btn" id="nav-btn-birthday-parent" onclick="showPage('birthday-parent',this);renderBirthdayParentPage()">🎂 資輔家長生日</button>
+  <button class="nav-btn" id="nav-btn-manage" onclick="showPage('manage',this);renderManagePage()">⚙️ 資料輸入及編輯</button>
 </nav>
 
 <div class="main">
 
+  <!-- ══ PAGE 0: HOME（主畫面）══ -->
+  <div class="page active" id="page-home">
+    <div class="section-title">🏠 管理主畫面</div>
+    <div class="home-fn-grid">
+
+      <div class="home-fn-card">
+        <div style="font-size:2rem;">👥</div>
+        <div style="font-weight:700;font-size:0.95rem;color:var(--teal);">人員名單</div>
+        <div style="font-size:0.78rem;color:var(--muted);line-height:1.6;flex:1;">查看與管理所有學員、小學輔、學輔、資輔、家長名單</div>
+        <button onclick="goToPage('members')" style="padding:8px 0;width:100%;background:var(--teal);color:white;border:none;border-radius:20px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">➡️ 進入人員名單</button>
+      </div>
+
+      <div class="home-fn-card">
+        <div style="font-size:2rem;">✅</div>
+        <div style="font-weight:700;font-size:0.95rem;color:#1565c0;">參加名單</div>
+        <div style="font-size:0.78rem;color:var(--muted);line-height:1.6;flex:1;">將本次報名人員統計表匯出成一張圖片</div>
+        <button onclick="exportAttendanceImage(this)" style="padding:8px 0;width:100%;background:#1565c0;color:white;border:none;border-radius:20px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">🖼️ 參加名單匯出</button>
+      </div>
+
+      <div class="home-fn-card">
+        <div style="font-size:2rem;">🍱</div>
+        <div style="font-weight:700;font-size:0.95rem;color:#0f6e3a;">便當名單</div>
+        <div style="font-size:0.78rem;color:var(--muted);line-height:1.6;flex:1;">將本次便當分配內容匯出成一張圖片</div>
+        <button onclick="exportBentoImage(this)" style="padding:8px 0;width:100%;background:#0f6e3a;color:white;border:none;border-radius:20px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">🖼️ 便當名單匯出</button>
+      </div>
+
+      <div class="home-fn-card">
+        <div style="font-size:2rem;">🎂</div>
+        <div style="font-weight:700;font-size:0.95rem;color:#7b3f9e;">當月理天生日名單</div>
+        <div style="font-size:0.78rem;color:var(--muted);line-height:1.6;flex:1;">依學員理天生日自動判斷本次應公布之月份名單，並可開啟LINE回報</div>
+        <button onclick="showMonthlyLdBirthdayModal()" style="padding:8px 0;width:100%;background:#7b3f9e;color:white;border:none;border-radius:20px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">🎂 當月理天生日名單</button>
+      </div>
+
+      <div class="home-fn-card">
+        <div style="font-size:2rem;">💾</div>
+        <div style="font-weight:700;font-size:0.95rem;color:#8B6914;">一鍵備份</div>
+        <div style="font-size:0.78rem;color:var(--muted);line-height:1.6;flex:1;">將人員名單、出席記錄、學員資料、資輔家長生日一次備份成一個檔案</div>
+        <button onclick="exportFullBackup()" style="padding:8px 0;width:100%;background:#8B6914;color:white;border:none;border-radius:20px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">💾 一鍵備份</button>
+      </div>
+
+      <div class="home-fn-card">
+        <div style="font-size:2rem;">📤</div>
+        <div style="font-weight:700;font-size:0.95rem;color:#c9a84c;">一鍵恢復</div>
+        <div style="font-size:0.78rem;color:var(--muted);line-height:1.6;flex:1;">從備份檔一次恢復人員名單、出席記錄、學員資料、資輔家長生日</div>
+        <button onclick="triggerImportFullBackup()" style="padding:8px 0;width:100%;background:#c9a84c;color:white;border:none;border-radius:20px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">📤 一鍵恢復</button>
+      </div>
+
+      <div class="home-fn-card">
+        <div style="font-size:2rem;">🏆</div>
+        <div style="font-weight:700;font-size:0.95rem;color:#c0392b;">全勤名單</div>
+        <div style="font-size:0.78rem;color:var(--muted);line-height:1.6;flex:1;">查看今年全勤獎學員名單，並可開啟LINE回報</div>
+        <button onclick="showFullAttendanceModal()" style="padding:8px 0;width:100%;background:#c0392b;color:white;border:none;border-radius:20px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">🏆 全勤名單匯出</button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- ══ PAGE 1: DASHBOARD ══ -->
-  <div class="page active" id="page-dashboard">
+  <div class="page" id="page-dashboard">
     <div class="section-title">總覽儀表板</div>
     <div class="stats-grid">
       <div class="stat-card"><div class="stat-num" id="dash-total">68</div><div class="stat-label">登記總人數</div></div>
       <div class="stat-card teal"><div class="stat-num" id="dash-attend">0</div><div class="stat-label">參班人數</div></div>
-
       <div class="stat-card purple"><div class="stat-num" id="dash-bento">0</div><div class="stat-label">便當總份數</div></div>
     </div>
 
@@ -556,47 +506,25 @@
 
   <!-- ══ PAGE 2: MEMBERS ══ -->
   <div class="page" id="page-members">
-    <div class="section-title" style="margin-bottom:1.2rem;">張氏童蒙班人員名單</div>
-
-    <div class="members-toolbar">
-      <div class="table-header-row">
-        <h3 id="members-count-title">全體人員（共72位）</h3>
-        <button type="button" class="filter-btn active" onclick="filterMembers('all',this)">全部</button>
-        <button type="button" class="filter-btn" onclick="filterMembers('小學輔',this)">小學輔</button>
-        <button type="button" class="filter-btn" onclick="filterMembers('資輔',this)">資輔</button>
-        <button type="button" class="filter-btn" onclick="filterMembers('學輔',this)">學輔</button>
-        <button type="button" class="filter-btn" onclick="filterMembers('學員',this)">學員</button>
-        <button type="button" class="filter-btn" onclick="filterMembers('家長',this)">家長</button>
-        <div class="members-toolbar-actions">
-          <div class="search-box">
-            <span>🔍</span>
-            <input type="text" placeholder="搜尋姓名或家庭…" oninput="searchMembers(this.value)">
-          </div>
-          <button type="button" onclick="confirmClearAll();" style="padding:7px 18px;background:#6a1b9a;color:white;border:none;border-radius:20px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;display:flex;align-items:center;gap:4px;white-space:nowrap;">🔄 清除出席記錄</button>
-          <button type="button" class="btn-add-member" onclick="goToManagePage()" style="margin-left:0;background:var(--gold);color:var(--ink);font-weight:700;">⚙️ 資料輸入及編輯</button>
-          <button type="button" onclick="toggleMembersExcelPanel();" style="padding:7px 18px;background:#0f6e3a;color:white;border:none;border-radius:20px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;display:flex;align-items:center;gap:4px;white-space:nowrap;">📊 匯入參班名單</button>
-          <button type="button" onclick="exportMembersList()" style="padding:7px 18px;background:#1565c0;color:white;border:none;border-radius:20px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;display:flex;align-items:center;gap:4px;white-space:nowrap;">💾 人員名單備份</button>
-          <button type="button" onclick="triggerImportMembersList()" style="padding:7px 18px;background:#c9a84c;color:white;border:none;border-radius:20px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;display:flex;align-items:center;gap:4px;white-space:nowrap;">📥 人員名單恢復</button>
-        </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.7rem;margin-bottom:1.2rem;">
+      <div class="section-title" style="margin-bottom:0;">張氏童蒙班人員名單</div>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;">
+        <button onclick="resetAllAttend();" style="padding:7px 18px;background:#6a1b9a;color:white;border:none;border-radius:20px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;display:flex;align-items:center;gap:4px;white-space:nowrap;">🔄 清除出席記錄</button>
       </div>
     </div>
-    <div id="members-excel-result" style="margin:0.4rem 0 0.4rem;font-size:0.8rem;line-height:1.8;"></div>
+    <div id="members-excel-result" style="margin-bottom:0.8rem;font-size:0.8rem;line-height:1.8;"></div>
 
-    <!-- Excel 匯入面板（嵌入人員名單頁） -->
-    <div class="photo-panel" id="members-excel-panel" style="border-color:#c8e6c9;margin-bottom:1rem;">
-      <label class="photo-drop-zone" for="members-excel-input" id="members-excel-drop-zone" style="border-color:#0f6e3a;background:#f1faf4;">
-        <span class="photo-drop-icon">📊</span>
-        <div style="font-size:0.88rem;color:var(--muted);">點擊選擇簽到 Excel 檔案<br><small>（.xlsx / .xls — 依各區姓名欄比對名單，備註欄支援「不要便當」/「備餐人員」）</small></div>
-      </label>
-      <input type="file" id="members-excel-input" accept=".xlsx,.xls" style="display:none;" onchange="handleMembersExcelUpload(this)">
-      <div id="members-excel-status" style="font-size:0.85rem;color:var(--muted);margin:0.5rem 0;"></div>
-      <div id="members-excel-matched-list" class="photo-result-list"></div>
-      <button type="button" onclick="applyMembersExcelMatches()" id="members-excel-apply-btn"
-        style="display:none;margin-top:0.6rem;padding:6px 16px;background:var(--green);color:white;border:none;border-radius:20px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">
-        ✔ 確認標記參班
-      </button>
+    <!-- 編輯/刪除模式提示列 -->
+    <div id="edit-done-bar" style="display:none;background:#e8f5e9;border:2px solid var(--green);border-radius:10px;padding:0.7rem 1.2rem;margin-bottom:1rem;align-items:center;gap:1rem;flex-wrap:wrap;">
+      <span style="color:var(--green);font-weight:700;font-size:0.9rem;">✏️ 修改模式已開啟</span>
+      <button onclick="toggleEditMode()" style="padding:7px 22px;background:var(--green);color:white;border:none;border-radius:20px;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;margin-left:auto;">✔ 完成修改</button>
+    </div>
+    <div id="delete-done-bar" style="display:none;background:#ffebee;border:2px solid #c0392b;border-radius:10px;padding:0.7rem 1.2rem;margin-bottom:1rem;align-items:center;gap:1rem;flex-wrap:wrap;">
+      <span style="color:#b71c1c;font-weight:700;font-size:0.9rem;">🗑 刪除模式已開啟</span>
+      <button type="button" id="delete-mode-btn" onclick="toggleDeleteMode()" style="padding:7px 22px;background:var(--green);color:white;border:none;border-radius:20px;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;margin-left:auto;">✔ 完成刪除</button>
     </div>
 
+    <!-- ══ 人員名單：新版雙欄六地區 ══ -->
     <div id="members-roster-wrap"></div>
   </div>
 
@@ -604,7 +532,7 @@
   <div class="page" id="page-attendance">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.7rem;margin-bottom:1.2rem;">
       <div class="section-title" style="margin-bottom:0;"><span id="date-attend"></span><span onclick="openDateEdit()" title="點擊修改日期" style="cursor:pointer;font-size:0.75rem;margin-left:6px;opacity:0.55;vertical-align:middle;">✏️</span> 報名人員統計表</div>
-      <button type="button" onclick="exportAttendanceImage(this)" style="padding:7px 18px;background:#1565c0;color:white;border:none;border-radius:20px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;display:flex;align-items:center;gap:4px;white-space:nowrap;">🖼️ 參加名單匯出</button>
+      <button onclick="exportAttendanceImage(this)" style="padding:7px 18px;background:#1565c0;color:white;border:none;border-radius:20px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;display:flex;align-items:center;gap:4px;white-space:nowrap;">🖼️ 參加名單匯出</button>
     </div>
     <div class="attend-grid-wrap">
       <table class="attend-grid-table">
@@ -618,7 +546,6 @@
         <tbody id="attend-grid-tbody"></tbody>
       </table>
     </div>
-
   </div>
 
   <!-- ══ PAGE 4: BENTO ══ -->
@@ -636,7 +563,7 @@
           <div id="bento-area-options"></div>
         </div>
       </span></div>
-      <button type="button" onclick="exportBentoImage(this)" style="padding:7px 18px;background:#1565c0;color:white;border:none;border-radius:20px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;display:flex;align-items:center;gap:4px;white-space:nowrap;">🖼️ 便當名單匯出</button>
+      <button onclick="exportBentoImage(this)" style="padding:7px 18px;background:#1565c0;color:white;border:none;border-radius:20px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;display:flex;align-items:center;gap:4px;white-space:nowrap;">🖼️ 便當名單匯出</button>
     </div>
     <div class="table-wrap">
       <div class="table-header-row">
@@ -650,6 +577,7 @@
         <tbody id="bento-tbody"></tbody>
       </table>
       <div class="bento-subtotal" id="bento-subtotal"></div>
+      <!-- 備餐人員＋總計 -->
       <div style="background:#fff8f0;border-top:1px dashed var(--border);padding:1rem 1.4rem;">
         <div style="font-size:0.88rem;font-weight:700;color:#8B6914;margin-bottom:0.6rem;">🍳 備餐人員便當</div>
         <div style="display:flex;gap:1.5rem;align-items:flex-start;flex-wrap:wrap;">
@@ -675,6 +603,7 @@
           </div>
         </div>
       </div>
+      <!-- 不要便當區塊 -->
       <div style="background:#fff0f0;border-top:2px solid #f5c0c0;padding:1rem 1.4rem;">
         <div style="font-size:0.88rem;font-weight:700;color:var(--red);margin-bottom:0.6rem;">🚫 不要便當人員</div>
         <div style="display:flex;gap:1.5rem;align-items:flex-start;flex-wrap:wrap;">
@@ -686,10 +615,6 @@
               style="width:100%;padding:0.5rem 0.7rem;border:1.5px solid #f5c0c0;border-radius:8px;
                      font-size:0.85rem;font-family:'Noto Sans TC',sans-serif;color:var(--ink);
                      resize:none;outline:none;line-height:1.6;background:white;"></textarea>
-            <button type="button" onclick="confirmNoBento()"
-              style="margin-top:0.5rem;padding:5px 16px;background:var(--red);color:white;border:none;
-                     border-radius:20px;font-size:0.8rem;font-weight:700;cursor:pointer;
-                     font-family:'Noto Sans TC',sans-serif;">✔ 確認並過濾名單</button>
             <div id="no-bento-validate" style="margin-top:0.5rem;line-height:1.8;"></div>
             <div id="no-bento-note" style="font-size:0.75rem;color:var(--red);margin-top:0.4rem;line-height:1.7;"></div>
           </div>
@@ -705,76 +630,153 @@
     </div>
   </div>
 
-  <!-- ══ PAGE: 資料輸入及編輯（獨立分頁，比照青少班、無茶會）══ -->
+  <!-- ══ PAGE 5: RECORD ══ -->
+  <div class="page" id="page-record">
+    <div class="section-title">📅 學員出席記錄表（2026/3～2027/1，不含 7 月、11 月）</div>
+    <div id="record-page-content"></div>
+  </div>
+
+  <!-- ══ PAGE 5b: BIRTHDAY（學員資料）══ -->
+  <div class="page" id="page-birthday">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.7rem;margin-bottom:1.2rem;">
+      <div class="section-title" style="margin-bottom:0;">🎂 學員資料（理天生日 ‧ 出生日期）</div>
+    </div>
+    <div class="note-box" style="margin-bottom:1.2rem;">
+      <div class="note-title">📖 資料說明</div>
+      <div class="note-text">
+        名單即「人員名單」中目前所有身份為學輔／小學輔／學員的成員，理天生日、出生日期可點列表最右側「✎ 修改」自行編輯（會自動存檔）；<br>
+        身份、乾坤、地區皆依「人員名單」即時同步 — 在人員名單修改身份（如學員變學輔）或新增／刪除人員後，本頁會自動更新並重新排序；<br>
+        排列順序：先乾道、後坤道，各組內先學輔、次小學輔、後學員，同組再依出生日期由前到後排序。
+      </div>
+    </div>
+    <div class="table-wrap">
+      <div class="table-header-row">
+        <h3>學輔／小學輔／學員 生日一覽</h3>
+      </div>
+      <table id="birthday-table">
+        <thead>
+          <tr>
+            <th style="width:44px;">序號</th>
+            <th style="width:56px;">身份</th>
+            <th style="width:56px;">乾坤</th>
+            <th style="width:56px;">地區</th>
+            <th style="width:70px;">姓名</th>
+            <th style="width:100px;">理天生日</th>
+            <th style="width:100px;">出生日期</th>
+            <th style="width:80px;">編輯</th>
+          </tr>
+        </thead>
+        <tbody id="birthday-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ PAGE 5c: BIRTHDAY（資輔家長）══ -->
+  <div class="page" id="page-birthday-parent">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.7rem;margin-bottom:1.2rem;">
+      <div class="section-title" style="margin-bottom:0;">🎂 資輔／家長 生日一覽</div>
+    </div>
+    <div class="note-box" style="margin-bottom:1.2rem;">
+      <div class="note-title">📖 資料說明</div>
+      <div class="note-text">
+        名單即「人員名單」中目前所有身份為資輔／家長的成員，姓氏、出生日期可點列表最右側「✎ 修改」自行編輯（會自動存檔）；<br>
+        身份、乾坤、地區皆依「人員名單」即時同步 — 在人員名單修改身份或新增／刪除人員後，本頁會自動更新並重新排序；<br>
+        排列順序：先乾道、後坤道，各組內先資輔、後家長，同組再依出生年月日由早到晚排序；<br>
+        僅查得出生年份、無月日資料者可於出生日期欄位填寫如「1963年（無月日資料）」，會自動排在同組最後。
+      </div>
+    </div>
+    <div class="table-wrap">
+      <div class="table-header-row">
+        <h3>資輔／家長 生日一覽</h3>
+      </div>
+      <table id="birthday-parent-table">
+        <thead>
+          <tr>
+            <th style="width:44px;">序號</th>
+            <th style="width:56px;">身份</th>
+            <th style="width:56px;">乾坤</th>
+            <th style="width:56px;">地區</th>
+            <th style="width:70px;">姓名</th>
+            <th style="width:100px;">出生日期</th>
+            <th style="width:80px;">編輯</th>
+          </tr>
+        </thead>
+        <tbody id="birthday-parent-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ PAGE 6: MANAGE ══ -->
   <div class="page" id="page-manage">
     <div class="section-title">⚙️ 資料輸入及編輯</div>
 
+    <!-- 長條格整合卡片 -->
     <div id="manage-buttons-wrap" style="background:var(--white);border-radius:16px;box-shadow:var(--shadow-lg);overflow:hidden;border:1px solid var(--border);margin-bottom:1.5rem;">
-      <div id="manage-buttons-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr;min-height:180px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;min-height:180px;">
 
+        <!-- 格1：人員管理 -->
         <div style="padding:1.4rem 1.2rem;border-right:1px solid var(--border);display:flex;flex-direction:column;">
           <div style="display:flex;align-items:center;gap:0.4rem;margin-bottom:0.9rem;">
             <span style="font-size:1rem;">👥</span>
             <span style="font-size:0.82rem;font-weight:700;color:var(--teal);letter-spacing:0.05em;">人員管理</span>
           </div>
           <div style="display:flex;flex-direction:column;gap:0.5rem;flex:1;justify-content:center;">
-            <button type="button" onclick="openAddMember();" style="padding:8px 0;width:100%;background:var(--teal);color:white;border:none;border-radius:9px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">➕ 新增人員</button>
-            <button type="button" id="manage-edit-btn" onclick="startManageMode('edit')" style="padding:8px 0;width:100%;background:#1565c0;color:white;border:none;border-radius:9px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">✏️ 修改人員</button>
-            <button type="button" id="manage-delete-btn" onclick="startManageMode('delete')" style="padding:8px 0;width:100%;background:#c0392b;color:white;border:none;border-radius:9px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">🗑 刪除人員</button>
+            <button onclick="openAddMember();" style="padding:8px 0;width:100%;background:var(--teal);color:white;border:none;border-radius:9px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">➕ 新增人員</button>
+            <button id="manage-edit-btn" onclick="startManageMode('edit')" style="padding:8px 0;width:100%;background:#1565c0;color:white;border:none;border-radius:9px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">✏️ 修改人員</button>
+            <button id="manage-delete-btn" onclick="startManageMode('delete')" style="padding:8px 0;width:100%;background:#c0392b;color:white;border:none;border-radius:9px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">🗑 刪除人員</button>
           </div>
         </div>
 
+        <!-- 格2：出席記錄 -->
         <div style="padding:1.4rem 1.2rem;border-right:1px solid var(--border);display:flex;flex-direction:column;">
           <div style="display:flex;align-items:center;gap:0.4rem;margin-bottom:0.9rem;">
             <span style="font-size:1rem;">📋</span>
             <span style="font-size:0.82rem;font-weight:700;color:#c0392b;letter-spacing:0.05em;">出席記錄</span>
           </div>
           <div style="display:flex;flex-direction:column;gap:0.5rem;flex:1;justify-content:center;">
-            <button type="button" onclick="confirmClearAll();" style="padding:8px 0;width:100%;background:#6a1b9a;color:white;border:none;border-radius:9px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">🔄 清除出席記錄</button>
+            <button onclick="exportMonthlyRecord();" style="padding:8px 0;width:100%;background:#1565c0;color:white;border:none;border-radius:9px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">📥 出席記錄匯出</button>
+            <button onclick="triggerImportMonthlyRecord();" style="padding:8px 0;width:100%;background:#c9a84c;color:white;border:none;border-radius:9px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">📤 出席記錄載入</button>
+            <button onclick="resetAllAttend();" style="padding:8px 0;width:100%;background:#6a1b9a;color:white;border:none;border-radius:9px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">🔄 清除出席記錄</button>
           </div>
+          <div id="record-backup-result" style="font-size:0.72rem;line-height:1.6;margin-top:0.4rem;"></div>
         </div>
 
+        <!-- 格3：Excel 匯入 -->
         <div style="padding:1.4rem 1.2rem;border-right:1px solid var(--border);display:flex;flex-direction:column;">
+          <div style="display:flex;align-items:center;gap:0.4rem;margin-bottom:0.9rem;">
+            <span style="font-size:1rem;">📊</span>
+            <span style="font-size:0.82rem;font-weight:700;color:#0f6e3a;letter-spacing:0.05em;">Excel 匯入</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:0.5rem;flex:1;justify-content:center;">
+            <button onclick="triggerExcelAttend()" style="padding:8px 0;width:100%;background:#0f6e3a;color:white;border:none;border-radius:9px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">📂 匯入參班名單</button>
+          </div>
+          <div id="manage-photo-result" style="font-size:0.72rem;line-height:1.6;margin-top:0.4rem;"></div>
+        </div>
+
+        <!-- 格4：語音辨識 -->
+        <div style="padding:1.4rem 1.2rem;display:flex;flex-direction:column;">
           <div style="display:flex;align-items:center;gap:0.4rem;margin-bottom:0.9rem;">
             <span style="font-size:1rem;">🎙</span>
             <span style="font-size:0.82rem;font-weight:700;color:#7b3f9e;letter-spacing:0.05em;">語音辨識</span>
           </div>
           <div style="display:flex;flex-direction:column;gap:0.5rem;flex:1;justify-content:center;">
-            <button type="button" onclick="toggleVoicePanel();" style="padding:8px 0;width:100%;background:#c0392b;color:white;border:none;border-radius:9px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">🎙 辨識參班</button>
+            <button id="tp-voice-attend-btn" onclick="toggleTpVoice('attend')" style="padding:8px 0;width:100%;background:#c0392b;color:white;border:none;border-radius:9px;font-size:0.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;display:flex;align-items:center;justify-content:center;gap:4px;"><span id="tp-va-icon">🎙</span><span id="tp-va-text">辨識參班</span></button>
           </div>
+          <div id="tp-voice-transcript" style="font-size:0.72rem;color:var(--muted);font-style:italic;margin-top:0.4rem;"></div>
+          <div id="tp-voice-result" style="font-size:0.72rem;line-height:1.6;margin-top:0.2rem;"></div>
         </div>
 
       </div>
     </div>
 
-    <div style="margin-bottom:1rem;">
-      <div class="voice-panel" id="voice-panel">
-        <div class="voice-status" id="voice-status-text">點擊麥克風開始說出姓名，系統將自動比對名單</div>
-        <div style="display:flex;justify-content:center;">
-          <button type="button" class="voice-mic-btn" id="voice-mic-btn" onclick="toggleVoiceRecognition()">🎙️</button>
-        </div>
-        <div class="voice-result" id="voice-result-text">（辨識結果將顯示於此）</div>
-        <div id="voice-matched-list" style="margin-top:0.5rem;"></div>
-        <button type="button" onclick="applyVoiceMatches()" id="voice-apply-btn"
-          style="display:none;margin-top:0.6rem;padding:6px 16px;background:var(--green);color:white;border:none;border-radius:20px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">
-          ✔ 確認標記參班
-        </button>
-      </div>
-    </div>
-
+    <!-- 修改/刪除模式的人員名單 -->
     <div id="manage-roster-wrap" style="display:none;">
       <div id="manage-mode-bar" style="background:#e8f5e9;border:2px solid var(--green);border-radius:10px;padding:0.8rem 1.2rem;margin-bottom:1rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
         <span id="manage-mode-label" style="font-weight:700;font-size:0.95rem;color:var(--green);"></span>
-        <button type="button" onclick="exitManageMode()" style="padding:7px 22px;background:var(--green);color:white;border:none;border-radius:20px;font-size:0.88rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;margin-left:auto;">✔ 完成</button>
+        <button onclick="exitManageMode()" style="padding:7px 22px;background:var(--green);color:white;border:none;border-radius:20px;font-size:0.88rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;margin-left:auto;">✔ 完成</button>
       </div>
       <div id="manage-roster-content"></div>
     </div>
-  </div>
-
-  <!-- ══ PAGE 5: RECORD ══ -->
-  <div class="page" id="page-record">
-    <div class="section-title">📅 學員出席記錄表（2026/3～2027/1，不含 7 月、11 月）</div>
-    <div id="record-page-content"></div>
   </div>
 
   <!-- ══ ADD MEMBER MODAL ══ -->
@@ -812,8 +814,15 @@
           </select>
         </div>
         <div class="modal-field">
-          <label>代號（隨地區）</label>
-          <select id="new-code"></select>
+          <label>代號</label>
+          <select id="new-code">
+            <option value="1-1">1-1</option>
+            <option value="1-2">1-2</option>
+            <option value="1-3">1-3</option>
+            <option value="1-4">1-4</option>
+            <option value="2-1">2-1</option>
+            <option value="2-3">2-3</option>
+          </select>
         </div>
       </div>
       <div class="modal-row">
@@ -826,19 +835,21 @@
           <input type="text" id="new-family" placeholder="請輸入家庭（留空同姓名）">
         </div>
       </div>
-      <div class="modal-field">
-        <label>長幼（家庭排序，與便當括號內順序相同）</label>
-        <select id="new-family-order">
-          <option value="1" selected>1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-        </select>
+      <div class="modal-row">
+        <div class="modal-field" style="flex:1;max-width:none;">
+          <label>長幼（家庭排序，與便當領取順序相同）</label>
+          <select id="new-family-order">
+            <option value="1">1（爸爸／最長）</option>
+            <option value="2">2（媽媽／次長）</option>
+            <option value="3">3（哥哥／第三）</option>
+            <option value="4">4（姊姊／第四）</option>
+            <option value="5">5（弟弟／第五）</option>
+            <option value="6">6（妹妹／第六）</option>
+            <option value="7">7（第七）</option>
+            <option value="8">8（第八）</option>
+            <option value="9">9（最小）</option>
+          </select>
+        </div>
       </div>
       <div class="modal-actions">
         <button class="btn-cancel" onclick="closeAddMember()">取消</button>
@@ -846,17 +857,18 @@
       </div>
     </div>
   </div>
+  <!-- ══ 備餐人員說明 Modal ══ -->
   <div id="meal-staff-hint-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:400;align-items:center;justify-content:center;">
     <div style="background:white;border-radius:14px;padding:1.5rem;width:92%;max-width:440px;box-shadow:0 8px 40px rgba(0,0,0,0.25);">
       <div style="font-family:'Noto Serif TC',serif;font-size:1.05rem;font-weight:700;color:var(--teal);margin-bottom:1rem;">🍳 備餐人員輸入說明</div>
       <div style="font-size:0.88rem;color:var(--ink);line-height:2;background:#fffbf0;border-radius:10px;padding:1rem;border:1px solid #e8d5a0;">
-        <p>請輸入備餐人員姓名，以<strong>頓號或逗號</strong>分隔。</p>
+        <p>請輸入備餐人員姓名，以頓號或逗號分隔。</p>
         <p style="color:var(--muted);margin-top:0.4rem;">例如：文強、青黎、文森</p>
-        <p style="margin-top:0.8rem;">如果是<strong>同一家庭</strong>的備餐人員，請用 <strong style="color:var(--teal);">＋</strong> 來表示。</p>
+        <p style="margin-top:0.8rem;">如果是同一家庭的備餐人員，請用 <strong style="color:var(--teal);">＋</strong> 來表示。</p>
         <p style="color:var(--muted);margin-top:0.4rem;">例如：銀龍+銀國+碧純</p>
       </div>
       <div style="display:flex;justify-content:flex-end;margin-top:1.2rem;">
-        <button type="button" onclick="closeMealStaffHint()" style="padding:8px 28px;background:var(--teal);color:white;border:none;border-radius:20px;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">✔ 已閱讀，開始輸入</button>
+        <button onclick="closeMealStaffHint()" style="padding:8px 28px;background:var(--teal);color:white;border:none;border-radius:20px;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">✔ 已閱讀，開始輸入</button>
       </div>
     </div>
   </div>
@@ -868,80 +880,394 @@
 // DATA
 // ══════════════════════════════════════════
 const allMembers = [
-  {no:1,role:"小學輔",gender:"乾道",area:"台中",code:"1-1",name:"子暘",attend:true,noBento:false,family:"玫芳"},
-  {no:2,role:"小學輔",gender:"乾道",area:"台中",code:"1-1",name:"立祐",attend:true,noBento:false,family:"佳俊"},
-  {no:3,role:"小學輔",gender:"坤道",area:"台中",code:"1-1",name:"若彤",attend:true,noBento:false,family:"玫芳"},
-  {no:4,role:"小學輔",gender:"坤道",area:"台中",code:"1-1",name:"詠晴",attend:true,noBento:false,family:"皓程"},
-  {no:5,role:"家長",gender:"乾道",area:"台中",code:"1-1",name:"由健",attend:true,noBento:false,family:"由健"},
-  {no:6,role:"家長",gender:"坤道",area:"台中",code:"1-1",name:"雅苓",attend:true,noBento:false,family:"雅苓"},
-  {no:7,role:"資輔",gender:"乾道",area:"台中",code:"1-1",name:"大元",attend:true,noBento:false,family:"大元"},
-  {no:8,role:"資輔",gender:"乾道",area:"台中",code:"1-1",name:"佳俊",attend:true,noBento:false,family:"佳俊"},
-  {no:9,role:"資輔",gender:"坤道",area:"台中",code:"1-1",name:"春華",attend:true,noBento:false,family:"大元"},
-  {no:10,role:"資輔",gender:"坤道",area:"台中",code:"1-1",name:"玫芳",attend:true,noBento:false,family:"玫芳"},
-  {no:11,role:"資輔",gender:"坤道",area:"台中",code:"1-1",name:"靜兒",attend:false,noBento:false,family:"靜兒"},
-  {no:12,role:"學員",gender:"乾道",area:"台中",code:"1-1",name:"侑恩",attend:false,noBento:false,family:"雅歆"},
-  {no:13,role:"學員",gender:"乾道",area:"台中",code:"1-1",name:"邑軒",attend:false,noBento:false,family:"邑軒"},
-  {no:14,role:"學員",gender:"乾道",area:"台中",code:"1-1",name:"晨睿",attend:true,noBento:false,family:"晨睿"},
-  {no:15,role:"學員",gender:"乾道",area:"台中",code:"1-1",name:"宥亨",attend:true,noBento:false,family:"晨睿"},
-  {no:16,role:"學員",gender:"坤道",area:"台中",code:"1-1",name:"庭褘",attend:true,noBento:false,family:"庭褘"},
-  {no:17,role:"學員",gender:"坤道",area:"台中",code:"1-1",name:"珈毓",attend:true,noBento:false,family:"庭褘"},
-  {no:18,role:"學員",gender:"坤道",area:"台中",code:"1-1",name:"雅歆",attend:false,noBento:false,family:"雅歆"},
-  {no:19,role:"學輔",gender:"乾道",area:"台中",code:"1-1",name:"安德",attend:true,noBento:false,family:"大元"},
-  {no:20,role:"學輔",gender:"乾道",area:"台中",code:"1-1",name:"智憲",attend:false,noBento:false,family:"智憲"},
-  {no:21,role:"學輔",gender:"乾道",area:"台中",code:"1-1",name:"皓程",attend:true,noBento:false,family:"皓程"},
-  {no:22,role:"學輔",gender:"乾道",area:"台中",code:"1-1",name:"少庸",attend:true,noBento:false,family:"玫芳"},
-  {no:23,role:"學輔",gender:"坤道",area:"台中",code:"1-1",name:"佩君",attend:false,noBento:false,family:"佩君"},
-  {no:24,role:"學輔",gender:"坤道",area:"台中",code:"1-1",name:"宛君",attend:true,noBento:false,family:"佩君"},
-  {no:25,role:"學輔",gender:"坤道",area:"台中",code:"1-1",name:"沛希",attend:true,noBento:false,family:"沛希"},
-  {no:26,role:"小學輔",gender:"乾道",area:"太平",code:"1-3",name:"亞奕",attend:true,noBento:true,family:"惠雯"},
-  {no:27,role:"家長",gender:"乾道",area:"太平",code:"1-3",name:"宏銘",attend:true,noBento:true,family:"宏銘"},
-  {no:28,role:"家長",gender:"坤道",area:"太平",code:"1-3",name:"美琪",attend:false,noBento:false,family:"宏銘"},
-  {no:29,role:"家長",gender:"坤道",area:"太平",code:"1-3",name:"佳樺",attend:false,noBento:false,family:"佳樺"},
-  {no:30,role:"家長",gender:"坤道",area:"太平",code:"1-3",name:"珮容",attend:false,noBento:false,family:"珮容"},
-  {no:31,role:"資輔",gender:"乾道",area:"太平",code:"1-3",name:"銀國",attend:false,noBento:false,family:"銀國"},
-  {no:32,role:"資輔",gender:"乾道",area:"太平",code:"1-3",name:"鄭強",attend:true,noBento:false,family:"鄭強"},
-  {no:33,role:"資輔",gender:"坤道",area:"太平",code:"1-3",name:"碧純",attend:false,noBento:false,family:"銀國"},
-  {no:34,role:"資輔",gender:"坤道",area:"太平",code:"1-3",name:"淑貞",attend:true,noBento:false,family:"淑貞"},
-  {no:35,role:"資輔",gender:"坤道",area:"太平",code:"1-3",name:"麗雪",attend:true,noBento:false,family:"麗雪"},
-  {no:36,role:"資輔",gender:"坤道",area:"太平",code:"1-3",name:"月嬌",attend:true,noBento:true,family:"鄭強"},
-  {no:37,role:"資輔",gender:"坤道",area:"太平",code:"1-3",name:"益美",attend:true,noBento:true,family:"益美"},
-  {no:38,role:"資輔",gender:"坤道",area:"太平",code:"1-3",name:"惠雯",attend:true,noBento:true,family:"惠雯"},
-  {no:39,role:"學員",gender:"乾道",area:"太平",code:"1-3",name:"敬元",attend:true,noBento:true,family:"宏銘"},
-  {no:40,role:"學員",gender:"乾道",area:"太平",code:"1-3",name:"馳恩",attend:false,noBento:false,family:"佳樺"},
-  {no:41,role:"學員",gender:"乾道",area:"太平",code:"1-3",name:"品丞",attend:false,noBento:false,family:"珮容"},
-  {no:42,role:"學員",gender:"坤道",area:"太平",code:"1-3",name:"菱恩",attend:true,noBento:true,family:"凱鈦"},
-  {no:43,role:"學員",gender:"坤道",area:"太平",code:"1-3",name:"妤芯",attend:true,noBento:true,family:"佳樺"},
-  {no:44,role:"學員",gender:"坤道",area:"太平",code:"1-3",name:"妤恩",attend:true,noBento:true,family:"宏銘"},
-  {no:45,role:"學員",gender:"坤道",area:"太平",code:"1-3",name:"歆云",attend:true,noBento:true,family:"宏銘"},
-  {no:46,role:"學輔",gender:"乾道",area:"太平",code:"1-3",name:"凱鈦",attend:false,noBento:false,family:"凱鈦"},
-  {no:47,role:"學輔",gender:"坤道",area:"太平",code:"1-3",name:"婕妤",attend:true,noBento:false,family:"婕妤"},
-  {no:48,role:"學輔",gender:"坤道",area:"太平",code:"1-3",name:"文君",attend:false,noBento:false,family:"文君"},
-  {no:49,role:"學輔",gender:"坤道",area:"太平",code:"1-3",name:"妤嫻",attend:true,noBento:false,family:"鄭強"},
-  {no:50,role:"學輔",gender:"坤道",area:"太平",code:"1-3",name:"亞宸",attend:true,noBento:true,family:"惠雯"},
-  {no:51,role:"小學輔",gender:"乾道",area:"坪林",code:"1-4",name:"柏謙",attend:true,noBento:true,family:"文聰"},
-  {no:52,role:"小學輔",gender:"乾道",area:"坪林",code:"1-4",name:"士博",attend:true,noBento:true,family:"文聰"},
-  {no:53,role:"小學輔",gender:"坤道",area:"坪林",code:"1-4",name:"芊衣",attend:true,noBento:true,family:"文聰"},
-  {no:54,role:"家長",gender:"坤道",area:"坪林",code:"1-4",name:"宜穎",attend:true,noBento:false,family:"宜穎"},
-  {no:55,role:"家長",gender:"坤道",area:"坪林",code:"1-4",name:"美星",attend:false,noBento:false,family:"美星"},
-  {no:56,role:"資輔",gender:"乾道",area:"坪林",code:"1-4",name:"坤財",attend:true,noBento:false,family:"坤財"},
-  {no:57,role:"資輔",gender:"乾道",area:"坪林",code:"1-4",name:"文聰",attend:true,noBento:true,family:"文聰"},
-  {no:58,role:"資輔",gender:"坤道",area:"坪林",code:"1-4",name:"怡珍",attend:false,noBento:false,family:"怡珍"},
-  {no:59,role:"資輔",gender:"坤道",area:"坪林",code:"1-4",name:"湘梅",attend:true,noBento:true,family:"湘梅"},
-  {no:60,role:"資輔",gender:"坤道",area:"坪林",code:"1-4",name:"濬綾",attend:true,noBento:true,family:"濬綾"},
-  {no:61,role:"學員",gender:"乾道",area:"坪林",code:"1-4",name:"竣棠",attend:true,noBento:true,family:"濬綾"},
-  {no:62,role:"學員",gender:"乾道",area:"坪林",code:"1-4",name:"祐嘉",attend:true,noBento:true,family:"濬綾"},
-  {no:63,role:"學員",gender:"乾道",area:"坪林",code:"1-4",name:"世欣",attend:true,noBento:true,family:"美星"},
-  {no:64,role:"學員",gender:"乾道",area:"坪林",code:"1-4",name:"子榮",attend:false,noBento:false,family:"美星"},
-  {no:65,role:"學員",gender:"乾道",area:"坪林",code:"1-4",name:"奕翔",attend:false,noBento:false,family:"珮綸"},
-  {no:66,role:"學員",gender:"坤道",area:"坪林",code:"1-4",name:"芸滋",attend:true,noBento:true,family:"濬綾"},
-  {no:67,role:"學員",gender:"坤道",area:"坪林",code:"1-4",name:"珮綸",attend:false,noBento:false,family:"珮綸"},
-  {no:68,role:"學員",gender:"坤道",area:"坪林",code:"1-4",name:"珮瑜",attend:false,noBento:false,family:"珮綸"},
-  {no:69,role:"學輔",gender:"坤道",area:"嘉義",code:"2-1",name:"雅如",attend:true,noBento:false,family:"雅如"},
-  {no:70,role:"學輔",gender:"坤道",area:"嘉義",code:"2-1",name:"妙慧",attend:true,noBento:false,family:"雅如"},
-  {no:71,role:"資輔",gender:"乾道",area:"斗六",code:"2-3",name:"鍚章",attend:false,noBento:false,family:"錫章"},
-  {no:72,role:"學輔",gender:"坤道",area:"斗六",code:"2-3",name:"咏恩",attend:false,noBento:false,family:"錫章"},
+  {no:1,role:"小學輔",gender:"乾道",area:"台中",code:"1-1",name:"子暘",attend:true,family:"玫芳"},
+  {no:2,role:"小學輔",gender:"乾道",area:"台中",code:"1-1",name:"立祐",attend:true,family:"佳俊"},
+  {no:3,role:"小學輔",gender:"坤道",area:"台中",code:"1-1",name:"若彤",attend:true,family:"玫芳"},
+  {no:4,role:"小學輔",gender:"坤道",area:"台中",code:"1-1",name:"詠晴",attend:true,family:"皓程"},
+  {no:5,role:"家長",gender:"乾道",area:"台中",code:"1-1",name:"由健",attend:true,family:"由健"},
+  {no:6,role:"家長",gender:"坤道",area:"台中",code:"1-1",name:"雅苓",attend:true,family:"雅苓"},
+  {no:7,role:"資輔",gender:"乾道",area:"台中",code:"1-1",name:"大元",attend:true,family:"大元"},
+  {no:8,role:"資輔",gender:"乾道",area:"台中",code:"1-1",name:"佳俊",attend:true,family:"佳俊"},
+  {no:9,role:"資輔",gender:"坤道",area:"台中",code:"1-1",name:"春華",attend:true,family:"大元"},
+  {no:10,role:"資輔",gender:"坤道",area:"台中",code:"1-1",name:"玫芳",attend:true,family:"玫芳"},
+  {no:11,role:"資輔",gender:"坤道",area:"台中",code:"1-1",name:"靜兒",attend:false,family:"靜兒"},
+  {no:12,role:"學員",gender:"乾道",area:"台中",code:"1-1",name:"侑恩",attend:false,family:"雅歆"},
+  {no:13,role:"學員",gender:"乾道",area:"台中",code:"1-1",name:"邑軒",attend:false,family:"邑軒"},
+  {no:14,role:"學員",gender:"乾道",area:"台中",code:"1-1",name:"晨睿",attend:true,family:"晨睿"},
+  {no:15,role:"學員",gender:"乾道",area:"台中",code:"1-1",name:"宥亨",attend:true,family:"晨睿"},
+  {no:16,role:"學員",gender:"坤道",area:"台中",code:"1-1",name:"庭褘",attend:true,family:"庭褘"},
+  {no:17,role:"學員",gender:"坤道",area:"台中",code:"1-1",name:"珈毓",attend:true,family:"庭褘"},
+  {no:18,role:"學員",gender:"坤道",area:"台中",code:"1-1",name:"雅歆",attend:false,family:"雅歆"},
+  {no:19,role:"學輔",gender:"乾道",area:"台中",code:"1-1",name:"安德",attend:true,family:"大元"},
+  {no:20,role:"學輔",gender:"乾道",area:"台中",code:"1-1",name:"智憲",attend:false,family:"智憲"},
+  {no:21,role:"學輔",gender:"乾道",area:"台中",code:"1-1",name:"皓程",attend:true,family:"皓程"},
+  {no:22,role:"學輔",gender:"乾道",area:"台中",code:"1-1",name:"少庸",attend:true,family:"玫芳"},
+  {no:23,role:"學輔",gender:"坤道",area:"台中",code:"1-1",name:"佩君",attend:false,family:"佩君"},
+  {no:24,role:"學輔",gender:"坤道",area:"台中",code:"1-1",name:"宛君",attend:true,family:"佩君"},
+  {no:25,role:"學輔",gender:"坤道",area:"台中",code:"1-1",name:"沛希",attend:true,family:"沛希"},
+  {no:26,role:"小學輔",gender:"乾道",area:"太平",code:"1-3",name:"亞奕",attend:true,family:"惠雯"},
+  {no:27,role:"家長",gender:"乾道",area:"太平",code:"1-3",name:"宏銘",attend:true,family:"宏銘"},
+  {no:28,role:"家長",gender:"坤道",area:"太平",code:"1-3",name:"美琪",attend:false,family:"宏銘"},
+  {no:29,role:"家長",gender:"坤道",area:"太平",code:"1-3",name:"佳樺",attend:false,family:"佳樺"},
+  {no:30,role:"家長",gender:"坤道",area:"太平",code:"1-3",name:"珮容",attend:false,family:"珮容"},
+  {no:31,role:"資輔",gender:"乾道",area:"太平",code:"1-3",name:"銀國",attend:false,family:"銀國"},
+  {no:32,role:"資輔",gender:"乾道",area:"太平",code:"1-3",name:"鄭強",attend:true,family:"鄭強"},
+  {no:33,role:"資輔",gender:"坤道",area:"太平",code:"1-3",name:"碧純",attend:false,family:"銀國"},
+  {no:34,role:"資輔",gender:"坤道",area:"太平",code:"1-3",name:"淑貞",attend:true,family:"淑貞"},
+  {no:35,role:"資輔",gender:"坤道",area:"太平",code:"1-3",name:"麗雪",attend:true,family:"麗雪"},
+  {no:36,role:"資輔",gender:"坤道",area:"太平",code:"1-3",name:"月嬌",attend:true,family:"鄭強"},
+  {no:37,role:"資輔",gender:"坤道",area:"太平",code:"1-3",name:"益美",attend:true,family:"益美"},
+  {no:38,role:"資輔",gender:"坤道",area:"太平",code:"1-3",name:"惠雯",attend:true,family:"惠雯"},
+  {no:39,role:"學員",gender:"乾道",area:"太平",code:"1-3",name:"敬元",attend:true,family:"宏銘"},
+  {no:40,role:"學員",gender:"乾道",area:"太平",code:"1-3",name:"馳恩",attend:false,family:"佳樺"},
+  {no:41,role:"學員",gender:"乾道",area:"太平",code:"1-3",name:"品丞",attend:false,family:"珮容"},
+  {no:42,role:"學員",gender:"坤道",area:"太平",code:"1-3",name:"菱恩",attend:true,family:"凱鈦"},
+  {no:43,role:"學員",gender:"坤道",area:"太平",code:"1-3",name:"妤芯",attend:true,family:"佳樺"},
+  {no:44,role:"學員",gender:"坤道",area:"太平",code:"1-3",name:"妤恩",attend:true,family:"宏銘"},
+  {no:45,role:"學員",gender:"坤道",area:"太平",code:"1-3",name:"歆云",attend:true,family:"宏銘"},
+  {no:46,role:"學輔",gender:"乾道",area:"太平",code:"1-3",name:"凱鈦",attend:false,family:"凱鈦"},
+  {no:47,role:"學輔",gender:"坤道",area:"太平",code:"1-3",name:"婕妤",attend:true,family:"婕妤"},
+  {no:48,role:"學輔",gender:"坤道",area:"太平",code:"1-3",name:"文君",attend:false,family:"文君"},
+  {no:49,role:"學輔",gender:"坤道",area:"太平",code:"1-3",name:"妤嫻",attend:true,family:"鄭強"},
+  {no:50,role:"學輔",gender:"坤道",area:"太平",code:"1-3",name:"亞宸",attend:true,family:"惠雯"},
+  {no:51,role:"小學輔",gender:"乾道",area:"坪林",code:"1-4",name:"柏謙",attend:true,family:"文聰"},
+  {no:52,role:"小學輔",gender:"乾道",area:"坪林",code:"1-4",name:"士博",attend:true,family:"文聰"},
+  {no:53,role:"小學輔",gender:"坤道",area:"坪林",code:"1-4",name:"芊衣",attend:true,family:"文聰"},
+  {no:54,role:"家長",gender:"坤道",area:"坪林",code:"1-4",name:"宜穎",attend:true,family:"宜穎"},
+  {no:55,role:"家長",gender:"坤道",area:"坪林",code:"1-4",name:"美星",attend:false,family:"美星"},
+  {no:56,role:"資輔",gender:"乾道",area:"坪林",code:"1-4",name:"坤財",attend:true,family:"坤財"},
+  {no:57,role:"資輔",gender:"乾道",area:"坪林",code:"1-4",name:"文聰",attend:true,family:"文聰"},
+  {no:58,role:"資輔",gender:"坤道",area:"坪林",code:"1-4",name:"怡珍",attend:false,family:"怡珍"},
+  {no:59,role:"資輔",gender:"坤道",area:"坪林",code:"1-4",name:"湘梅",attend:true,family:"湘梅"},
+  {no:60,role:"資輔",gender:"坤道",area:"坪林",code:"1-4",name:"濬綾",attend:true,family:"濬綾"},
+  {no:61,role:"學員",gender:"乾道",area:"坪林",code:"1-4",name:"竣棠",attend:true,family:"濬綾"},
+  {no:62,role:"學員",gender:"乾道",area:"坪林",code:"1-4",name:"祐嘉",attend:true,family:"濬綾"},
+  {no:63,role:"學員",gender:"乾道",area:"坪林",code:"1-4",name:"世欣",attend:true,family:"美星"},
+  {no:64,role:"學員",gender:"乾道",area:"坪林",code:"1-4",name:"子榮",attend:false,family:"美星"},
+  {no:65,role:"學員",gender:"乾道",area:"坪林",code:"1-4",name:"奕翔",attend:false,family:"珮綸"},
+  {no:66,role:"學員",gender:"坤道",area:"坪林",code:"1-4",name:"芸滋",attend:true,family:"濬綾"},
+  {no:67,role:"學員",gender:"坤道",area:"坪林",code:"1-4",name:"珮綸",attend:false,family:"珮綸"},
+  {no:68,role:"學員",gender:"坤道",area:"坪林",code:"1-4",name:"珮瑜",attend:false,family:"珮綸"},
+  {no:69,role:"學輔",gender:"坤道",area:"嘉義",code:"2-1",name:"雅如",attend:true,family:"雅如"},
+  {no:70,role:"學輔",gender:"坤道",area:"嘉義",code:"2-1",name:"妙慧",attend:true,family:"雅如"},
+  {no:71,role:"資輔",gender:"乾道",area:"斗六",code:"2-3",name:"鍚章",attend:false,family:"錫章"},
+  {no:72,role:"學輔",gender:"坤道",area:"斗六",code:"2-3",name:"咏恩",attend:false,family:"錫章"},
 ];
 allMembers.forEach(m => { if (m.familyOrder == null) m.familyOrder = 1; });
+
+// ══════════════════════════════════════════
+// 學員資料 額外欄位對照表（理天生日 ld、出生日期 bd）— 依「姓名」對應「人員名單」(allMembers)
+// 身份／乾坤／地區一律以人員名單為準（人員名單異動會自動反映在此頁，排序也會自動更新）
+// 此表只保留人員名單中沒有的欄位；可在「學員資料」頁面點 ✎ 修改，資料會自動存檔
+// ══════════════════════════════════════════
+const studentBirthdayExtra = {
+  "咏恩": {ld:"", bd:"2002/11/08"},
+  "芊衣": {ld:"103年2月29曰", bd:"2014/02/05"},
+  "若彤": {ld:"2014/09/05", bd:"2014/05/27"},
+  "智憲": {ld:"1999/03/09", bd:"1998/12/25"},
+  "珮綸": {ld:"2014/08/27", bd:"2014/06/02"},
+  "妤恩": {ld:"2015/01/10", bd:"2015/01/11"},
+  "亞宸": {ld:"2008/11/16", bd:"2008/10/02"},
+  "竣棠": {ld:"2015/01/10", bd:"2015/01/26"},
+  "皓程": {ld:"2004/08/24", bd:"2004/08/07"},
+  "妙慧": {ld:"", bd:"1999/09/22"},
+  "子暘": {ld:"2011/03/15", bd:"2010/12/06"},
+  "士博": {ld:"2015/06/03", bd:"2015/04/22"},
+  "柏謙": {ld:"2013/11/12", bd:"2011/04/27"},
+  "妤嫻": {ld:"2002/12/10", bd:"2001/11/30"},
+  "立祐": {ld:"2012/04/30", bd:"2012/04/11"},
+  "佩君": {ld:"1993/06/21", bd:"1993/05/23"},
+  "詠晴": {ld:"2012/02/25", bd:"2012/02/14"},
+  "亞奕": {ld:"2011/10/10", bd:"2011/09/01"},
+  "沛希": {ld:"2008/07/23", bd:"2008/05/19"},
+  "凱鈦": {ld:"2010/05/08", bd:"2008/03/05"},
+  "少庸": {ld:"2007/06/02", bd:"2007/04/18"},
+  "雅如": {ld:"", bd:"1994/10/12"},
+  "宛君": {ld:"1993/06/21", bd:"1993/05/23"},
+};
+
+// 把出生資料併入 allMembers（依姓名比對），供各頁面「依出生年月日排序」使用
+// 學輔／學員 取自 studentBirthdayExtra；資輔／家長 取自 parentBirthdayExtra
+// 注意：loadData() 會用 localStorage 的舊資料重建 allMembers，所以每次重建後都要重新呼叫本函式
+function attachBirthdates() {
+  allMembers.forEach(m => {
+    let bd = null;
+    if (m.role === '學輔' || m.role === '小學輔' || m.role === '學員') {
+      const ex = studentBirthdayExtra[m.name];
+      bd = ex ? (ex.bd || null) : null;
+    } else if (m.role === '資輔' || m.role === '家長') {
+      const ex = (typeof parentBirthdayExtra !== 'undefined') ? parentBirthdayExtra[m.name] : null;
+      bd = ex ? (ex.bd || null) : null;
+    }
+    m.bd = bd;
+  });
+  promoteAdultStudents();
+}
+
+// 依出生日期字串（格式如 "1991/07/31"，若僅有年份如 "1980年（無月日資料）" 則以該年 1/1 估算）
+// 計算「今天」滿幾歲；無法解析則回傳 null
+function computeAge(bd) {
+  if (!bd) return null;
+  const full = bd.match(/^(\d{4})\/(\d{1,2})\/(\d{1,2})$/);
+  const yearOnly = bd.match(/^(\d{4})年/);
+  const today = new Date();
+  let y, m, d;
+  if (full) {
+    y = parseInt(full[1], 10); m = parseInt(full[2], 10); d = parseInt(full[3], 10);
+  } else if (yearOnly) {
+    y = parseInt(yearOnly[1], 10); m = 1; d = 1;
+  } else {
+    return null;
+  }
+  let age = today.getFullYear() - y;
+  const beforeBirthdayThisYear = (today.getMonth() + 1 < m) || (today.getMonth() + 1 === m && today.getDate() < d);
+  if (beforeBirthdayThisYear) age--;
+  return age;
+}
+
+// 學員年滿 30 歲時，身份自動由「學員」變更為「學輔」（人員名單同步更新）
+// 每次 attachBirthdates() 執行（載入資料／匯入備份／修改生日）時都會自動檢查一次
+function promoteAdultStudents() {
+  let changed = false;
+  allMembers.forEach(m => {
+    if (m.role === '學員') {
+      const age = computeAge(m.bd);
+      if (age !== null && age >= 30) {
+        m.role = '學輔';
+        changed = true;
+      }
+    }
+  });
+  return changed;
+}
+
+// 人員姓名修正對照表：若瀏覽器 localStorage／備份檔中還留著舊名字，
+// 重新載入名單時會自動改成正確名字，避免生日資料比對失敗
+const NAME_MIGRATIONS = {};
+function applyNameMigrations(list) {
+  list.forEach(m => { if (NAME_MIGRATIONS[m.name]) m.name = NAME_MIGRATIONS[m.name]; });
+}
+
+// 把生日字串轉成可比較的數值 key（年*10000+月*100+日），避免因日期未補零（如 "1991/12/1"）
+// 造成文字比較順序錯誤；僅有年份「YYYY年（無月日資料）」的視為當年度最後（sentinel 1301 大於任何合法月日組合）
+// 無法解析的字串回傳 null（視同「沒有生日資料」）
+function bdSortKey(bd) {
+  if (!bd) return null;
+  const full = bd.match(/^(\d{4})\/(\d{1,2})\/(\d{1,2})$/);
+  if (full) {
+    const y = parseInt(full[1], 10), m = parseInt(full[2], 10), d = parseInt(full[3], 10);
+    return y * 10000 + m * 100 + d;
+  }
+  const yearOnly = bd.match(/^(\d{4})年/);
+  if (yearOnly) {
+    return parseInt(yearOnly[1], 10) * 10000 + 1301;
+  }
+  return null;
+}
+
+// 通用「依出生年月日排序」比較函式：
+// ‧ 兩人都有生日 → 生日早的（年紀較長）排前面
+// ‧ 只有一人有生日 → 沒有生日資料的人維持原本名單順序，排在前面
+// ‧ 兩人都沒有生日 → 維持原本名單順序（依 no）
+function compareBirthdate(a, b) {
+  const ka = bdSortKey(a.bd), kb = bdSortKey(b.bd);
+  if (ka != null && kb != null) {
+    if (ka !== kb) return ka - kb;
+    return (a.no ?? 9999) - (b.no ?? 9999);
+  }
+  if (ka != null && kb == null) return 1;
+  if (ka == null && kb != null) return -1;
+  return (a.no ?? 9999) - (b.no ?? 9999);
+}
+
+// 身份分組排序（同乾坤內，先後順序）
+const ROLE_ORDER_STUDENT = { '學輔': 0, '小學輔': 1, '學員': 2 };
+const ROLE_ORDER_PARENT  = { '資輔': 0, '家長': 1 };
+
+// 依「目前人員名單」即時組出「學員資料」頁要顯示的資料列
+// 身份／乾坤／地區一律取自 allMembers（人員名單異動會自動反映在這裡）
+// ld／bd 兩個欄位則取自 studentBirthdayExtra（可在頁面上編輯）
+function getStudentBirthdayRows() {
+  return allMembers
+    .filter(m => m.role === '學輔' || m.role === '小學輔' || m.role === '學員')
+    .map(m => {
+      const ex = studentBirthdayExtra[m.name] || {};
+      return { no: m.no, name: m.name, role: m.role, gender: m.gender, area: m.area,
+               ld: ex.ld || '', bd: ex.bd || '' };
+    })
+    .sort((a, b) => {
+      const ga = a.gender === '乾道' ? 0 : 1, gb = b.gender === '乾道' ? 0 : 1;
+      if (ga !== gb) return ga - gb;
+      const ra = ROLE_ORDER_STUDENT[a.role] ?? 9, rb = ROLE_ORDER_STUDENT[b.role] ?? 9;
+      if (ra !== rb) return ra - rb;
+      return compareBirthdate(a, b);
+    });
+}
+
+function renderBirthdayPage() {
+  const tbody = document.getElementById('birthday-tbody');
+  if (!tbody) return;
+  const rows = getStudentBirthdayRows();
+  let html = '';
+  let lastGroup = null;
+  rows.forEach((m, i) => {
+    const groupKey = m.gender + m.role;
+    if (groupKey !== lastGroup) {
+      const label = `▌ ${m.gender}・${m.role}`;
+      html += `<tr class="record-sep-row"><td colspan="8">${label}</td></tr>`;
+      lastGroup = groupKey;
+    }
+    html += `<tr>
+      <td>${i+1}</td>
+      <td><span class="badge badge-${m.role}">${m.role}</span></td>
+      <td><span class="badge badge-${m.gender}">${m.gender}</span></td>
+      <td>${m.area}</td>
+      <td class="name">${m.name}</td>
+      <td>${m.ld || '—'}</td>
+      <td>${m.bd || '—'}</td>
+      <td><button type="button" class="btn-bday-edit" onclick="openEditStudentBirthday('${m.name}')">✎ 修改</button></td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+// ── 修改「學員資料」理天生日／出生日期 ──
+function openEditStudentBirthday(name) {
+  const ex = studentBirthdayExtra[name] || {};
+  const existing = document.getElementById('edit-bday-modal');
+  if (existing) existing.remove();
+  const modal = document.createElement('div');
+  modal.id = 'edit-bday-modal';
+  modal.className = 'modal-overlay open';
+  modal.innerHTML = `
+    <div class="modal">
+      <div class="modal-title">✏️ 修改生日資料 — ${name}</div>
+      <div class="modal-row">
+        <div class="modal-field"><label>理天生日</label><input type="text" id="edit-bday-ld" value="${(ex.ld||'').replace(/"/g,'&quot;')}" placeholder="例：1997/01/06"></div>
+        <div class="modal-field"><label>出生日期</label><input type="text" id="edit-bday-bd" value="${(ex.bd||'').replace(/"/g,'&quot;')}" placeholder="例：1991/07/31"></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="document.getElementById('edit-bday-modal').remove()">取消</button>
+        <button class="btn-confirm" onclick="confirmEditStudentBirthday('${name}')">✔ 確認修改</button>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+}
+function confirmEditStudentBirthday(name) {
+  const ld = document.getElementById('edit-bday-ld').value.trim();
+  const bd = document.getElementById('edit-bday-bd').value.trim();
+  studentBirthdayExtra[name] = { ld, bd };
+  attachBirthdates();
+  saveData();
+  renderBirthdayPage();
+  renderMembers();
+  const modal = document.getElementById('edit-bday-modal');
+  if (modal) modal.remove();
+}
+
+// ══════════════════════════════════════════
+// 資輔／家長 額外欄位對照表（姓氏 surname、出生日期 bd）— 依「姓名」對應「人員名單」(allMembers)
+// 身份／乾坤／地區一律以人員名單為準（人員名單異動會自動反映在此頁，排序也會自動更新）
+// 姓名欄顯示為 姓氏＋人員名單中的名字；可在「資輔家長生日」頁面點 ✎ 修改，資料會自動存檔
+// ══════════════════════════════════════════
+const parentBirthdayExtra = {
+  "宏銘": {surname:"陳", bd:"1977年（無月日資料）"},
+  "文聰": {surname:"施", bd:"1974/08/31"},
+  "玫芳": {surname:"蔡", bd:"1978/06/02"},
+  "坤財": {surname:"古", bd:"1967/04/01"},
+  "靜兒": {surname:"林", bd:"1980年（無月日資料）"},
+  "月嬌": {surname:"曾", bd:"1973/07/12"},
+  "鄭強": {surname:"", bd:"1970/03/29"},
+  "湘梅": {surname:"周", bd:"1974年（無月日資料）"},
+  "益美": {surname:"陳", bd:"1975/02/11"},
+  "濬綾": {surname:"白", bd:"1976/12/08"},
+  "麗雪": {surname:"林", bd:"1965/05/23"},
+  "怡珍": {surname:"劉", bd:"1969/05/26"},
+  "惠雯": {surname:"詹", bd:"1981/05/26"},
+  "佳俊": {surname:"陳", bd:"1980/07/18"},
+  "淑貞": {surname:"黃", bd:"1974/09/18"},
+};
+
+// studentBirthdayExtra 與 parentBirthdayExtra 都已宣告完成，這裡才能正式把生日併入 allMembers
+attachBirthdates();
+
+// 依「目前人員名單」即時組出「資輔／家長生日」頁要顯示的資料列
+function getParentBirthdayRows() {
+  return allMembers
+    .filter(m => m.role === '資輔' || m.role === '家長')
+    .map(m => {
+      const ex = parentBirthdayExtra[m.name] || {};
+      return { no: m.no, name: m.name, fullname: (ex.surname || '') + m.name,
+               role: m.role, gender: m.gender, area: m.area, bd: ex.bd || '' };
+    })
+    .sort((a, b) => {
+      const ga = a.gender === '乾道' ? 0 : 1, gb = b.gender === '乾道' ? 0 : 1;
+      if (ga !== gb) return ga - gb;
+      const ra = ROLE_ORDER_PARENT[a.role] ?? 9, rb = ROLE_ORDER_PARENT[b.role] ?? 9;
+      if (ra !== rb) return ra - rb;
+      return compareBirthdate(a, b);
+    });
+}
+
+function renderBirthdayParentPage() {
+  const tbody = document.getElementById('birthday-parent-tbody');
+  if (!tbody) return;
+  const rows = getParentBirthdayRows();
+  let html = '';
+  let lastGroup = null;
+  rows.forEach((m, i) => {
+    const groupKey = m.gender + m.role;
+    if (groupKey !== lastGroup) {
+      const label = `▌ ${m.gender}・${m.role}`;
+      html += `<tr class="record-sep-row"><td colspan="7">${label}</td></tr>`;
+      lastGroup = groupKey;
+    }
+    html += `<tr>
+      <td>${i+1}</td>
+      <td><span class="badge badge-${m.role}">${m.role}</span></td>
+      <td><span class="badge badge-${m.gender}">${m.gender}</span></td>
+      <td>${m.area}</td>
+      <td class="name">${m.fullname}</td>
+      <td>${m.bd || '—'}</td>
+      <td><button type="button" class="btn-bday-edit" onclick="openEditParentBirthday('${m.name}')">✎ 修改</button></td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+// ── 修改「資輔／家長生日」姓氏／出生日期 ──
+function openEditParentBirthday(name) {
+  const ex = parentBirthdayExtra[name] || {};
+  const existing = document.getElementById('edit-bday-parent-modal');
+  if (existing) existing.remove();
+  const modal = document.createElement('div');
+  modal.id = 'edit-bday-parent-modal';
+  modal.className = 'modal-overlay open';
+  modal.innerHTML = `
+    <div class="modal">
+      <div class="modal-title">✏️ 修改生日資料 — ${name}</div>
+      <div class="modal-row">
+        <div class="modal-field"><label>姓氏</label><input type="text" id="edit-bday-parent-surname" value="${(ex.surname||'').replace(/"/g,'&quot;')}" placeholder="例：蕭"></div>
+        <div class="modal-field"><label>出生日期</label><input type="text" id="edit-bday-parent-bd" value="${(ex.bd||'').replace(/"/g,'&quot;')}" placeholder="例：1963/03/12 或 1963年（無月日資料）"></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="document.getElementById('edit-bday-parent-modal').remove()">取消</button>
+        <button class="btn-confirm" onclick="confirmEditParentBirthday('${name}')">✔ 確認修改</button>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+}
+function confirmEditParentBirthday(name) {
+  const surname = document.getElementById('edit-bday-parent-surname').value.trim();
+  const bd = document.getElementById('edit-bday-parent-bd').value.trim();
+  parentBirthdayExtra[name] = { surname, bd };
+  attachBirthdates();
+  saveData();
+  renderBirthdayParentPage();
+  renderMembers();
+  const modal = document.getElementById('edit-bday-parent-modal');
+  if (modal) modal.remove();
+}
 
 // ══════════════════════════════════════════
 // localStorage 自動儲存
@@ -949,49 +1275,68 @@ allMembers.forEach(m => { if (m.familyOrder == null) m.familyOrder = 1; });
 const LS_KEY_QSB = 'tmb_data_main';
 
 function saveData() {
-  // 以姓名為 key 的物件，避免序號重排後 index 對應錯誤
-  const memberMap = {};
-  allMembers.forEach(m => {
-    memberMap[m.name] = {
-      attend:      m.attend,
-      family:      m.family,
-      familyOrder: m.familyOrder ?? 1,
-      role:        m.role,
-      gender:      m.gender,
-      area:        m.area,
-      code:        m.code
-    };
-  });
-  // 同時保留新增成員清單（名單本身）
-  const memberList = allMembers.map(m => ({
-    name: m.name, role: m.role, gender: m.gender,
-    area: m.area, code: m.code, family: m.family,
-    familyOrder: m.familyOrder ?? 1, attend: m.attend, noBento: m.noBento ?? false
-  }));
   const data = {
-    version: 2,
-    memberMap,
-    memberList,
+    members: allMembers.map(m => ({
+      no: m.no, role: m.role, gender: m.gender, area: m.area, code: m.code,
+      name: m.name, family: m.family, familyOrder: m.familyOrder ?? 1,
+      attend: m.attend
+    })),
     staffNames:   document.getElementById('meal-staff-names')?.value || '',
-    noBentoNames: document.getElementById('no-bento-names')?.value || ''
+    noBentoNames: document.getElementById('no-bento-names')?.value || '',
+    studentBirthdayExtra: studentBirthdayExtra,
+    parentBirthdayExtra:  parentBirthdayExtra
   };
   localStorage.setItem(LS_KEY_QSB, JSON.stringify(data));
 }
 
+function loadData() {
+  try {
+    const d = JSON.parse(localStorage.getItem(LS_KEY_QSB));
+    if (!d) return;
+    // 新格式：完整 members 陣列
+    if (d.members && Array.isArray(d.members) && d.members.length > 0) {
+      // 清空並重建 allMembers
+      allMembers.length = 0;
+      d.members.forEach(m => allMembers.push({
+        no: m.no, role: m.role, gender: m.gender, area: m.area, code: m.code,
+        name: m.name, family: m.family,
+        familyOrder: m.familyOrder != null ? m.familyOrder : 1,
+        attend: !!m.attend
+      }));
+    } else {
+      // 舊格式相容
+      if (d.attend   && d.attend.length   === allMembers.length) d.attend.forEach((v,i)   => allMembers[i].attend = v);
+      if (d.names    && d.names.length    === allMembers.length) d.names.forEach((v,i)    => allMembers[i].name = v);
+      if (d.families && d.families.length === allMembers.length) d.families.forEach((v,i) => allMembers[i].family = v);
+      if (d.roles    && d.roles.length    === allMembers.length) d.roles.forEach((v,i)    => allMembers[i].role = v);
+      if (d.genders  && d.genders.length  === allMembers.length) d.genders.forEach((v,i)  => allMembers[i].gender = v);
+      if (d.areas    && d.areas.length    === allMembers.length) d.areas.forEach((v,i)    => allMembers[i].area = v);
+      if (d.codes    && d.codes.length    === allMembers.length) d.codes.forEach((v,i)    => allMembers[i].code = v);
+    }
+    allMembers.forEach(m => { if (m.familyOrder == null) m.familyOrder = 1; });
+    applyNameMigrations(allMembers);
+    // 學員資料／資輔家長生日 的額外欄位（若使用者曾在頁面上修改過，載入時以 localStorage 為準）
+    if (d.studentBirthdayExtra) Object.assign(studentBirthdayExtra, d.studentBirthdayExtra);
+    if (d.parentBirthdayExtra)  Object.assign(parentBirthdayExtra,  d.parentBirthdayExtra);
+    attachBirthdates();
+    if (d.staffNames)   { const el = document.getElementById('meal-staff-names'); if (el) el.value = d.staffNames; }
+    if (d.noBentoNames) { const el = document.getElementById('no-bento-names');   if (el) el.value = d.noBentoNames; }
+  } catch(e) {}
+}
+
 // ══════════════════════════════════════════
-// 人員名單 備份／恢復（完整資料匯出成檔案／從檔案還原）
+// 人員名單 匯出／匯入（完整資料備份成檔案）
 // ══════════════════════════════════════════
 function exportMembersList() {
-  const memberList = allMembers.map(m => ({
-    name: m.name, role: m.role, gender: m.gender,
-    area: m.area, code: m.code, family: m.family,
-    familyOrder: m.familyOrder ?? 1, attend: m.attend, noBento: m.noBento ?? false
-  }));
   const data = {
     exportType: 'tmb_members_backup',
-    exportVersion: 2,
+    exportVersion: 1,
     exportDate: new Date().toISOString(),
-    memberList,
+    members: allMembers.map(m => ({
+      no: m.no, role: m.role, gender: m.gender, area: m.area, code: m.code,
+      name: m.name, family: m.family, familyOrder: m.familyOrder ?? 1,
+      attend: m.attend
+    })),
     staffNames:   document.getElementById('meal-staff-names')?.value || '',
     noBentoNames: document.getElementById('no-bento-names')?.value || ''
   };
@@ -1033,10 +1378,10 @@ function handleImportMembersList(event) {
   reader.onload = function(e) {
     try {
       const d = JSON.parse(e.target.result);
-      if (!d || !Array.isArray(d.memberList) || d.memberList.length === 0) {
+      if (!d || !Array.isArray(d.members) || d.members.length === 0) {
         throw new Error('檔案格式不正確，找不到人員名單資料');
       }
-      const ok = confirm(`確定要恢復此備份嗎？\n共 ${d.memberList.length} 筆人員資料，恢復後將覆蓋目前所有人員名單（含姓名、出席等所有資訊）。`);
+      const ok = confirm(`確定要恢復此備份嗎？\n共 ${d.members.length} 筆人員資料，恢復後將覆蓋目前所有人員名單（含姓名、出席等所有資訊）。`);
       if (!ok) {
         if (resultEl) resultEl.innerHTML = '';
         event.target.value = '';
@@ -1044,21 +1389,15 @@ function handleImportMembersList(event) {
       }
 
       allMembers.length = 0;
-      d.memberList.forEach(saved => {
-        allMembers.push({
-          no: 0,
-          name:        saved.name,
-          role:        saved.role,
-          gender:      saved.gender,
-          area:        saved.area,
-          code:        saved.code,
-          family:      saved.family,
-          familyOrder: typeof saved.familyOrder === 'number' ? saved.familyOrder : (parseInt(saved.familyOrder,10)||1),
-          attend:      !!saved.attend,
-          noBento:     !!saved.noBento
-        });
-      });
+      d.members.forEach(m => allMembers.push({
+        no: m.no, role: m.role, gender: m.gender, area: m.area, code: m.code,
+        name: m.name, family: m.family,
+        familyOrder: m.familyOrder != null ? m.familyOrder : 1,
+        attend: !!m.attend
+      }));
       allMembers.forEach(m => { if (m.familyOrder == null) m.familyOrder = 1; });
+      applyNameMigrations(allMembers);
+      attachBirthdates();
 
       if (typeof d.staffNames === 'string') {
         const el = document.getElementById('meal-staff-names');
@@ -1086,57 +1425,7 @@ function handleImportMembersList(event) {
   reader.readAsText(file, 'utf-8');
 }
 
-function loadData() {
-  try {
-    const d = JSON.parse(localStorage.getItem(LS_KEY_QSB));
-    if (!d) return;
-
-    if (d.version === 2 && d.memberList && d.memberList.length > 0) {
-      // 版本2：完整還原 memberList（含新增/刪除後的名單）
-      allMembers.length = 0;
-      d.memberList.forEach(saved => {
-        allMembers.push({
-          no: 0,
-          name:        saved.name,
-          role:        saved.role,
-          gender:      saved.gender,
-          area:        saved.area,
-          code:        saved.code,
-          family:      saved.family,
-          familyOrder: typeof saved.familyOrder === 'number' ? saved.familyOrder : (parseInt(saved.familyOrder,10)||1),
-          attend:      saved.attend,
-          noBento:     saved.noBento ?? false
-        });
-      });
-    } else if (d.memberMap) {
-      // 版本2但無 memberList（或舊版）：用 memberMap 覆蓋現有成員的欄位
-      allMembers.forEach(m => {
-        const s = d.memberMap[m.name];
-        if (!s) return;
-        m.attend      = s.attend;
-        m.family      = s.family;
-        m.familyOrder = typeof s.familyOrder === 'number' ? s.familyOrder : (parseInt(s.familyOrder,10)||1);
-        m.role        = s.role;
-        m.gender      = s.gender;
-        m.area        = s.area;
-        m.code        = s.code;
-      });
-    } else if (d.attend && Array.isArray(d.attend)) {
-      // 舊版 v1（index 陣列）：只在長度相同時套用，避免亂掉
-      if (d.attend.length === allMembers.length) d.attend.forEach((v,i) => allMembers[i].attend = v);
-      if (d.names    && d.names.length    === allMembers.length) d.names.forEach((v,i)    => allMembers[i].name = v);
-      if (d.families && d.families.length === allMembers.length) d.families.forEach((v,i) => allMembers[i].family = v);
-      if (d.familyOrders && d.familyOrders.length === allMembers.length) d.familyOrders.forEach((v,i) => { allMembers[i].familyOrder = typeof v === 'number' ? v : (parseInt(v,10)||1); });
-      if (d.roles && d.roles.length === allMembers.length) d.roles.forEach((v,i) => allMembers[i].role = v);
-    }
-
-    allMembers.forEach(m => { if (m.familyOrder == null) m.familyOrder = 1; });
-    { const el = document.getElementById('meal-staff-names'); if (el) el.value = d.staffNames ?? ''; }
-    { const el = document.getElementById('no-bento-names');   if (el) el.value = d.noBentoNames ?? ''; }
-  } catch(e) { console.warn('loadData error:', e); }
-}
-
-// ── 出席記錄月份（與青少班相同區間，不含 7、11 月）──
+// ── 出席記錄月份（須在 syncAll 之前定義）──
 const RECORD_MONTHS = [
   {year:2026,month:3,label:'2026/3'},
   {year:2026,month:4,label:'2026/4'},
@@ -1148,6 +1437,10 @@ const RECORD_MONTHS = [
   {year:2026,month:12,label:'2026/12'},
   {year:2027,month:1,label:'2027/1'},
 ];
+const RECORD_AREA_LABELS = {
+  '1-1':'台中 1-1','1-3':'太平 1-3','1-4':'坪林 1-4',
+  '2-1':'嘉義 2-1','2-3':'斗六 2-3'
+};
 const LS_RECORD_KEY = 'tmb_monthly_record_v1';
 let monthlyRecord = {};
 
@@ -1162,47 +1455,280 @@ function saveMonthlyRecord() {
   localStorage.setItem(LS_RECORD_KEY, JSON.stringify(monthlyRecord));
 }
 
-/** 童蒙班名單直欄（與出席統計表地區一致） */
-const ROSTER_AREAS = [
-  { name: '台中 1-1', pred: m => m.area === '台中' },
-  { name: '太平 1-3', pred: m => m.area === '太平' },
-  { name: '坪林 1-4', pred: m => m.area === '坪林' },
-  { name: '嘉義 2-1', pred: m => m.area === '嘉義' },
-  { name: '斗六 2-3', pred: m => m.area === '斗六' },
-];
+// ══════════════════════════════════════════
+// 出席記錄 匯出／載入（完整資料備份成檔案）
+// ══════════════════════════════════════════
+function exportMonthlyRecord() {
+  loadMonthlyRecord();
+  const data = {
+    exportType: 'tmb_attendance_record_backup',
+    exportVersion: 1,
+    exportDate: new Date().toISOString(),
+    record: monthlyRecord
+  };
+  const json = JSON.stringify(data, null, 2);
+  const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const now = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  const stamp = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}`;
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `童蒙班出席記錄備份_${stamp}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 
-/** 每次載入依代號→職位→乾坤→姓名重排並重編序號 1…n */
-function reorderMemberNos() {
-  const codeOrder = {'1-1':0,'1-2':1,'1-3':2,'1-4':3,'2-1':4,'2-2':5,'2-3':6,'2區':7};
-  const roleOrder = {'資輔':0,'學輔':1,'小學輔':2,'家長':3,'學員':4};
-  allMembers.sort((a,b) => {
-    const ca = codeOrder[a.code]??9, cb = codeOrder[b.code]??9;
-    if (ca !== cb) return ca - cb;
-    const ra = roleOrder[a.role]??9, rb = roleOrder[b.role]??9;
-    if (ra !== rb) return ra - rb;
-    const ga = a.gender==='乾道'?0:1, gb = b.gender==='乾道'?0:1;
-    if (ga !== gb) return ga - gb;
-    return (a.name || '').localeCompare(b.name || '', 'zh-Hant');
-  });
-  allMembers.forEach((m, i) => { m.no = i + 1; });
+  const resultEl = document.getElementById('record-backup-result');
+  const count = Object.keys(monthlyRecord).length;
+  if (resultEl) resultEl.innerHTML = `<span style="color:#1565c0;font-weight:700;">✅ 已完成出席記錄備份，共 ${count} 位學員資料</span>`;
+}
+
+function triggerImportMonthlyRecord() {
+  const resultEl = document.getElementById('record-backup-result');
+  if (resultEl) resultEl.innerHTML = '';
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json,application/json';
+  input.onchange = handleImportMonthlyRecord;
+  input.click();
+}
+
+function handleImportMonthlyRecord(event) {
+  const file = event.target.files[0];
+  const resultEl = document.getElementById('record-backup-result');
+  if (!file) return;
+  if (resultEl) resultEl.innerHTML = `<span style="color:#c9a84c;">⏳ 讀取備份檔案中，請稍候...</span>`;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const d = JSON.parse(e.target.result);
+      const rec = d && typeof d === 'object' ? (d.record || d) : null;
+      if (!rec || typeof rec !== 'object' || Array.isArray(rec)) {
+        throw new Error('檔案格式不正確，找不到出席記錄資料');
+      }
+      const count = Object.keys(rec).length;
+      const ok = confirm(`確定要載入此出席記錄備份嗎？\n共 ${count} 位學員資料，載入後將覆蓋目前所有出席記錄勾選。`);
+      if (!ok) {
+        if (resultEl) resultEl.innerHTML = '';
+        event.target.value = '';
+        return;
+      }
+
+      monthlyRecord = rec;
+      saveMonthlyRecord();
+      if (typeof renderRecord === 'function') renderRecord();
+
+      const timeInfo = d.exportDate ? `（備份時間：${new Date(d.exportDate).toLocaleString('zh-TW')}）` : '';
+      if (resultEl) resultEl.innerHTML = `<span style="color:#0f6e3a;font-weight:700;">✅ 已完成出席記錄載入，共 ${count} 位學員資料 ${timeInfo}</span>`;
+    } catch (err) {
+      if (resultEl) resultEl.innerHTML = `<span style="color:#c0392b;font-weight:700;">❌ 載入失敗：${err.message}</span>`;
+    }
+    event.target.value = '';
+  };
+  reader.onerror = function() {
+    if (resultEl) resultEl.innerHTML = `<span style="color:#c0392b;font-weight:700;">❌ 讀取檔案失敗</span>`;
+  };
+  reader.readAsText(file, 'utf-8');
 }
 
 // ══════════════════════════════════════════
-// MEMBERS PAGE（格線名單：比照青少班，僅參班、無茶會）
+// 主畫面「一鍵備份／一鍵恢復」
+// 整合：人員名單（含身份／乾坤／地區／參班）、出席記錄、學員資料（理天生日／出生日期）、
+//       資輔家長生日（姓氏／出生日期），一次備份／恢復成單一檔案
 // ══════════════════════════════════════════
-let memberFilter = 'all', memberSearch = '';
+function exportFullBackup() {
+  loadMonthlyRecord();
+  const data = {
+    exportType: 'tmb_full_backup',
+    exportVersion: 1,
+    exportDate: new Date().toISOString(),
+    members: allMembers.map(m => ({
+      no: m.no, role: m.role, gender: m.gender, area: m.area, code: m.code,
+      name: m.name, family: m.family, familyOrder: m.familyOrder ?? 1,
+      attend: m.attend
+    })),
+    staffNames:   document.getElementById('meal-staff-names')?.value || '',
+    noBentoNames: document.getElementById('no-bento-names')?.value || '',
+    studentBirthdayExtra: studentBirthdayExtra,
+    parentBirthdayExtra:  parentBirthdayExtra,
+    monthlyRecord: monthlyRecord
+  };
+  const json = JSON.stringify(data, null, 2);
+  const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const now = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  const stamp = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}`;
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `張氏童蒙班一鍵備份_${stamp}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 
-function renderMembers() {
-  const roleOrder = { '資輔': 0, '學輔': 1, '小學輔': 2, '家長': 3, '學員': 4 };
+  alert(`✅ 已完成一鍵備份！\n共 ${allMembers.length} 筆人員資料、${Object.keys(monthlyRecord).length} 位學員的出席記錄。\n\n備份檔已下載，請妥善保存。`);
+}
 
-  function memberPassesFilter(m) {
-    if (memberFilter !== 'all' && m.role !== memberFilter) return false;
-    if (memberSearch) {
-      const q = memberSearch.trim();
-      if (!m.name.includes(q) && !(m.family && m.family.includes(q))) return false;
+function triggerImportFullBackup() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json,application/json';
+  input.onchange = handleImportFullBackup;
+  input.click();
+}
+
+function handleImportFullBackup(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const d = JSON.parse(e.target.result);
+      if (!d || !Array.isArray(d.members) || d.members.length === 0) {
+        throw new Error('檔案格式不正確，找不到人員名單資料');
+      }
+      const recordCount = d.monthlyRecord && typeof d.monthlyRecord === 'object'
+        ? Object.keys(d.monthlyRecord).length : 0;
+      const ok = confirm(
+        `確定要恢復此一鍵備份嗎？\n共 ${d.members.length} 筆人員資料、${recordCount} 位學員的出席記錄。\n` +
+        `恢復後將覆蓋目前的人員名單、出席記錄、學員資料、資輔家長生日，此動作無法復原。`
+      );
+      if (!ok) { event.target.value = ''; return; }
+
+      // 1) 人員名單（含參班）
+      allMembers.length = 0;
+      d.members.forEach(m => allMembers.push({
+        no: m.no, role: m.role, gender: m.gender, area: m.area, code: m.code,
+        name: m.name, family: m.family,
+        familyOrder: m.familyOrder != null ? m.familyOrder : 1,
+        attend: !!m.attend
+      }));
+      allMembers.forEach(m => { if (m.familyOrder == null) m.familyOrder = 1; });
+      applyNameMigrations(allMembers);
+
+      // 2) 學員資料（理天生日／出生日期）與 資輔家長生日（姓氏／出生日期）— 完全以備份檔為準
+      if (d.studentBirthdayExtra && typeof d.studentBirthdayExtra === 'object') {
+        Object.keys(studentBirthdayExtra).forEach(k => delete studentBirthdayExtra[k]);
+        Object.assign(studentBirthdayExtra, d.studentBirthdayExtra);
+      }
+      if (d.parentBirthdayExtra && typeof d.parentBirthdayExtra === 'object') {
+        Object.keys(parentBirthdayExtra).forEach(k => delete parentBirthdayExtra[k]);
+        Object.assign(parentBirthdayExtra, d.parentBirthdayExtra);
+      }
+      attachBirthdates(); // 同時會自動檢查滿30歲學員升級為學輔
+
+      // 3) 出席記錄
+      if (d.monthlyRecord && typeof d.monthlyRecord === 'object') {
+        monthlyRecord = d.monthlyRecord;
+        saveMonthlyRecord();
+      }
+
+      if (typeof d.staffNames === 'string') {
+        const el = document.getElementById('meal-staff-names');
+        if (el) el.value = d.staffNames;
+      }
+      if (typeof d.noBentoNames === 'string') {
+        const el = document.getElementById('no-bento-names');
+        if (el) el.value = d.noBentoNames;
+      }
+
+      saveData();
+      renderMembers();
+      syncAll();
+      if (typeof renderRecord === 'function') renderRecord();
+      if (typeof renderBirthdayPage === 'function') renderBirthdayPage();
+      if (typeof renderBirthdayParentPage === 'function') renderBirthdayParentPage();
+
+      const timeInfo = d.exportDate ? `（備份時間：${new Date(d.exportDate).toLocaleString('zh-TW')}）` : '';
+      alert(`✅ 已完成一鍵恢復！\n共 ${allMembers.length} 筆人員資料、${recordCount} 位學員的出席記錄 ${timeInfo}`);
+    } catch (err) {
+      alert(`❌ 恢復失敗：${err.message}`);
     }
-    return true;
+    event.target.value = '';
+  };
+  reader.onerror = function() {
+    alert('❌ 讀取檔案失敗');
+  };
+  reader.readAsText(file, 'utf-8');
+}
+
+// ══════════════════════════════════════════
+// MEMBERS PAGE
+// ══════════════════════════════════════════
+let memberFilter = 'all', memberSearch = '', globalEditMode = false, deleteMode = false;
+
+function toggleEditMode() {
+  globalEditMode = !globalEditMode;
+  if (globalEditMode) { deleteMode = false; updateDeleteBtn(); }
+  const btn = document.getElementById('edit-mode-btn');
+  const th  = document.getElementById('action-th');
+  if (btn) {
+    btn.textContent = globalEditMode ? '✔ 完成修改' : '✏️ 修改人員';
+    btn.style.background = globalEditMode ? 'var(--green)' : '';
   }
+  if (th) th.textContent = globalEditMode ? '刪除' : (deleteMode ? '刪除' : '');
+  // 顯示/隱藏頁面上方的完成修改按鈕
+  const doneBar = document.getElementById('edit-done-bar');
+  if (doneBar) doneBar.style.display = globalEditMode ? 'flex' : 'none';
+  if (!globalEditMode) { saveData(); syncAll(); }
+  renderMembers();
+}
+
+function toggleDeleteMode() {
+  deleteMode = !deleteMode;
+  if (deleteMode) {
+    globalEditMode = false;
+    const editBar = document.getElementById('edit-done-bar');
+    if (editBar) editBar.style.display = 'none';
+    updateEditBtn();
+  }
+  updateDeleteBtn();
+  const th = document.getElementById('action-th');
+  if (th) th.textContent = deleteMode ? '刪除' : '';
+  renderMembers();
+}
+
+function updateDeleteBtn() {
+  const bar = document.getElementById('delete-done-bar');
+  const btn = document.getElementById('delete-mode-btn');
+  if (bar) bar.style.display = deleteMode ? 'flex' : 'none';
+  if (btn) {
+    btn.textContent = '✔ 完成刪除';
+    if (deleteMode) {
+      btn.style.background = 'var(--green)';
+      btn.style.color = 'white';
+    } else {
+      btn.style.background = '';
+      btn.style.color = '';
+    }
+  }
+}
+
+function updateEditBtn() {
+  const btn = document.getElementById('edit-mode-btn');
+  if (btn) {
+    btn.textContent = '✏️ 修改人員';
+    btn.style.background = '';
+  }
+}
+
+
+
+// ══ 新版人員名單 renderMembers ══
+function renderMembers() {
+  const AREAS = [
+    { name: '台中', code: '1-1' },
+    { name: '太平', code: '1-3' },
+    { name: '坪林', code: '1-4' },
+    { name: '嘉義', code: '2-1' },
+    { name: '斗六', code: '2-3' },
+  ];
+  const roleOrder = { '資輔': 0, '學輔': 1, '小學輔': 2, '家長': 3, '學員': 4 };
 
   function sortArea(members) {
     return [...members].sort((a, b) => {
@@ -1210,25 +1736,38 @@ function renderMembers() {
       if (ra !== rb) return ra - rb;
       const ga = a.gender === '乾道' ? 0 : 1, gb = b.gender === '乾道' ? 0 : 1;
       if (ga !== gb) return ga - gb;
-      return (a.no ?? 9999) - (b.no ?? 9999);
+      return compareBirthdate(a, b);
     });
   }
 
   const attendCount = allMembers.filter(m => m.attend).length;
-  const titleEl = document.getElementById('members-count-title');
-  if (titleEl) titleEl.textContent = `全體人員（共${allMembers.length}位）`;
 
-  function buildAreaRows() {
-    return ROSTER_AREAS.map(area => {
-      const members = sortArea(allMembers.filter(m => area.pred(m) && memberPassesFilter(m)));
+  function buildAreaRows(mode) {
+    return AREAS.map(area => {
+      const members = sortArea(allMembers.filter(m => m.area === area.name));
       const chips = members.map(m => {
         const idx = allMembers.indexOf(m);
-        const chipClass = m.attend ? 'roster-name-chip attend-on' : 'roster-name-chip';
-        const roleLabel = `<span style="font-size:0.62rem;opacity:0.72;margin-left:3px;">${m.role}</span>`;
-        return `<span class="${chipClass}" onclick="toggleAttendIdx(${idx})">${m.name}${roleLabel}</span>`;
+        const isOn = m.attend;
+        const baseClass = 'roster-name-chip';
+        const onClass   = 'attend-on';
+        const chipClass = isOn ? `${baseClass} ${onClass}` : baseClass;
+        let onclick = '';
+        if (deleteMode || globalEditMode) {
+          onclick = `onclick="deleteMember(${idx})"`;
+        } else {
+          onclick = `onclick="toggleAttendIdx(${idx})"`;
+        }
+        let chipStyle = '';
+        if (deleteMode || globalEditMode) {
+          chipStyle = 'border-color:#c0392b;color:#c0392b;';
+        }
+        const roleLabel = m.role === '學員'
+          ? `<span style="font-size:0.62rem;opacity:0.72;margin-left:3px;">學員</span>`
+          : `<span style="font-size:0.62rem;opacity:0.72;margin-left:3px;">${m.role}</span>`;
+        return `<span class="${chipClass}" style="${chipStyle}" ${onclick}>${m.name}${roleLabel}</span>`;
       }).join('');
       return `<div class="roster-area-label">${area.name}</div>` +
-             `<div class="roster-names-cell">${chips || '<span style="color:var(--muted);font-size:0.8rem;">（無）</span>'}</div>`;
+             `<div class="roster-names-cell">${chips || '<span style=\"color:var(--muted);font-size:0.8rem;\">（無）</span>'}</div>`;
     }).join('');
   }
 
@@ -1238,10 +1777,10 @@ function renderMembers() {
     `<div class="roster-panels">
       <div class="roster-panel">
         <div class="roster-panel-header attend">
-          <span>✅ 童蒙班參班報名<span style="font-size:0.72rem;font-weight:400;color:white;margin-left:0.3em;letter-spacing:0.02em;">（點姓名切換參班／未參）</span></span>
+          <span>✅ 童蒙班參班報名</span><span style="font-size:0.72rem;font-weight:400;color:white;margin-left:0.3em;letter-spacing:0.02em;">（請在姓名上點選代表參班）</span>
           <span class="count-pill">${attendCount} 人參班</span>
         </div>
-        <div class="roster-areas">${buildAreaRows()}</div>
+        <div class="roster-areas">${buildAreaRows('attend')}</div>
       </div>
     </div>`;
 }
@@ -1250,7 +1789,84 @@ function toggleAttendIdx(idx) {
   const m = allMembers[idx];
   if (!m) return;
   m.attend = !m.attend;
+  saveData(); syncAll(); renderMembers();
+}
+
+function editArea(no, area) {
+  const m = allMembers.find(x => x.no === no+1);
+  if (!m) return;
+  m.area = area;
+  m.code = areaCodeMap[area] || m.code;
   saveData();
+  renderMembers();
+}
+
+function editField(no, field, value) {
+  const m = allMembers.find(x => x.no === no+1);
+  if (!m) return;
+  if (field === 'familyOrder') m.familyOrder = parseInt(value, 10) || 1;
+  else m[field] = value;
+  saveData();
+  syncAll();
+}
+
+function renameMember(no, newName) {
+  const m = allMembers.find(x => x.no === no+1);
+  if (!m) return;
+  const oldName = m.name;
+  m.name = newName;
+  if (m.family === oldName) m.family = newName;
+  allMembers.forEach(x => { if (x.family === oldName) x.family = newName; });
+  saveData();
+  syncAll();
+}
+
+function renameFamily(no, newFamily) {
+  const m = allMembers.find(x => x.no === no+1);
+  if (!m) return;
+  m.family = newFamily;
+  saveData();
+  syncAll();
+}
+
+function deleteMember(no) {
+  const idx = allMembers.findIndex(x => x.no === no+1);
+  if (idx === -1) return;
+  const name = allMembers[idx].name;
+  const pwd = prompt(`請輸入密碼以刪除「${name}」：`);
+  if (pwd === null) return;
+  if (pwd !== 'amos6438') { alert('密碼錯誤，無法刪除。'); return; }
+  allMembers.splice(idx, 1);
+  allMembers.forEach((m, i) => m.no = i + 1);
+  saveData();
+  renderMembers();
+  syncAll();
+}
+
+function resetAllAttend() {
+  if (!confirm('確定要將所有人的參班設為未參，並清除備餐人員、不要便當名單嗎？\n（「出席記錄」分頁的月份勾選將保留。）')) return;
+  for (var i = 0; i < allMembers.length; i++) {
+    allMembers[i].attend = false;
+  }
+  var el1 = document.getElementById('meal-staff-names');
+  var el2 = document.getElementById('no-bento-names');
+  var el3 = document.getElementById('no-bento-validate');
+  var el4 = document.getElementById('no-bento-note');
+  if (el1) el1.value = '';
+  if (el2) el2.value = '';
+  if (el3) el3.innerHTML = '';
+  if (el4) el4.textContent = '';
+  saveData();
+  syncAll();
+  renderMembers();
+  if (document.getElementById('page-record')?.classList.contains('active')) renderRecord();
+}
+
+function toggleAttend(idx, btn) {
+  allMembers[idx].attend = !allMembers[idx].attend;
+  const m = allMembers[idx];
+  btn.className = 'toggle-btn ' + (m.attend ? 'on-attend' : 'off-attend');
+  btn.textContent = m.attend ? '✓ 參班' : '— 未參';
   syncAll();
   renderMembers();
 }
@@ -1276,11 +1892,9 @@ const areaDefs = [
 
 function updateDashboard() {
   const attending = allMembers.filter(m => m.attend);
-
   const bentoTotal = calcBentoTotal();
   document.getElementById('dash-total').textContent  = allMembers.length;
   document.getElementById('dash-attend').textContent = attending.length;
-
   document.getElementById('dash-bento').textContent  = bentoTotal;
 
   // area cards
@@ -1376,13 +1990,11 @@ function renderAttendGrid() {
   roles.forEach(r => {
     const rowTotal = codes.reduce((s,c) => s + attending.filter(m=>m.role===r.role&&m.code===c).length, 0);
     if (rowTotal === 0) return; // 跳過無人的職位
-    html += `<tr><td class="row-label ${r.cls}">
-    <span style="display:inline-block;width:3.5em;text-align:justify;text-align-last:justify;">${r.label}</span>
-  </td>`;
+    html += `<tr><td class="row-label ${r.cls}"><span style="display:inline-block;width:3.5em;text-align:justify;text-align-last:justify;">${r.label}</span></td>`;
     codes.forEach(c => {
       const allNames = attending.filter(m=>m.role===r.role&&m.code===c);
-      const males   = allNames.filter(m=>m.gender==='乾道').map(m=>m.name);
-      const females = allNames.filter(m=>m.gender==='坤道').map(m=>m.name);
+      const males   = allNames.filter(m=>m.gender==='乾道').sort(compareBirthdate).map(m=>m.name);
+      const females = allNames.filter(m=>m.gender==='坤道').sort(compareBirthdate).map(m=>m.name);
       const renderGroup = (arr, color) => arr.map((n, i) => {
         const sep = i < arr.length - 1 ? '、' : '';
         const br  = (i + 1) % 3 === 0 && i < arr.length - 1 ? '<br>' : '';
@@ -1401,38 +2013,81 @@ function renderAttendGrid() {
 
   // 合計行
   const grand = codes.reduce((s,c) => s + attending.filter(m=>m.code===c).length, 0);
-  html += `<tr><td class="row-label dark">
-    <span style="display:inline-block;width:3.5em;text-align:justify;text-align-last:justify;">人員合計</span>
-  </td>`;
+  html += `<tr><td class="row-label dark"><span style="display:inline-block;width:3.5em;text-align:justify;text-align-last:justify;">人員合計</span></td>`;
   codes.forEach(c => {
     html += `<td class="grand-total">${attending.filter(m=>m.code===c).length}</td>`;
   });
   html += `<td class="grand-total">${grand}</td></tr>`;
 
   document.getElementById('attend-grid-tbody').innerHTML = html;
-
 }
-
 
 // ══════════════════════════════════════════
 // BENTO
 // ══════════════════════════════════════════
 const bentoCountColors = ['','two','three','four'];
 let bentoFilter = 'all';
+let _cachedAreaText = '';
+let _cachedAreaBg = 'var(--gold)';
+
+/** 解析備餐輸入：回傳供便當計算用的 staffGroups。 */
+function parseMealStaffInput(raw) {
+  const staffGroups = [];
+  const s = (raw || '').trim();
+  if (!s) return { staffGroups };
+  s.split(/[、，,\n]/).map(x => x.trim()).filter(x => x.length > 0).forEach(seg => {
+    const staffNamesOnly = seg.split(/[+＋]/).map(n => n.trim()).filter(n => n.length > 0);
+    if (staffNamesOnly.length === 0) return;
+    staffGroups.push({
+      names: staffNamesOnly,
+      bentoCnt: staffNamesOnly.length,
+      isPlus: staffNamesOnly.length > 1
+    });
+  });
+  return { staffGroups };
+}
+
+function calcBentoList() {
+  const familyMap = {};
+  allMembers.filter(m=>m.attend).forEach(m => {
+    if (!familyMap[m.family]) familyMap[m.family] = [];
+    familyMap[m.family].push(m.name);
+  });
+  return Object.entries(familyMap)
+    .map(([family, names]) => {
+      const getMember = name => allMembers.find(m => m.name === name);
+      const sortFn = (a, b) => {
+        const ma = getMember(a), mb = getMember(b);
+        const oa = ma?.familyOrder ?? 99, ob = mb?.familyOrder ?? 99;
+        if (oa !== ob) return oa - ob;
+        return ma && mb ? compareBirthdate(ma, mb) : (ma?.no ?? 9999) - (mb?.no ?? 9999);
+      };
+      const reordered = [...names].sort(sortFn);
+      return {family, names: reordered, count: reordered.length};
+    })
+    .sort((a,b) => {
+      if (a.count !== b.count) return a.count - b.count;
+      const familyIdx = {};
+      allMembers.forEach((m, i) => { if (!(m.family in familyIdx)) familyIdx[m.family] = i; });
+      const ia = familyIdx[a.family] ?? 9999;
+      const ib = familyIdx[b.family] ?? 9999;
+      return ia - ib;
+    })
+    .map((e,i) => ({no:i+1, family:e.family, receiver:e.names[0], count:e.count, members:e.names.join('、')}));
+}
 
 function calcBentoTotal() {
-  const attending = allMembers.filter(m => m.attend);
-  const famMap = {};
-  attending.forEach(m => { famMap[m.family] = (famMap[m.family] || 0) + 1; });
-  const bentoBase = Object.values(famMap).reduce((s, n) => s + n, 0);
+  const noBentoEl = document.getElementById('no-bento-names');
+  const rawNoBento = noBentoEl ? noBentoEl.value : '';
+  const noBentoNames = rawNoBento.split(/[、，,\n]/).map(n => n.trim()).filter(n => n.length > 0);
   const rawStaff = (document.getElementById('meal-staff-names')?.value || '').trim();
-  let staffTotal = 0;
-  if (rawStaff) {
-    rawStaff.split(/[、，,\n]/).map(s => s.trim()).filter(s => s.length > 0).forEach(seg => {
-      const parts = seg.split(/[+＋]/).filter(n => n.trim().length > 0);
-      staffTotal += Math.max(1, parts.length);
-    });
-  }
+  const { staffGroups } = parseMealStaffInput(rawStaff);
+  const famMap = {};
+  allMembers.filter(m => m.attend && !noBentoNames.includes(m.name)).forEach(m => {
+    famMap[m.family] = (famMap[m.family] || 0) + 1;
+  });
+  const bentoBase = Object.values(famMap).reduce((s, n) => s + n, 0);
+  const staffTotal = staffGroups.reduce((s, g) => s + g.bentoCnt, 0);
   return bentoBase + staffTotal;
 }
 
@@ -1467,9 +2122,6 @@ function exportBentoImage(btn) {
     // 篩選按鈕在圖片中無作用，移除
     const filterBar = clone.querySelector('#bento-filter-bar');
     if (filterBar) filterBar.remove();
-
-    // 「確認並過濾名單」按鈕在圖片中無作用，移除
-    clone.querySelectorAll('button').forEach(b => b.remove());
 
     // textarea 的即時輸入值不會被 cloneNode 帶入，改用純文字呈現
     const staffTextarea = document.getElementById('meal-staff-names');
@@ -1528,20 +2180,26 @@ function exportBentoImage(btn) {
 function renderBento() {
   saveData();
 
+  // 括號內成員：先依職位（資輔→家長→學輔→小學輔→學員），再依長幼 familyOrder，同序則依名單 no
+  const _bentoRoleOrd = { '資輔': 0, '家長': 1, '學輔': 2, '小學輔': 3, '學員': 4 };
   function sortFamilyMembers(names) {
     const getMember = n => allMembers.find(m => m.name === n);
     return [...names].sort((a, b) => {
       const ma = getMember(a), mb = getMember(b);
+      const ra = _bentoRoleOrd[ma?.role] ?? 9, rb = _bentoRoleOrd[mb?.role] ?? 9;
+      if (ra !== rb) return ra - rb;
       const oa = ma?.familyOrder ?? 99, ob = mb?.familyOrder ?? 99;
       if (oa !== ob) return oa - ob;
-      return (ma?.no ?? 9999) - (mb?.no ?? 9999);
+      return ma && mb ? compareBirthdate(ma, mb) : (ma?.no ?? 9999) - (mb?.no ?? 9999);
     });
   }
 
+  // ── 取得不要便當名單（即時解析，不需按鈕）──
   const noBentoEl = document.getElementById('no-bento-names');
   const rawNoBento = noBentoEl ? noBentoEl.value : '';
   const noBentoNames = rawNoBento.split(/[、，,\n]/).map(n => n.trim()).filter(n => n.length > 0);
 
+  // 即時驗證不要便當名單
   const noBentoValidateEl = document.getElementById('no-bento-validate');
   if (noBentoValidateEl && noBentoNames.length > 0) {
     const nbNotFound  = noBentoNames.filter(n => !allMembers.find(m => m.name === n));
@@ -1556,60 +2214,78 @@ function renderBento() {
     noBentoValidateEl.innerHTML = '';
   }
 
+  // ── 解析備餐 ──
   const rawStaffInput = (document.getElementById('meal-staff-names')?.value || '').trim();
-  const staffGroups = [];
-  if (rawStaffInput) {
-    rawStaffInput.split(/[、，,\n]/).map(s => s.trim()).filter(s => s.length > 0).forEach(seg => {
-      const parts = seg.split(/[+＋]/).map(n => n.trim()).filter(n => n.length > 0);
-      if (parts.length > 0) staffGroups.push({ names: parts, bentoCnt: parts.length, isPlus: parts.length > 1 });
-    });
-  }
+  const { staffGroups } = parseMealStaffInput(rawStaffInput);
 
-  const staffRosterMap = {};
+  // 備餐人員分類：
+  // A. 在名單中 + 家庭有人參班 → 加入對應家庭的便當行（以家庭參班人數決定幾個便當），不另計便當
+  // B. 在名單中 + 無人參班  → 放到1個便當行末「備餐：xxx」，計1個便當
+  // C. 不在名單中（單名）    → 放到1個便當行末「備餐：xxx」，計1個便當
+  // D. ＋分組               → 放到對應便當數行末「備餐：xxx」，計N個便當
+
+  // staffRosterMap: { staffName -> familyKey } 只含 A 類
+  const staffRosterMap = {}; // staffName -> family
+  // staffSingleDisplay: B+C 類名字（放1個便當行末）
   const staffSingleDisplay = [];
+  // staffPlusGroups: D 類 [{names, bentoCnt}]
   const staffPlusGroups = [];
+
   let staffTotalBento = 0;
 
   staffGroups.forEach(grp => {
     if (grp.isPlus) {
+      // D 類
       staffPlusGroups.push(grp);
       staffTotalBento += grp.bentoCnt;
     } else {
       const name = grp.names[0];
       const inRoster = allMembers.find(m => m.name === name);
       if (inRoster) {
+        // 看家庭是否有人參班（不含不要便當）
         const famAttend = allMembers.filter(m =>
-          m.family === inRoster.family && m.attend && !noBentoNames.includes(m.name)
+          m.family === inRoster.family && m.attend && !noBentoNames.includes(m.name) && m.name !== name
         );
         if (famAttend.length > 0) {
+          // A 類：加入家庭行，不另計便當
           staffRosterMap[name] = inRoster.family;
-          staffTotalBento += 1;
+          // 不加 staffTotalBento，因為便當數已包含在家庭行（此備餐人屬於同家庭）
+          staffTotalBento += 1; // 備餐人員本人需1個便當
         } else {
+          // B 類：家庭無人參班
           staffSingleDisplay.push(name);
           staffTotalBento += 1;
         }
       } else {
+        // C 類
         staffSingleDisplay.push(name);
         staffTotalBento += 1;
       }
     }
   });
 
+  // ── 建立便當明細（含備餐A類：家庭便當數+1）──
+  // 每個家庭的便當數 = 參班人數（不含不要便當、不含備餐人員）+ A類備餐人數
+  const allStaffNames = new Set(Object.keys(staffRosterMap).concat(staffSingleDisplay));
+  staffPlusGroups.forEach(g => g.names.forEach(n => allStaffNames.add(n)));
   const familyMap = {};
-  allMembers.filter(m => m.attend && !noBentoNames.includes(m.name)).forEach(m => {
+  allMembers.filter(m => m.attend && !noBentoNames.includes(m.name) && !allStaffNames.has(m.name)).forEach(m => {
     if (!familyMap[m.family]) familyMap[m.family] = { members: [], staffNames: [] };
     familyMap[m.family].members.push(m.name);
   });
+  // 把 A 類備餐加入對應家庭
   Object.entries(staffRosterMap).forEach(([staffName, family]) => {
     if (!familyMap[family]) familyMap[family] = { members: [], staffNames: [] };
     familyMap[family].staffNames.push(staffName);
   });
 
+  // 建構家庭名字在 allMembers 中第一次出現的順序索引（用於排序）
   const familyFirstIndex = {};
   allMembers.forEach((m, i) => {
     if (!(m.family in familyFirstIndex)) familyFirstIndex[m.family] = i;
   });
 
+  // 建構每筆資料
   const allData = Object.entries(familyMap)
     .filter(([, v]) => v.members.length > 0 || v.staffNames.length > 0)
     .map(([family, v]) => {
@@ -1623,24 +2299,29 @@ function renderBento() {
     })
     .sort((a, b) => {
       if (a.count !== b.count) return a.count - b.count;
+      // 同份數（2個以上）：依家庭名字在人員名單中的出現順序排列
       const ia = familyFirstIndex[a.family] ?? 9999;
       const ib = familyFirstIndex[b.family] ?? 9999;
       return ia - ib;
     });
 
-  const allCounts = [...new Set(allData.map(b=>b.count))].sort((a,b)=>a-b);
+  const staffOnlyCounts = new Set();
+  if (staffSingleDisplay.length) staffOnlyCounts.add(1);
+  staffPlusGroups.forEach(g => staffOnlyCounts.add(g.bentoCnt));
+  const allCounts = [...new Set([...allData.map(b => b.count), ...staffOnlyCounts])].sort((a, b) => a - b);
 
   // ── 動態篩選按鈕 ──
   const filterBar = document.getElementById('bento-filter-bar');
   if (filterBar) {
     filterBar.innerHTML =
-      `<button class="filter-btn ${bentoFilter==='all'?'active':''}" onclick="filterBento('all',this)">全部</button>` +
-      allCounts.map(c => `<button class="filter-btn ${bentoFilter===String(c)?'active':''}" onclick="filterBento('${c}',this)">${c}份</button>`).join('');
+      `<button class="filter-btn ${bentoFilter === 'all' ? 'active' : ''}" onclick="filterBento('all',this)">全部</button>` +
+      allCounts.map(c => `<button class="filter-btn ${bentoFilter === String(c) ? 'active' : ''}" onclick="filterBento('${c}',this)">${c}份</button>`).join('');
   }
 
   let data = allData;
   if (bentoFilter !== 'all') data = data.filter(b => b.count === Number(bentoFilter));
 
+  // ── 分組 ──
   const countGroups = {};
   allData.forEach(b => {
     if (!countGroups[b.count]) countGroups[b.count] = [];
@@ -1648,28 +2329,48 @@ function renderBento() {
   });
 
   const receiverColor = 'var(--teal)';
-  const multiCounts = [...new Set(allData.filter(b => b.count > 1).map(b => b.count))].sort((a, b) => a - b);
+  const multiCounts = [...new Set([
+    ...allData.filter(b => b.count > 1).map(b => b.count),
+    ...staffPlusGroups.filter(g => g.bentoCnt > 1).map(g => g.bentoCnt)
+  ])].sort((a, b) => a - b);
   const oneGroup = countGroups[1] || [];
 
+  // ── 小計（基礎：僅計參班，不含備餐）──
+  // 參班人員便當小計 = 以實際參班人數為準，不含備餐
   const attendOnlyFamilyMap = {};
   allMembers.filter(m => m.attend && !noBentoNames.includes(m.name)).forEach(m => {
     attendOnlyFamilyMap[m.family] = (attendOnlyFamilyMap[m.family] || 0) + 1;
   });
+  const baseTotal = Object.values(attendOnlyFamilyMap).reduce((s, cnt) => s + cnt, 0);
+
+  // 各「N個便當」份數：與便當表列一致（含 A 類已併入家庭列；另加 B/C/D 類備餐）
   const subtotalByCount = {};
-  Object.values(attendOnlyFamilyMap).forEach(cnt => {
-    subtotalByCount[cnt] = (subtotalByCount[cnt] || 0) + 1;
+  allData.forEach(b => {
+    subtotalByCount[b.count] = (subtotalByCount[b.count] || 0) + 1;
   });
-  const baseTotal = Object.entries(subtotalByCount).reduce((s, [c, n]) => s + Number(c) * n, 0);
+  staffSingleDisplay.forEach(() => {
+    subtotalByCount[1] = (subtotalByCount[1] || 0) + 1;
+  });
+  staffPlusGroups.forEach(grp => {
+    subtotalByCount[grp.bentoCnt] = (subtotalByCount[grp.bentoCnt] || 0) + 1;
+  });
 
   let rows = [];
 
+  // ── 1個便當行 ──
   // 排列順序：乾資輔→乾家長→乾學輔→乾小學輔→乾學員，坤換行坤同
   const _roleOrder1 = { '資輔': 0, '家長': 1, '學輔': 2, '小學輔': 3, '學員': 4 };
-  if (oneGroup.length && (bentoFilter === 'all' || bentoFilter === '1')) {
+  if ((oneGroup.length || staffSingleDisplay.length) && (bentoFilter === 'all' || bentoFilter === '1')) {
     const _getRole1 = b => allMembers.find(m => m.name === b.receiver)?.role;
+    // 吉男為課程負責人，便當分配表名單永遠排在第一位，不受年齡（出生日期）排序影響
     const _sortOne = (a, b) => {
+      if (a.receiver === '吉男') return -1;
+      if (b.receiver === '吉男') return 1;
       const ra = _roleOrder1[_getRole1(a)] ?? 9, rb = _roleOrder1[_getRole1(b)] ?? 9;
       if (ra !== rb) return ra - rb;
+      const ma = allMembers.find(m => m.name === a.receiver);
+      const mb = allMembers.find(m => m.name === b.receiver);
+      if (ma && mb) return compareBirthdate(ma, mb);
       const ia = familyFirstIndex[a.family] ?? 9999;
       const ib = familyFirstIndex[b.family] ?? 9999;
       return ia - ib;
@@ -1685,6 +2386,7 @@ function renderBento() {
     if (oneMales.length)   nameStr += renderOne(oneMales);
     if (oneMales.length && oneFemales.length) nameStr += '<br>';
     if (oneFemales.length) nameStr += renderOne(oneFemales);
+    // B+C類備餐放1個便當行末
     if (staffSingleDisplay.length) {
       nameStr += (nameStr ? '<br>' : '') +
         `<span style="color:#8B6914;font-size:0.82rem;font-style:italic;">備餐：${staffSingleDisplay.join('、')}</span>`;
@@ -1696,13 +2398,22 @@ function renderBento() {
     </tr>`);
   }
 
+  // ── 2個以上便當行 ──
+  const _roleOrderM = { '資輔': 0, '家長': 0, '學輔': 1, '小學輔': 2, '學員': 3 };
   multiCounts.forEach(cnt => {
     const group = countGroups[cnt] || [];
-    if (!group.length) return;
+    const plusForCnt = staffPlusGroups.filter(g => g.bentoCnt === cnt);
+    if (!group.length && !plusForCnt.length) return;
     if (bentoFilter !== 'all' && Number(cnt) !== Number(bentoFilter)) return;
     const cls = bentoCountColors[cnt - 1] || 'two';
 
+    // 吉男為課程負責人，便當分配表名單永遠排在第一位，不受年齡（出生日期）排序影響
     const _sortM = (a, b) => {
+      if (a.receiver === '吉男') return -1;
+      if (b.receiver === '吉男') return 1;
+      const ma = allMembers.find(m => m.name === a.receiver);
+      const mb = allMembers.find(m => m.name === b.receiver);
+      if (ma && mb) return compareBirthdate(ma, mb);
       const ia = familyFirstIndex[a.family] ?? 9999;
       const ib = familyFirstIndex[b.family] ?? 9999;
       return ia - ib;
@@ -1715,6 +2426,7 @@ function renderBento() {
     const femaleGroups = group.filter(b => getGender(b) !== '乾道').sort(_sortM);
 
     const renderGroup = g => g.map((b, i) => {
+      // 括號內：除領取人外的成員（已按名單順序排列），備餐人放最後並加標籤
       const otherMembers = b.membersArr.filter(n => n !== b.receiver && !b.staffInFamily.includes(n));
       const staffLabels = b.staffInFamily.map(n =>
         `${n}<span style="font-size:0.68rem;background:#fef3c7;color:#92400e;border:1px solid #fcd34d;border-radius:3px;padding:0 3px;margin-left:2px;vertical-align:middle;">備餐</span>`
@@ -1733,7 +2445,7 @@ function renderBento() {
     if (maleGroups.length && femaleGroups.length) nameStr += '<br>';
     if (femaleGroups.length) nameStr += renderGroup(femaleGroups);
 
-    const plusForCnt = staffPlusGroups.filter(g => g.bentoCnt === cnt);
+    // D類（＋分組）備餐放對應便當數行末
     plusForCnt.forEach(grp => {
       nameStr += (nameStr ? '<br>' : '') +
         `<span style="color:#8B6914;font-size:0.82rem;font-style:italic;">備餐：${grp.names.join('、')}</span>`;
@@ -1748,6 +2460,7 @@ function renderBento() {
 
   document.getElementById('bento-tbody').innerHTML = rows.join('');
 
+  // ── 小計：各份數顯示（已含備餐對應份數），備餐總個數另列 ──
   const parts = Object.entries(subtotalByCount).sort(([a], [b]) => Number(a) - Number(b))
     .map(([c, n]) =>
       `<div class="subtotal-item"><span class="subtotal-label" style="font-size:1rem;font-weight:700;color:var(--ink);">${c}個便當：</span><span class="subtotal-num" style="font-size:1.4rem;">${n}</span><span class="subtotal-label" style="font-size:1rem;">份</span></div>`
@@ -1764,6 +2477,7 @@ function renderBento() {
     ${bentoFilter !== 'all' ? '<span style="font-size:0.75rem;color:var(--muted);">（篩選結果）</span>' : ''}
   `;
 
+  // ── 更新備餐人數、總計 ──
   const staffCountEl = document.getElementById('meal-staff-count-display');
   if (staffCountEl) staffCountEl.textContent = staffTotalBento;
   const subtotalStaffEl = document.getElementById('bento-subtotal-staff');
@@ -1772,23 +2486,27 @@ function renderBento() {
   const grandEl = document.getElementById('bento-grand-total');
   if (grandEl) grandEl.textContent = grandTotal;
 
+  // ── 同步儀表板 ──
   const dashBento = document.getElementById('dash-bento');
   if (dashBento) dashBento.textContent = grandTotal;
 
+  // ── 同步本月負責橢圓 ──
   const _subBadge = document.getElementById('bento-area-badge-sub');
   if (_subBadge && _cachedAreaText) {
     _subBadge.textContent = _cachedAreaText;
     _subBadge.style.background = _cachedAreaBg;
   }
 
+  // ── 不要便當統計 ──
   const noBentoCountEl = document.getElementById('no-bento-count-display');
   if (noBentoCountEl) noBentoCountEl.textContent = noBentoNames.length;
 
+  // ── 不要便當分類說明 ──
   const noBentoNote = document.getElementById('no-bento-note');
   if (noBentoNote) {
-    noBentoNote.textContent = noBentoNames.length > 0
-      ? `便當明細移除：${noBentoNames.join('、')}`
-      : '';
+    let notes = [];
+    if (noBentoNames.length > 0)  notes.push(`便當明細移除：${noBentoNames.join('、')}`);
+    noBentoNote.textContent = notes.length ? notes.join('　') : '';
   }
 }
 
@@ -1814,35 +2532,23 @@ function confirmNoBento() {
 
   let html = '';
   if (notFound.length) {
-    html += '<div style="font-size:0.78rem;color:#c0392b;font-weight:700;">❌ 姓名有誤（不在人員名單）：' + notFound.map(n=>'<span style="background:#ffd0d0;padding:1px 6px;border-radius:4px;">'+n+'</span>').join(' ') + '</div>';
+    html += '<div style="font-size:0.78rem;color:#c0392b;font-weight:700;">\u274c \u59d3\u540d\u6709\u8aa4\uff08\u4e0d\u5728\u4eba\u54e1\u540d\u55ae\uff09\uff1a' + notFound.map(n=>'<span style="background:#ffd0d0;padding:1px 6px;border-radius:4px;">'+n+'</span>').join(' ') + '</div>';
   }
   if (notAttend.length) {
-    html += '<div style="font-size:0.78rem;color:#e65100;font-weight:700;margin-top:4px;">⚠️ 未參加本次活動，不列入：' + notAttend.map(n=>'<span style="background:#ffe0cc;padding:1px 6px;border-radius:4px;">'+n+'</span>').join(' ') + '</div>';
+    html += '<div style="font-size:0.78rem;color:#e65100;font-weight:700;margin-top:4px;">\u26a0\ufe0f \u672a\u53c3\u52a0\u672c\u6b21\u6d3b\u52d5\uff0c\u4e0d\u5217\u5165\uff1a' + notAttend.map(n=>'<span style="background:#ffe0cc;padding:1px 6px;border-radius:4px;">'+n+'</span>').join(' ') + '</div>';
   }
   if (valid.length) {
-    html += '<div style="font-size:0.78rem;color:#1e7e5e;font-weight:700;margin-top:4px;">✅ 已確認不要便當：' + valid.map(n=>'<span style="background:#d0f0e0;padding:1px 6px;border-radius:4px;">'+n+'</span>').join(' ') + '</div>';
+    html += '<div style="font-size:0.78rem;color:#1e7e5e;font-weight:700;margin-top:4px;">\u2705 \u5df2\u78ba\u8a8d\u4e0d\u8981\u4fbf\u7576\uff1a' + valid.map(n=>'<span style="background:#d0f0e0;padding:1px 6px;border-radius:4px;">'+n+'</span>').join(' ') + '</div>';
   }
   if (!inputs.length) html = '';
   if (validateEl) validateEl.innerHTML = html;
 
   if (el && (notFound.length || notAttend.length)) {
-    el.value = valid.join('、');
+    el.value = valid.join('\u3001');
   }
 
   saveData();
   renderBento();
-}
-
-function confirmClearAll() {
-  if (!confirm('確定要清除本次所有參班紀錄，以及備餐人員便當和不要便當名單嗎？\n「出席記錄」分頁的月份勾選將保留。\n此操作無法復原。')) return;
-  allMembers.forEach(m => { m.attend = false; });
-  const ms = document.getElementById('meal-staff-names'); if (ms) ms.value = '';
-  const nb = document.getElementById('no-bento-names'); if (nb) nb.value = '';
-  const nv = document.getElementById('no-bento-validate'); if (nv) nv.innerHTML = '';
-  const nn = document.getElementById('no-bento-note'); if (nn) nn.textContent = '';
-  saveData(); renderMembers(); syncAll();
-  if (document.getElementById('page-record')?.classList.contains('active')) renderRecord();
-  alert('已清除本次參班紀錄及便當名單！');
 }
 
 function filterBento(f) { bentoFilter = f; renderBento(); }
@@ -1852,36 +2558,75 @@ function filterBento(f) { bentoFilter = f; renderBento(); }
 // ADD MEMBER
 // ══════════════════════════════════════════
 const areaCodeMap = {
-  '台中': '1-1', '太平': '1-3', '坪林': '1-4', '嘉義': '2-1', '斗六': '2-3'
+  '台中':'1-1','太平':'1-3','坪林':'1-4','嘉義':'2-1','斗六':'2-3'
 };
 
-let manageMode = '';
-
-function goToManagePage() {
-  const btn = document.getElementById('nav-manage');
-  if (btn) showPage('manage', btn);
+function openAddMember() {
+  document.getElementById('add-member-modal').classList.add('open');
+  document.getElementById('new-name').focus();
 }
 
+function closeAddMember() {
+  document.getElementById('add-member-modal').classList.remove('open');
+  document.getElementById('new-name').value = '';
+  document.getElementById('new-family').value = '';
+}
+
+function updateCodeOptions() {
+  const area = document.getElementById('new-area').value;
+  const code = areaCodeMap[area] || '1-1';
+  document.getElementById('new-code').value = code;
+}
+
+function confirmAddMember() {
+  const name = document.getElementById('new-name').value.trim();
+  if (!name) { alert('請輸入姓名'); return; }
+  const family = document.getElementById('new-family').value.trim() || name;
+  const newMember = {
+    no: allMembers.length + 1,
+    role:   document.getElementById('new-role').value,
+    gender: document.getElementById('new-gender').value,
+    area:   document.getElementById('new-area').value,
+    code:   document.getElementById('new-code').value,
+    name, family,
+    familyOrder: parseInt(document.getElementById('new-family-order').value, 10) || 1,
+    attend: false
+  };
+  allMembers.push(newMember);
+  allMembers.forEach((m, i) => m.no = i + 1);
+  saveData();
+  syncAll();
+  renderMembers();
+  closeAddMember();
+}
+
+
+// ══════════════════════════════════════════
+// MANAGE PAGE
+// ══════════════════════════════════════════
+let manageMode = ''; // 'edit' or 'delete'
+
 function renderManagePage() {
+  // 重置狀態，只顯示功能按鈕區
   manageMode = '';
   const rosterWrap = document.getElementById('manage-roster-wrap');
   const buttonsWrap = document.getElementById('manage-buttons-wrap');
   if (rosterWrap) rosterWrap.style.display = 'none';
-  if (buttonsWrap) buttonsWrap.style.display = 'block';
+  if (buttonsWrap) buttonsWrap.style.display = 'flex';
   const editBtn = document.getElementById('manage-edit-btn');
   const delBtn  = document.getElementById('manage-delete-btn');
-  if (editBtn) { editBtn.style.background = '#1565c0'; editBtn.textContent = '✏️ 修改人員'; }
-  if (delBtn)  { delBtn.style.background  = '#c0392b'; delBtn.textContent  = '🗑 刪除人員'; }
+  if (editBtn) { editBtn.style.background = 'var(--teal)'; editBtn.textContent = '✏️ 修改人員'; }
+  if (delBtn)  { delBtn.style.background  = '#c0392b';     delBtn.textContent  = '🗑 刪除人員'; }
 }
 
 function startManageMode(mode) {
   manageMode = mode;
-  const rosterWrap    = document.getElementById('manage-roster-wrap');
-  const modeBar       = document.getElementById('manage-mode-bar');
-  const modeLabel     = document.getElementById('manage-mode-label');
+  const rosterWrap   = document.getElementById('manage-roster-wrap');
+  const modeBar      = document.getElementById('manage-mode-bar');
+  const modeLabel    = document.getElementById('manage-mode-label');
   const rosterContent = document.getElementById('manage-roster-content');
-  if (!rosterWrap || !rosterContent) return;
 
+  // 更新提示列樣式與文字
   if (mode === 'edit') {
     modeBar.style.background = '#e8f5e9';
     modeBar.style.borderColor = 'var(--green)';
@@ -1908,15 +2653,19 @@ function exitManageMode() {
   if (rosterWrap) rosterWrap.style.display = 'none';
   const editBtn = document.getElementById('manage-edit-btn');
   const delBtn  = document.getElementById('manage-delete-btn');
-  if (editBtn) { editBtn.style.background = '#1565c0'; editBtn.textContent = '✏️ 修改人員'; }
-  if (delBtn)  { delBtn.style.background  = '#c0392b'; delBtn.textContent  = '🗑 刪除人員'; }
-  reorderMemberNos();
-  saveData();
-  syncAll();
-  renderMembers();
+  if (editBtn) { editBtn.style.background = 'var(--teal)'; editBtn.textContent = '✏️ 修改人員'; }
+  if (delBtn)  { delBtn.style.background  = '#c0392b';     delBtn.textContent  = '🗑 刪除人員'; }
+  saveData(); syncAll(); renderMembers();
 }
 
 function renderManageRoster(container, mode) {
+  const AREAS = [
+    { name: '台中', code: '1-1' },
+    { name: '太平', code: '1-3' },
+    { name: '坪林', code: '1-4' },
+    { name: '嘉義', code: '2-1' },
+    { name: '斗六', code: '2-3' },
+  ];
   const roleOrder = { '資輔': 0, '學輔': 1, '小學輔': 2, '家長': 3, '學員': 4 };
   function sortArea(members) {
     return [...members].sort((a, b) => {
@@ -1924,16 +2673,17 @@ function renderManageRoster(container, mode) {
       if (ra !== rb) return ra - rb;
       const ga = a.gender === '乾道' ? 0 : 1, gb = b.gender === '乾道' ? 0 : 1;
       if (ga !== gb) return ga - gb;
-      return (a.no ?? 9999) - (b.no ?? 9999);
+      return compareBirthdate(a, b);
     });
   }
+
   const isDelete = mode === 'delete';
   const chipBorder = isDelete ? '#c0392b' : '#1565c0';
   const chipColor  = isDelete ? '#c0392b' : '#1565c0';
   const onClickFn  = isDelete ? 'manageDeleteChip' : 'manageEditChip';
 
-  const areaRows = ROSTER_AREAS.map(area => {
-    const members = sortArea(allMembers.filter(area.pred));
+  const areaRows = AREAS.map(area => {
+    const members = sortArea(allMembers.filter(m => m.area === area.name));
     const chips = members.map(m => {
       const idx = allMembers.indexOf(m);
       const roleLabel = `<span style="font-size:0.6rem;opacity:0.75;margin-left:2px;">${m.role}</span>`;
@@ -1962,41 +2712,42 @@ function manageDeleteChip(idx) {
   const pwd = prompt(`請輸入密碼以刪除「${m.name}」：`);
   if (pwd === null) return;
   if (pwd !== 'amos6438') { alert('密碼錯誤，無法刪除。'); return; }
-  if (monthlyRecord[m.name]) {
-    delete monthlyRecord[m.name];
-    saveMonthlyRecord();
-  }
   allMembers.splice(idx, 1);
-  reorderMemberNos();
-  saveData();
-  syncAll();
-  renderMembers();
+  allMembers.forEach((x, i) => x.no = i + 1);
+  saveData(); syncAll(); renderMembers();
+  // 重新渲染名單
   const rosterContent = document.getElementById('manage-roster-content');
   if (rosterContent) renderManageRoster(rosterContent, 'delete');
+  // 更新人數
+  const pill = document.querySelector('#manage-roster-content .count-pill');
+  if (pill) pill.textContent = allMembers.length + ' 人';
 }
 
 function manageEditChip(idx) {
-  if (allMembers[idx]) openEditMemberModal(idx);
+  const m = allMembers[idx];
+  if (!m) return;
+  openEditMemberModal(idx);
 }
 
+// ══ 修改人員 Modal ══
 function openEditMemberModal(idx) {
   const m = allMembers[idx];
   if (!m) return;
+  // 若已有 modal 則移除
   const existing = document.getElementById('edit-member-modal');
   if (existing) existing.remove();
 
-  const areaList = ['台中', '太平', '坪林', '嘉義', '斗六'];
-  const areaOpts = areaList.map(a =>
-    `<option value="${a}" ${m.area === a ? 'selected' : ''}>${a}</option>`).join('');
-  const codeOpts = ['1-1', '1-3', '1-4', '2-1', '2-3'].map(c =>
-    `<option value="${c}" ${m.code === c ? 'selected' : ''}>${c}</option>`).join('');
-  const roleOpts = ['小學輔', '資輔', '學輔', '學員', '家長'].map(r =>
-    `<option value="${r}" ${m.role === r ? 'selected' : ''}>${r}</option>`).join('');
-  const genderOpts = ['乾道', '坤道'].map(g =>
-    `<option value="${g}" ${m.gender === g ? 'selected' : ''}>${g}</option>`).join('');
-  const orderOpts = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => {
-    const labels = { 1: '1（爸爸／最長）', 2: '2（媽媽／次長）', 3: '3（第三）', 4: '4（第四）', 5: '5（第五）', 6: '6（第六）', 7: '7（第七）', 8: '8（第八）', 9: '9（最小）' };
-    return `<option value="${n}" ${(m.familyOrder || 1) === n ? 'selected' : ''}>${labels[n]}</option>`;
+  const areaOpts = ['台中','太平','坪林','嘉義','斗六'].map(a =>
+    `<option value="${a}" ${m.area===a?'selected':''}>${a}</option>`).join('');
+  const codeOpts = ['1-1','1-3','1-4','2-1','2-3'].map(c =>
+    `<option value="${c}" ${m.code===c?'selected':''}>${c}</option>`).join('');
+  const roleOpts = ['小學輔','資輔','學輔','學員','家長'].map(r =>
+    `<option value="${r}" ${m.role===r?'selected':''}>${r}</option>`).join('');
+  const genderOpts = ['乾道','坤道'].map(g =>
+    `<option value="${g}" ${m.gender===g?'selected':''}>${g}</option>`).join('');
+  const orderOpts = [1,2,3,4,5,6,7,8,9].map(n => {
+    const labels = {1:'1（爸爸／最長）',2:'2（媽媽／次長）',3:'3（哥哥／第三）',4:'4（姊姊／第四）',5:'5（弟弟／第五）',6:'6（妹妹／第六）',7:'7（第七）',8:'8（第八）',9:'9（最小）'};
+    return `<option value="${n}" ${(m.familyOrder||1)===n?'selected':''}>${labels[n]}</option>`;
   }).join('');
 
   const modal = document.createElement('div');
@@ -2014,8 +2765,8 @@ function openEditMemberModal(idx) {
         <div class="modal-field"><label>代號</label><select id="edit-code">${codeOpts}</select></div>
       </div>
       <div class="modal-row">
-        <div class="modal-field"><label>姓名</label><input type="text" id="edit-name" value=""></div>
-        <div class="modal-field"><label>家庭</label><input type="text" id="edit-family" value=""></div>
+        <div class="modal-field"><label>姓名</label><input type="text" id="edit-name" value="${m.name}"></div>
+        <div class="modal-field"><label>家庭</label><input type="text" id="edit-family" value="${m.family||m.name}"></div>
       </div>
       <div class="modal-row">
         <div class="modal-field" style="max-width:none;flex:1;">
@@ -2024,13 +2775,11 @@ function openEditMemberModal(idx) {
         </div>
       </div>
       <div class="modal-actions">
-        <button type="button" class="btn-cancel" onclick="document.getElementById('edit-member-modal').remove()">取消</button>
-        <button type="button" class="btn-confirm" onclick="confirmEditMember(${idx})">✔ 確認修改</button>
+        <button class="btn-cancel" onclick="document.getElementById('edit-member-modal').remove()">取消</button>
+        <button class="btn-confirm" onclick="confirmEditMember(${idx})">✔ 確認修改</button>
       </div>
     </div>`;
   document.body.appendChild(modal);
-  document.getElementById('edit-name').value = m.name;
-  document.getElementById('edit-family').value = m.family || m.name;
 }
 
 function confirmEditMember(idx) {
@@ -2046,63 +2795,294 @@ function confirmEditMember(idx) {
   m.name   = newName;
   m.family = document.getElementById('edit-family').value.trim() || newName;
   m.familyOrder = parseInt(document.getElementById('edit-family-order').value, 10) || 1;
+  // 若原本家庭等於原名，跟著改
   if (m.family === oldName && oldName !== newName) m.family = newName;
   allMembers.forEach(x => { if (x.family === oldName) x.family = newName; });
-  if (oldName !== newName && monthlyRecord[oldName]) {
-    monthlyRecord[newName] = monthlyRecord[oldName];
-    delete monthlyRecord[oldName];
-    saveMonthlyRecord();
-  }
-  reorderMemberNos();
-  saveData();
-  syncAll();
-  renderMembers();
+  saveData(); syncAll(); renderMembers();
   document.getElementById('edit-member-modal').remove();
+  // 重新渲染 manage roster
   const rosterContent = document.getElementById('manage-roster-content');
   if (rosterContent && manageMode === 'edit') renderManageRoster(rosterContent, 'edit');
 }
 
-function openAddMember() {
-  updateCodeOptions();
-  document.getElementById('add-member-modal').classList.add('open');
-  document.getElementById('new-name').focus();
-}
+// 舊的 openToolPanel/closeToolPanel 保留空函式以免報錯
+function openToolPanel() {}
+function closeToolPanel() {}
 
-function closeAddMember() {
-  document.getElementById('add-member-modal').classList.remove('open');
-  document.getElementById('new-name').value = '';
-  document.getElementById('new-family').value = '';
-  const fo = document.getElementById('new-family-order');
-  if (fo) fo.value = '1';
-}
-
-function updateCodeOptions() {
-  const area = document.getElementById('new-area').value;
-  const code = areaCodeMap[area] || '1-1';
-  const sel = document.getElementById('new-code');
-  if (sel) sel.innerHTML = `<option value="${code}">${code}</option>`;
-}
-
-function confirmAddMember() {
-  const name = document.getElementById('new-name').value.trim();
-  if (!name) { alert('請輸入姓名'); return; }
-  const family = document.getElementById('new-family').value.trim() || name;
-  const newMember = {
-    no: allMembers.length + 1,
-    role:   document.getElementById('new-role').value,
-    gender: document.getElementById('new-gender').value,
-    area:   document.getElementById('new-area').value,
-    code:   document.getElementById('new-code').value,
-    name, family,
-    familyOrder: parseInt(document.getElementById('new-family-order').value, 10) || 1,
-    attend: false, noBento: false
+// Excel 匯入（參班）— 從人員名單頁呼叫，結果顯示在該頁
+function triggerExcelAttendMembers() {
+  const resultEl = document.getElementById('members-excel-result');
+  if (resultEl) resultEl.innerHTML = '';
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.xlsx,.xls,.csv';
+  input.onchange = function(e) {
+    allMembers.forEach(m => { m.attend = false; });
+    const mealEl = document.getElementById('meal-staff-names');
+    if (mealEl) mealEl.value = '';
+    const noBentoEl = document.getElementById('no-bento-names');
+    if (noBentoEl) noBentoEl.value = '';
+    saveData(); syncAll(); renderMembers();
+    handleExcelImport(e, 'attend', 'members-excel-result');
   };
-  allMembers.push(newMember);
-  reorderMemberNos();
-  saveData();
-  syncAll();
-  renderMembers();
-  closeAddMember();
+  input.click();
+}
+// Excel 匯入（參班）— 從資料輸入頁呼叫
+function triggerExcelAttend() {
+  document.getElementById('manage-photo-result').innerHTML = '';
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.xlsx,.xls,.csv';
+  input.onchange = (e) => handleExcelImport(e, 'attend', 'manage-photo-result');
+  input.click();
+}
+
+async function handleExcelImport(event, mode, resultElId) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const color = mode === 'attend' ? '#0f6e3a' : '#6a1b9a';
+  const resultEl = document.getElementById(resultElId || 'manage-photo-result');
+  resultEl.innerHTML = `<span style="color:${color};">⏳ 讀取 Excel 中，請稍候...</span>`;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: 'array' });
+
+      // 關鍵字判斷（備註欄）
+      const NO_BENTO_KEYWORDS = ['不要便當', '不要', '不用便當', '不訂便當', '不吃便當'];
+      function isNoBento(str) {
+        if (!str) return false;
+        return NO_BENTO_KEYWORDS.some(kw => String(str).includes(kw));
+      }
+
+      // 從字串中萃取可能的姓名（2~5字）
+      function extractNames(str) {
+        if (!str) return [];
+        // 清除全形空白、不換行空白、BOM 等不可見字元
+        const s = String(str).replace(/[\u3000\u00a0\ufeff]/g, ' ').trim();
+        const parts = s.split(/[\s、，,\/\n\r]+/).map(p => p.trim()).filter(p => p.length >= 2 && p.length <= 5);
+        const result = new Set(parts);
+        if (s.length >= 2 && s.length <= 5) result.add(s);
+        return [...result];
+      }
+
+      // 姓名正規化比對（去除所有空白類字元）
+      function normName(n) { return String(n).replace(/[\u3000\u00a0\ufeff\s]/g, ''); }
+
+      const MEAL_STAFF_KEYWORDS = ['備餐人員', '備餐', '備餐者'];
+      function isMealStaff(str) {
+        if (!str) return false;
+        return MEAL_STAFF_KEYWORDS.some(kw => String(str).includes(kw));
+      }
+
+      // 逐列讀取，嘗試找出姓名欄與備註欄
+      const allNames = new Set();         // 所有出現的姓名
+      const noBentoNames = new Set();     // 備註為「不要便當」的姓名
+      const mealStaffNames = new Set();   // 備註為「備餐人員」的姓名
+
+      workbook.SheetNames.forEach(sheetName => {
+        const sheet = workbook.Sheets[sheetName];
+        const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
+        if (!rows.length) return;
+
+        // 尋找標題列（含「姓名」或「備註」的列）
+        // 優先順序：整理姓名 > 姓名/名字 > 其他含「姓名」的欄位（排除「原始姓名」）
+        let nameColIdx = -1, remarkColIdx = -1, headerRowIdx = -1;
+        for (let r = 0; r < Math.min(rows.length, 6); r++) {
+          const row = rows[r];
+          let bestNameCol = -1, bestNamePriority = 99;
+          for (let c = 0; c < row.length; c++) {
+            const cell = String(row[c]).trim();
+            // 姓名欄優先順序：整理姓名(0) > 姓名/名字(1) > 其他含姓名但不含原始(2)
+            if (cell === '整理姓名' && bestNamePriority > 0) { bestNameCol = c; bestNamePriority = 0; headerRowIdx = r; }
+            else if ((cell === '姓名' || cell === '名字') && bestNamePriority > 1) { bestNameCol = c; bestNamePriority = 1; headerRowIdx = r; }
+            else if (cell.includes('姓名') && !cell.includes('原始') && bestNamePriority > 2) { bestNameCol = c; bestNamePriority = 2; headerRowIdx = r; }
+            if (cell.includes('備註') || cell.includes('說明') || cell.includes('備注') || cell === '備註事項') {
+              remarkColIdx = c;
+            }
+          }
+          if (bestNameCol >= 0) { nameColIdx = bestNameCol; break; }
+        }
+
+        // 逐列處理
+        const startRow = headerRowIdx >= 0 ? headerRowIdx + 1 : 0;
+        rows.slice(startRow).forEach(row => {
+          // 取得姓名：優先用找到的姓名欄，否則掃描整列
+          let rowNames = [];
+          if (nameColIdx >= 0 && row[nameColIdx]) {
+            rowNames = extractNames(row[nameColIdx]);
+          } else {
+            // 沒有標題欄：掃描整列所有儲存格
+            row.forEach(cell => { rowNames.push(...extractNames(cell)); });
+          }
+
+          // 判斷備註欄是否含「不要便當」或「備餐人員」
+          let hasNoBento = false, hasMealStaff = false;
+          if (remarkColIdx >= 0) {
+            hasNoBento  = isNoBento(row[remarkColIdx]);
+            hasMealStaff = isMealStaff(row[remarkColIdx]);
+          } else {
+            // 沒有備註欄：掃描整列是否有任一格含關鍵字
+            hasNoBento   = row.some(cell => isNoBento(cell));
+            hasMealStaff = row.some(cell => isMealStaff(cell));
+          }
+
+          rowNames.forEach(name => {
+            allNames.add(name);
+            if (hasNoBento)   noBentoNames.add(name);
+            if (hasMealStaff) mealStaffNames.add(name);
+          });
+        });
+      });
+
+      // 比對人員名單，標記參班（備餐人員不列入參班）
+      let matched = [], notFound = [];
+      allMembers.forEach(m => {
+        const normed = normName(m.name);
+        if ([...allNames].some(n => normName(n) === normed)) {
+          // 若此人在備餐人員名單中，不勾選參班
+          const isMeal = [...mealStaffNames].some(n => normName(n) === normed);
+          if (isMeal) return;
+          m.attend = true;
+          matched.push(m.name);
+        }
+      });
+
+      // 處理不要便當：覆蓋便當頁的不要便當欄位
+      const addedNoBento = [];
+      if (noBentoNames.size > 0) {
+        const noBentoEl = document.getElementById('no-bento-names');
+        if (noBentoEl) {
+          const names = [];
+          noBentoNames.forEach(name => {
+            const matched = allMembers.find(m => normName(m.name) === normName(name));
+            if (matched) { names.push(matched.name); addedNoBento.push(matched.name); }
+          });
+          noBentoEl.value = names.join('、');
+        }
+      }
+
+      // 處理備餐人員：直接覆蓋便當頁的備餐人員欄位（不保留舊資料）
+      const addedMealStaff = [];
+      if (mealStaffNames.size > 0) {
+        const mealEl = document.getElementById('meal-staff-names');
+        if (mealEl) {
+          // 直接覆蓋，不合併，確保不會有舊版原始姓名殘留
+          const names = [...mealStaffNames];
+          mealEl.value = names.join('、');
+          addedMealStaff.push(...names);
+        }
+      }
+
+      saveData(); syncAll(); renderMembers();
+
+      // 組結果訊息
+      let html = '';
+      if (matched.length) {
+        html += `<div style="color:${color};font-weight:700;">✅ 已自動勾選參班（${matched.length} 人）：${matched.join('、')}</div>`;
+      }
+      if (addedNoBento.length) {
+        html += `<div style="color:#c0392b;font-weight:700;margin-top:4px;">🚫 已加入不要便當名單（${addedNoBento.length} 人）：${addedNoBento.join('、')}</div>`;
+      }
+      if (addedMealStaff.length) {
+        html += `<div style="color:#8B6914;font-weight:700;margin-top:4px;">🍳 已加入備餐人員名單（${addedMealStaff.length} 人）：${addedMealStaff.join('、')}</div>`;
+      }
+      if (notFound.length) {
+        const filtered = notFound.filter(n => n.length >= 2 && n.length <= 4);
+        if (filtered.length) {
+          html += `<div style="color:#9e9e9e;margin-top:4px;font-size:0.68rem;">📋 Excel 中有但不在名單：${filtered.join('、')}</div>`;
+        }
+      }
+      if (!html) {
+        html = '<div style="color:#c0392b;">❌ 未在 Excel 中找到任何名單成員，請確認檔案格式或姓名是否正確。</div>';
+      } else {
+        html += `<div style="color:var(--muted);margin-top:4px;font-size:0.68rem;">📄 已讀取：${file.name}（${workbook.SheetNames.length} 個工作表）</div>`;
+      }
+      resultEl.innerHTML = html;
+    } catch(err) {
+      resultEl.innerHTML = '<div style="color:#c0392b;">❌ 讀取失敗，請確認檔案為有效的 Excel 格式。</div>';
+      console.error(err);
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+// 舊函式保留空殼以免其他地方呼叫報錯
+function triggerPhotoAttend() { triggerExcelAttend(); }
+async function handleTpPhoto() {}
+
+// 語音辨識（整合版）
+let tpVoiceRec = null, tpVoiceActive = false, tpVoiceMode = '';
+
+function toggleTpVoice(mode) {
+  if (tpVoiceActive) { tpVoiceRec && tpVoiceRec.stop(); return; }
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    document.getElementById('tp-voice-result').innerHTML = '<div style="color:#c0392b;">❌ 此瀏覽器不支援語音辨識，請使用 Chrome。</div>';
+    return;
+  }
+  tpVoiceMode = mode;
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  tpVoiceRec = new SR();
+  tpVoiceRec.lang = 'zh-TW';
+  tpVoiceRec.continuous = true;
+  tpVoiceRec.interimResults = true;
+
+  const aBtn = document.getElementById('tp-voice-attend-btn');
+
+  tpVoiceRec.onstart = function() {
+    tpVoiceActive = true;
+    document.getElementById('tp-voice-transcript').textContent = '聆聽中...';
+    document.getElementById('tp-voice-result').innerHTML = '';
+    aBtn.style.background='#e74c3c'; document.getElementById('tp-va-icon').textContent='⏹'; document.getElementById('tp-va-text').textContent='停止錄音';
+  };
+  tpVoiceRec.onresult = function(e) {
+    let t = '';
+    for (let i = 0; i < e.results.length; i++) t += e.results[i][0].transcript;
+    document.getElementById('tp-voice-transcript').textContent = '聽到：' + t;
+  };
+  tpVoiceRec.onend = function() {
+    tpVoiceActive = false;
+    aBtn.style.background='#c0392b'; document.getElementById('tp-va-icon').textContent='🎙'; document.getElementById('tp-va-text').textContent='辨識參班';
+    const transcript = document.getElementById('tp-voice-transcript').textContent.replace('聽到：','');
+    if (!transcript || transcript === '聆聽中...') return;
+    processTpVoiceNames(transcript, mode);
+  };
+  tpVoiceRec.onerror = function(e) {
+    tpVoiceActive = false;
+    aBtn.style.background='#c0392b'; document.getElementById('tp-va-icon').textContent='🎙'; document.getElementById('tp-va-text').textContent='辨識參班';
+    document.getElementById('tp-voice-result').innerHTML = '<div style="color:#c0392b;">❌ 錄音失敗：' + e.error + '</div>';
+  };
+  tpVoiceRec.start();
+}
+
+function processTpVoiceNames(transcript, mode) {
+  const parts = transcript.split(/[、，,\s]+/).map(s => s.trim()).filter(s => s.length > 0);
+  let matched = [], notFound = [];
+  parts.forEach(name => {
+    const m = allMembers.find(x => x.name === name);
+    if (!m) { notFound.push(name); }
+    else { m.attend = true; matched.push(name); }
+  });
+  saveData(); syncAll(); renderMembers();
+  const color = '#c0392b';
+  let html = '';
+  if (matched.length) html += `<div style="color:${color};font-weight:700;">✅ 已自動勾選參班（${matched.length} 人）：${matched.join('、')}</div>`;
+  if (notFound.length)  html += `<div style="color:#c0392b;margin-top:4px;">⚠️ 未在名單中找到：${notFound.join('、')}</div>`;
+  if (!html) html = '<div style="color:#c0392b;">❌ 未辨識到任何名字，請再試一次。</div>';
+  document.getElementById('tp-voice-result').innerHTML = html;
+}
+
+let _mealStaffHintShown = false;
+function showMealStaffHint() {
+  if (_mealStaffHintShown) return;
+  _mealStaffHintShown = true;
+  document.getElementById('meal-staff-hint-modal').style.display = 'flex';
+}
+function closeMealStaffHint() {
+  document.getElementById('meal-staff-hint-modal').style.display = 'none';
+  document.getElementById('meal-staff-names').focus();
 }
 
 // ══════════════════════════════════════════
@@ -2110,10 +3090,13 @@ function confirmAddMember() {
 // ══════════════════════════════════════════
 function syncAll() {
   saveData();
+  renderBento();
   updateDashboard();
   renderAttendGrid();
-  renderBento();
   if (document.getElementById('page-record')?.classList.contains('active')) renderRecord();
+  // 人員名單（身份／乾坤／地區／新增／刪除）異動後，「學員資料」「資輔家長生日」兩頁需同步更新身份與排序
+  renderBirthdayPage();
+  renderBirthdayParentPage();
 }
 
 function showPage(id, btn) {
@@ -2121,7 +3104,12 @@ function showPage(id, btn) {
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   btn.classList.add('active');
-  if (id === 'manage') renderManagePage();
+}
+
+// 供主畫面卡片按鈕呼叫，透過對應的導覽按鈕id切換頁面
+function goToPage(id) {
+  const btn = document.getElementById('nav-btn-' + id);
+  if (btn) showPage(id, btn);
 }
 
 
@@ -2132,7 +3120,7 @@ function getThirdSunday(year, month) {
   for (let d = 1; d <= 31; d++) {
     const date = new Date(year, month - 1, d);
     if (date.getMonth() !== month - 1) break;
-    if (date.getDay() === 0) { // 0 = Sunday
+    if (date.getDay() === 0) {
       count++;
       if (count === 3) return date;
     }
@@ -2147,532 +3135,120 @@ function getCurrentThirdSunday() {
   return getThirdSunday(now.getFullYear(), now.getMonth() + 1);
 }
 
-// ══════════════════════════════════════════
-// 舊版資料面板已改為「資料輸入及編輯」分頁；保留函式名以免舊連結報錯
-// ══════════════════════════════════════════
-function openDataPanel() {
-  const b = document.getElementById('nav-manage');
-  if (b) showPage('manage', b);
-}
-function closeDataPanel() {}
+// init
+loadData();
+loadMonthlyRecord();
+renderMembers();
+syncAll();
+// ── 更新日期為當月第三個禮拜日（可修改日） ──
+const _sun = getCurrentThirdSunday();
+let _customDay = null;
+const _defaultMonth = _sun ? (_sun.getMonth() + 1) : (new Date().getMonth() + 1);
+const _defaultDay   = _sun ? _sun.getDate() : 1;
 
-function toggleVoicePanel() {
-  const p = document.getElementById('voice-panel');
-  const ph = document.getElementById('photo-panel');
-  if (p) p.classList.toggle('open');
-  if (ph) ph.classList.remove('open');
+function getDisplayDateStr() {
+  const d = _customDay !== null ? _customDay : _defaultDay;
+  return _defaultMonth + '月' + d + '日';
 }
-function toggleExcelPanel() {
-  const p = document.getElementById('photo-panel');
-  const v = document.getElementById('voice-panel');
-  if (p) p.classList.toggle('open');
-  if (v) v.classList.remove('open');
-  // Reset file input so same file can be re-selected
-  const inp = document.getElementById('excel-upload-input');
-  if (inp) inp.value = '';
-  // 重設面板內容，確保上傳區可見
-  const dropZone = document.getElementById('excel-drop-zone');
-  if (dropZone) dropZone.style.display = '';
-  const statusEl = document.getElementById('excel-status');
-  if (statusEl) statusEl.textContent = '';
-  const listEl = document.getElementById('excel-matched-list');
-  if (listEl) listEl.innerHTML = '';
-  const applyBtn = document.getElementById('excel-apply-btn');
-  if (applyBtn) applyBtn.style.display = 'none';
+function applyDateStr() {
+  const s = getDisplayDateStr();
+  ['date-attend','date-bento','date-badge','date-stat'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = s;
+  });
 }
-// Keep old name as alias so any residual references don't break
-function togglePhotoPanel() { toggleExcelPanel(); }
+applyDateStr();
 
-// ══════════════════════════════════════════
-// 人員名單頁：Excel 匯入參班
-// ══════════════════════════════════════════
-let membersExcelAttendRows   = [];
-let membersExcelNoBentoNames  = [];
-let membersExcelMealStaffNames = [];
+function openDateEdit() {
+  const cur = _customDay !== null ? _customDay : _defaultDay;
+  const val = prompt(_defaultMonth + '月 — 請輸入日期（日）', cur);
+  if (val === null) return;
+  const n = parseInt(val, 10);
+  if (!isNaN(n) && n >= 1 && n <= 31) {
+    _customDay = n;
+    applyDateStr();
+  } else if (val.trim() === '') {
+    _customDay = null;
+    applyDateStr();
+  } else {
+    alert('請輸入 1～31 的數字，或清空以恢復預設。');
+  }
+}
+// ── 當月負責區（點擊下拉選單，同步 dashboard）──
+const _areaOrder = ['太平區','台中區','坪林區'];
+const _activeMonths = [3,4,5,6,8,9,10,12,1];
+const LS_AREA_KEY = 'tmb_bento_area';
 
-function toggleMembersExcelPanel() {
-  const panel = document.getElementById('members-excel-panel');
-  if (!panel) return;
-  const isOpen = panel.classList.toggle('open');
-  if (isOpen) {
-    // 重設面板
-    const inp = document.getElementById('members-excel-input');
-    if (inp) inp.value = '';
-    const dropZone = document.getElementById('members-excel-drop-zone');
-    if (dropZone) dropZone.style.display = '';
-    const statusEl = document.getElementById('members-excel-status');
-    if (statusEl) statusEl.textContent = '';
-    const listEl = document.getElementById('members-excel-matched-list');
-    if (listEl) listEl.innerHTML = '';
-    const applyBtn = document.getElementById('members-excel-apply-btn');
-    if (applyBtn) applyBtn.style.display = 'none';
-    membersExcelAttendRows    = [];
-    membersExcelNoBentoNames  = [];
-    membersExcelMealStaffNames = [];
+function applyBentoArea(areaName) {
+  const badge    = document.getElementById('bento-area-badge');
+  const dashArea = document.getElementById('dash-bento-area');
+  if (areaName === '本月不輪流') {
+    _cachedAreaText = '本月不輪流';
+    _cachedAreaBg   = '#ccc';
+    if (badge)    { badge.innerHTML = '本月不輪流 <span style="font-size:0.7rem;opacity:0.7;">▾</span>'; badge.style.background = '#9e9e9e'; badge.style.color = 'white'; }
+    if (dashArea) dashArea.innerHTML = '本月負責：<strong>本月不輪流</strong>';
+  } else {
+    const text = '本月負責：' + areaName;
+    _cachedAreaText = text;
+    _cachedAreaBg   = 'var(--gold)';
+    if (badge)    { badge.innerHTML = text + ' <span style="font-size:0.7rem;opacity:0.7;">▾</span>'; badge.style.background = 'var(--gold)'; badge.style.color = 'var(--ink)'; }
+    if (dashArea) dashArea.innerHTML = '本月負責：<strong>' + areaName + '</strong>';
   }
 }
 
-function handleMembersExcelUpload(input) {
-  const file = input.files[0];
-  if (!file) return;
-
-  // ── 匯入前清除所有出席、便當、不要便當資料 ──
-  allMembers.forEach(m => { m.attend = false; m.noBento = false; });
-  const noBentoTA   = document.getElementById('no-bento-names');
-  const mealStaffTA = document.getElementById('meal-staff-names');
-  if (noBentoTA)   noBentoTA.value   = '';
-  if (mealStaffTA) mealStaffTA.value = '';
-  const _validateEl = document.getElementById('no-bento-validate');
-  const _noteEl     = document.getElementById('no-bento-note');
-  if (_validateEl) _validateEl.innerHTML = '';
-  if (_noteEl)     _noteEl.textContent   = '';
-
-  document.getElementById('members-excel-status').textContent = '⏳ 正在讀取 Excel 檔案…';
-  document.getElementById('members-excel-matched-list').innerHTML = '';
-  document.getElementById('members-excel-apply-btn').style.display = 'none';
-  const _dropZone = document.getElementById('members-excel-drop-zone');
-  if (_dropZone) _dropZone.style.display = 'none';
-  membersExcelAttendRows    = [];
-  membersExcelNoBentoNames  = [];
-  membersExcelMealStaffNames = [];
-
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      const data = new Uint8Array(e.target.result);
-      const workbook = XLSX.read(data, { type: 'array' });
-
-      const fullNameMap  = new Map();
-      allMembers.forEach(m => fullNameMap.set(m.name, m));
-
-      const seenMembers = new Set();
-      const seenNames   = new Set();
-      const resultRows  = [];
-
-      workbook.SheetNames.forEach(sheetName => {
-        const ws = workbook.Sheets[sheetName];
-        const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
-        if (rows.length < 2) return;
-
-        const headerRow = rows[0].map(c => String(c ?? '').trim());
-        let colShort = -1, colFull = -1, colRemark = -1;
-        headerRow.forEach((h, i) => {
-          if (h.includes('整理姓名')) colShort = i;
-          else if (h.includes('原始姓名')) colFull = i;
-          else if (h.includes('備註'))    colRemark = i;
-        });
-
-        const dataRows = headerRow.some(h => h.length > 0) ? rows.slice(1) : rows;
-        dataRows.forEach(row => {
-          const cells = row.map(c => String(c ?? '').trim());
-          if (cells.every(c => c === '')) return;
-
-          let remark = '';
-          if (colRemark >= 0 && cells[colRemark]) {
-            remark = cells[colRemark].trim();
-          } else {
-            cells.forEach(c => {
-              if (c.includes('不要便當')) remark = '不要便當';
-              if (c.includes('備餐人員')) remark = '備餐人員';
-            });
-          }
-
-          const shortName = (colShort >= 0 ? cells[colShort] : '').trim();
-          const fullName  = (colFull  >= 0 ? cells[colFull]  : '').trim();
-          const displayName = shortName || fullName;
-          if (!displayName) return;
-
-          // 備餐人員：不列入參班名單，只加入備餐欄
-          if (remark === '備餐人員') {
-            if (!seenNames.has(displayName)) {
-              seenNames.add(displayName);
-              resultRows.push({ member: null, displayName, remark });
-            }
-            return;
-          }
-
-          let member = null;
-          if (fullName && fullNameMap.has(fullName)) member = fullNameMap.get(fullName);
-          if (!member && shortName) {
-            member = allMembers.find(m =>
-              m.name === shortName ||
-              m.name.endsWith(shortName) ||
-              m.name.includes(shortName)
-            ) || null;
-          }
-          if (!member) {
-            cells.forEach(c => { if (!member && fullNameMap.has(c)) member = fullNameMap.get(c); });
-          }
-          if (!member) return;
-          if (seenMembers.has(member)) return;
-          seenMembers.add(member);
-          resultRows.push({ member, displayName, remark });
-        });
-      });
-
-      if (resultRows.length === 0) {
-        document.getElementById('members-excel-status').textContent = '⚠️ 未在 Excel 中比對到名單中的姓名';
-        return;
-      }
-
-      resultRows.forEach(({ member, displayName, remark }) => {
-        if (remark === '備餐人員') {
-          membersExcelMealStaffNames.push(displayName);
-        } else {
-          membersExcelAttendRows.push({ member, displayName, remark });
-          if (remark === '不要便當') membersExcelNoBentoNames.push(displayName);
-        }
-      });
-
-      renderMembersExcelMatches();
-    } catch(err) {
-      document.getElementById('members-excel-status').textContent = '❌ 讀取失敗：' + err.message;
-      console.error(err);
-    }
-  };
-  reader.readAsArrayBuffer(file);
+function buildAreaDropdown() {
+  const opts = document.getElementById('bento-area-options');
+  if (!opts) return;
+  const choices = ['太平區','台中區','坪林區','本月不輪流'];
+  opts.innerHTML = choices.map(a =>
+    `<div onclick="selectBentoArea('${a}')"
+      style="padding:8px 16px;font-size:0.85rem;cursor:pointer;transition:background 0.12s;font-family:'Noto Sans TC',sans-serif;"
+      onmouseover="this.style.background='#fdf8f0'" onmouseout="this.style.background=''">
+      ${a}
+    </div>`
+  ).join('');
 }
 
-function renderMembersExcelMatches() {
-  const statusEl = document.getElementById('members-excel-status');
-  const listEl   = document.getElementById('members-excel-matched-list');
-  const applyBtn = document.getElementById('members-excel-apply-btn');
+function toggleAreaDropdown(e) {
+  e.stopPropagation();
+  const dd = document.getElementById('bento-area-dropdown');
+  if (!dd) return;
+  const isOpen = dd.style.display !== 'none';
+  dd.style.display = isOpen ? 'none' : 'block';
+}
 
-  const attendCount    = membersExcelAttendRows.length;
-  const noBentoCount   = membersExcelNoBentoNames.length;
-  const mealStaffCount = membersExcelMealStaffNames.length;
-  const total = attendCount + mealStaffCount;
+function selectBentoArea(areaName) {
+  applyBentoArea(areaName);
+  localStorage.setItem(LS_AREA_KEY, areaName);
+  const dd = document.getElementById('bento-area-dropdown');
+  if (dd) dd.style.display = 'none';
+}
 
-  if (total === 0) {
-    statusEl.textContent = '⚠️ 未比對到任何名單成員';
-    return;
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('bento-area-badge-wrap');
+  if (wrap && !wrap.contains(e.target)) {
+    const dd = document.getElementById('bento-area-dropdown');
+    if (dd) dd.style.display = 'none';
   }
+});
 
-  statusEl.innerHTML =
-    `✅ 共讀取 <strong>${total}</strong> 筆` +
-    `　✔ 參班：<strong>${attendCount}</strong> 人` +
-    (noBentoCount   ? `　🚫 不要便當：<strong>${noBentoCount}</strong> 人` : '') +
-    (mealStaffCount ? `　🍳 備餐人員：<strong>${mealStaffCount}</strong> 人（不列入出席）` : '');
+buildAreaDropdown();
 
-  let html = '';
-  membersExcelAttendRows.forEach(({ member: m, displayName, remark }) => {
-    let badge = '';
-    if (remark === '不要便當') badge = '<span style="font-size:0.7rem;background:#ffebee;color:#c0392b;padding:1px 6px;border-radius:10px;margin-left:4px;">🚫不要便當</span>';
-    html += `<div class="photo-match-item confirmed">
-      <span>✅</span><strong>${displayName}</strong>
-      <span style="color:var(--muted);font-size:0.8rem;">${m.name !== displayName ? m.name + ' · ' : ''}${m.role} · ${m.area}</span>
-      ${badge}
-    </div>`;
-  });
-  membersExcelMealStaffNames.forEach(name => {
-    html += `<div class="photo-match-item" style="background:#fff8e8;">
-      <span>🍳</span><strong>${name}</strong>
-      <span style="font-size:0.7rem;background:#fff8e1;color:#8B6914;padding:1px 6px;border-radius:10px;margin-left:4px;">備餐人員（不列入出席）</span>
-    </div>`;
-  });
-  listEl.innerHTML = html;
-  applyBtn.style.display = 'inline-block';
-}
-
-function applyMembersExcelMatches() {
-  // 1. 標記出席（備餐人員不在此列）
-  membersExcelAttendRows.forEach(({ member }) => { member.attend = true; });
-
-  // 2. 不要便當 → 寫入 textarea
-  const noBentoTA = document.getElementById('no-bento-names');
-  if (noBentoTA) noBentoTA.value = membersExcelNoBentoNames.join('、');
-
-  // 3. 備餐人員 → 寫入 textarea
-  const mealStaffTA = document.getElementById('meal-staff-names');
-  if (mealStaffTA) mealStaffTA.value = membersExcelMealStaffNames.join('、');
-
-  // 4. 清除驗證提示
-  const validateEl = document.getElementById('no-bento-validate');
-  const noteEl     = document.getElementById('no-bento-note');
-  if (validateEl) validateEl.innerHTML = '';
-  if (noteEl)     noteEl.textContent   = '';
-
-  saveData();
-
-  // 5. 重置面板
-  membersExcelAttendRows    = [];
-  membersExcelNoBentoNames  = [];
-  membersExcelMealStaffNames = [];
-  document.getElementById('members-excel-status').textContent = '✅ 已標記完畢！便當名單已同步更新。';
-  document.getElementById('members-excel-matched-list').innerHTML = '';
-  document.getElementById('members-excel-apply-btn').style.display = 'none';
-  document.getElementById('members-excel-input').value = '';
-  document.getElementById('members-excel-panel')?.classList.remove('open');
-
-  syncAll(); renderMembers();
-  // 跳轉到便當分配分頁
-  const bentoBtn = document.getElementById('nav-bento');
-  if (bentoBtn) showPage('bento', bentoBtn);
-}
-
-// ══════════════════════════════════════════
-// EXCEL 匯入辨識參班
-// ══════════════════════════════════════════
-// Excel 格式：地區 | 原始姓名 | 整理姓名 | 備註事項
-// 比對邏輯：以「整理姓名」欄（短名）對比 allMembers.name
-// 備餐人員：只加入備餐欄，不標記出席、不列入出席比對
-// 不要便當：標記出席 + 加入不要便當欄
-// ══════════════════════════════════════════
-
-// excelRows: [{ shortName, fullName, remark }]  – parsed from Excel
-// excelAttendRows:   rows where remark !== '備餐人員'  (mark attend)
-// excelNoBentoRows:  rows where remark === '不要便當'
-// excelMealStaffRows: rows where remark === '備餐人員'
-let excelAttendRows   = [];   // { member, displayName }
-let excelNoBentoNames  = [];  // short names for textarea
-let excelMealStaffNames = []; // short names for textarea
-
-function handleExcelUpload(input) {
-  const file = input.files[0];
-  if (!file) return;
-
-  // ── 匯入前清除所有出席、便當、不要便當資料 ──
-  allMembers.forEach(m => { m.attend = false; m.noBento = false; });
-  const noBentoTA   = document.getElementById('no-bento-names');
-  const mealStaffTA = document.getElementById('meal-staff-names');
-  if (noBentoTA)   noBentoTA.value   = '';
-  if (mealStaffTA) mealStaffTA.value = '';
-  // 清除舊的驗證提示文字，避免殘留
-  const _validateEl = document.getElementById('no-bento-validate');
-  const _noteEl     = document.getElementById('no-bento-note');
-  if (_validateEl) _validateEl.innerHTML = '';
-  if (_noteEl)     _noteEl.textContent   = '';
-
-  document.getElementById('excel-status').textContent = '⏳ 正在讀取 Excel 檔案…';
-  document.getElementById('excel-matched-list').innerHTML = '';
-  document.getElementById('excel-apply-btn').style.display = 'none';
-  // 隱藏上傳區，顯示進度
-  const _dropZone = document.getElementById('excel-drop-zone');
-  if (_dropZone) _dropZone.style.display = 'none';
-  excelAttendRows    = [];
-  excelNoBentoNames  = [];
-  excelMealStaffNames = [];
-
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      const data = new Uint8Array(e.target.result);
-      const workbook = XLSX.read(data, { type: 'array' });
-
-      // ── 解析 Excel 每一列 ──────────────────────────────────────
-      // 自動偵測欄位：尋找含「姓名」的欄作為姓名欄、含「備註」的欄作為備註欄
-      // 同時支援「整理姓名」欄（短名）和「原始姓名」欄（全名）的雙重比對
-
-      // 建立查找表：
-      //   shortNameMap: 短名 → member（用整理姓名欄）
-      //   fullNameMap:  全名 → member（用 allMembers.name 完整比對）
-      const shortNameMap = new Map(); // shortName → member
-      const fullNameMap  = new Map(); // fullName  → member
-      allMembers.forEach(m => fullNameMap.set(m.name, m));
-
-      // 已處理過的 member（去重，避免同一人在多個工作表重複出現）
-      const seenMembers = new Set(); // member object 去重
-      const seenNames   = new Set(); // 備餐人員短名去重
-      // 結果列表（保留順序）
-      const resultRows = []; // { member|null, displayName, remark }
-
-      workbook.SheetNames.forEach(sheetName => {
-        const ws = workbook.Sheets[sheetName];
-        const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
-        if (rows.length < 2) return;
-
-        // 第一列若含標題，偵測欄位索引
-        const headerRow = rows[0].map(c => String(c ?? '').trim());
-        let colShort = -1, colFull = -1, colRemark = -1;
-
-        headerRow.forEach((h, i) => {
-          if (h.includes('整理姓名')) colShort = i;
-          else if (h.includes('原始姓名')) colFull = i;
-          else if (h.includes('備註'))    colRemark = i;
-        });
-
-        // 從第二列開始（跳過標題）
-        const dataRows = headerRow.some(h => h.length > 0) ? rows.slice(1) : rows;
-
-        dataRows.forEach(row => {
-          const cells = row.map(c => String(c ?? '').trim());
-          if (cells.every(c => c === '')) return; // 跳過空列
-
-          // 取備註
-          let remark = '';
-          if (colRemark >= 0 && cells[colRemark]) {
-            remark = cells[colRemark].trim();
-          } else {
-            // fallback: 任何儲存格含關鍵字
-            cells.forEach(c => {
-              if (c.includes('不要便當')) remark = '不要便當';
-              if (c.includes('備餐人員')) remark = '備餐人員';
-            });
-          }
-
-          // 取短名（整理姓名）和全名（原始姓名）
-          const shortName = (colShort >= 0 ? cells[colShort] : '').trim();
-          const fullName  = (colFull  >= 0 ? cells[colFull]  : '').trim();
-          const displayName = shortName || fullName;
-
-          if (!displayName) return; // 沒有姓名則跳過
-
-          // ── 備餐人員：不需要在名單中，直接用短名加入備餐欄 ──
-          if (remark === '備餐人員') {
-            if (!seenNames.has(displayName)) {
-              seenNames.add(displayName);
-              resultRows.push({ member: null, displayName, remark });
-            }
-            return;
-          }
-
-          // ── 一般參班 / 不要便當：需要比對 allMembers ──
-          let member = null;
-
-          // 1. 用全名直接比對 allMembers.name
-          if (fullName && fullNameMap.has(fullName)) {
-            member = fullNameMap.get(fullName);
-          }
-          // 2. 短名：找 allMembers 中 name 等於短名、或結尾包含短名
-          if (!member && shortName) {
-            member = allMembers.find(m =>
-              m.name === shortName ||
-              m.name.endsWith(shortName) ||
-              m.name.includes(shortName)
-            ) || null;
-          }
-          // 3. fallback: 掃描所有儲存格，找精確等於某 member.name 的值
-          if (!member) {
-            cells.forEach(c => {
-              if (!member && fullNameMap.has(c)) member = fullNameMap.get(c);
-            });
-          }
-
-          if (!member) return; // 找不到對應成員則跳過
-          // 去重（以 member 物件 identity 判斷）
-          if (seenMembers.has(member)) return;
-          seenMembers.add(member);
-
-          resultRows.push({ member, displayName, remark });
-        });
-      });
-
-      if (resultRows.length === 0) {
-        document.getElementById('excel-status').textContent = '⚠️ 未在 Excel 中比對到名單中的姓名';
-        return;
-      }
-
-      // 分類
-      resultRows.forEach(({ member, displayName, remark }) => {
-        if (remark === '備餐人員') {
-          // 備餐人員：不需在名單中，只加入備餐欄
-          excelMealStaffNames.push(displayName);
-        } else {
-          // 一般參班（含不要便當）：標記出席
-          excelAttendRows.push({ member, displayName, remark });
-          if (remark === '不要便當') excelNoBentoNames.push(displayName);
-        }
-      });
-
-      renderExcelMatches();
-    } catch(err) {
-      document.getElementById('excel-status').textContent = '❌ 讀取失敗：' + err.message;
-      console.error(err);
-    }
-  };
-  reader.readAsArrayBuffer(file);
-}
-
-function renderExcelMatches() {
-  const statusEl = document.getElementById('excel-status');
-  const listEl   = document.getElementById('excel-matched-list');
-  const applyBtn = document.getElementById('excel-apply-btn');
-
-  const attendCount   = excelAttendRows.length;
-  const noBentoCount  = excelNoBentoNames.length;
-  const mealStaffCount = excelMealStaffNames.length;
-  const total = attendCount + mealStaffCount;
-
-  if (total === 0) {
-    statusEl.textContent = '⚠️ 未比對到任何名單成員';
-    return;
+// 決定初始負責區：優先用 localStorage 手動設定，否則按月份自動推算
+(function() {
+  const saved = localStorage.getItem(LS_AREA_KEY);
+  if (saved) { applyBentoArea(saved); return; }
+  const _nowM = new Date().getMonth() + 1;
+  const _mIdx = _activeMonths.indexOf(_nowM);
+  if (_mIdx === -1) {
+    applyBentoArea('本月不輪流');
+  } else {
+    applyBentoArea(_areaOrder[_mIdx % _areaOrder.length]);
   }
-
-  statusEl.innerHTML =
-    `✅ 共讀取 <strong>${total}</strong> 筆` +
-    `　✔ 參班：<strong>${attendCount}</strong> 人` +
-    (noBentoCount  ? `　🚫 不要便當：<strong>${noBentoCount}</strong> 人` : '') +
-    (mealStaffCount ? `　🍳 備餐人員：<strong>${mealStaffCount}</strong> 人（不列入出席）` : '');
-
-  // 顯示清單：先列參班（含不要便當），再列備餐人員
-  let html = '';
-  excelAttendRows.forEach(({ member: m, displayName, remark }) => {
-    let badge = '';
-    if (remark === '不要便當') badge = '<span style="font-size:0.7rem;background:#ffebee;color:#c0392b;padding:1px 6px;border-radius:10px;margin-left:4px;">🚫不要便當</span>';
-    html += `<div class="photo-match-item confirmed">
-      <span>✅</span><strong>${displayName}</strong>
-      <span style="color:var(--muted);font-size:0.8rem;">${m.name !== displayName ? m.name + ' · ' : ''}${m.role} · ${m.area}</span>
-      ${badge}
-    </div>`;
-  });
-  excelMealStaffNames.forEach(name => {
-    html += `<div class="photo-match-item" style="background:#fff8e8;">
-      <span>🍳</span><strong>${name}</strong>
-      <span style="font-size:0.7rem;background:#fff8e1;color:#8B6914;padding:1px 6px;border-radius:10px;margin-left:4px;">備餐人員（不列入出席）</span>
-    </div>`;
-  });
-  listEl.innerHTML = html;
-  applyBtn.style.display = 'inline-block';
-}
-
-function applyExcelMatches() {
-  // 1. 標記出席（備餐人員不在此列）
-  excelAttendRows.forEach(({ member }) => { member.attend = true; });
-
-  // 2. 不要便當 → 寫入 no-bento-names textarea（已於匯入前清空，直接覆寫）
-  const noBentoTA = document.getElementById('no-bento-names');
-  if (noBentoTA) noBentoTA.value = excelNoBentoNames.join('、');
-
-  // 3. 備餐人員 → 寫入 meal-staff-names textarea（已於匯入前清空，直接覆寫）
-  const mealStaffTA = document.getElementById('meal-staff-names');
-  if (mealStaffTA) mealStaffTA.value = excelMealStaffNames.join('、');
-
-  // 4. 清除舊的驗證提示
-  const validateEl = document.getElementById('no-bento-validate');
-  const noteEl     = document.getElementById('no-bento-note');
-  if (validateEl) validateEl.innerHTML = '';
-  if (noteEl)     noteEl.textContent   = '';
-
-  // 5. 先 saveData 讓 renderBento 能讀到最新 textarea 值
-  saveData();
-
-  // 6. 重置面板
-  excelAttendRows    = [];
-  excelNoBentoNames  = [];
-  excelMealStaffNames = [];
-  document.getElementById('excel-status').textContent = '✅ 已標記完畢！便當名單已同步更新。';
-  document.getElementById('excel-matched-list').innerHTML = '';
-  document.getElementById('excel-apply-btn').style.display = 'none';
-  document.getElementById('excel-upload-input').value = '';
-  // 關閉面板
-  document.getElementById('photo-panel')?.classList.remove('open');
-
-  syncAll(); renderMembers();
-  // 跳轉到便當分配分頁
-  const bentoBtn = document.getElementById('nav-bento');
-  if (bentoBtn) showPage('bento', bentoBtn);
-}
-
-
-function clearMonthlyRecord() {
-  if (!confirm('確定要清除「出席記錄」分頁所有月份的勾選嗎？')) return;
-  monthlyRecord = {};
-  saveMonthlyRecord();
-  if (document.getElementById('page-record')?.classList.contains('active')) renderRecord();
-}
+})();
 
 // ══════════════════════════════════════════
-// ATTENDANCE RECORD（月份出席記錄，與青少班相同邏輯）
+// ATTENDANCE RECORD（月份出席記錄，比照學人班）
 // ══════════════════════════════════════════
 function toggleRecord(name, monthLabel) {
   if (!monthlyRecord[name]) monthlyRecord[name] = {};
@@ -2713,9 +3289,7 @@ function getFilteredRecordMembers() {
     if (ca !== cb) return ca - cb;
     const ga = a.gender==='乾道'?0:1, gb = b.gender==='乾道'?0:1;
     if (ga !== gb) return ga - gb;
-    if (a.family !== b.family) return a.family.localeCompare(b.family,'zh-Hant');
-    if (a.familyOrder !== b.familyOrder) return (a.familyOrder??0) - (b.familyOrder??0);
-    return a.name.localeCompare(b.name,'zh-Hant');
+    return compareBirthdate(a, b);
   });
 }
 
@@ -2752,8 +3326,8 @@ function showFullAttendanceModal() {
       <div style="font-size:0.92rem;font-weight:700;color:var(--ink);margin-bottom:0.8rem;">今年童蒙班全勤獎人員名單如下：</div>
       <div style="font-size:0.9rem;line-height:1.9;color:#c0392b;font-weight:700;background:#fdf3f2;border:1px solid #f0d5d2;border-radius:10px;padding:0.8rem 1rem;margin-bottom:1.2rem;max-height:40vh;overflow-y:auto;">${listHtml}</div>
       <div class="modal-actions">
-        <button type="button" class="btn-cancel" onclick="document.getElementById('full-attendance-modal').remove()">關閉</button>
-        <button type="button" class="btn-confirm" style="background:#06c755;" onclick="shareFullAttendanceToLine()">📱 開啟LINE回報</button>
+        <button class="btn-cancel" onclick="document.getElementById('full-attendance-modal').remove()">關閉</button>
+        <button class="btn-confirm" style="background:#06c755;" onclick="shareFullAttendanceToLine()">📱 開啟LINE回報</button>
       </div>
     </div>`;
   document.body.appendChild(modal);
@@ -2765,21 +3339,100 @@ function shareFullAttendanceToLine() {
   window.open(url, '_blank');
 }
 
+// ══════════════════════════════════════════
+// 當月理天生日名單（依學員資料理天生日 ld 欄位）
+// 因童蒙班並非每月上課（缺 2、7、11 月），故部分月份需合併顯示：
+//   ‧ 當月是 4 月 → 顯示 3 月名單
+//   ‧ 當月是 9 月 → 顯示 7、8 月合併名單
+//   ‧ 當月是 12 月 → 顯示 10、11 月合併名單
+//   ‧ 當年度第一次上課月份為 3 月（承接去年最後一次上課 1 月）
+//     → 當月是 3 月時，顯示 1、2 月合併名單
+//   ‧ 其餘月份 → 顯示當月名單
+// ══════════════════════════════════════════
+function getMonthlyLdTargetMonths(refMonth) {
+  const m = refMonth || (new Date().getMonth() + 1);
+  if (m === 3)  return [1, 2];
+  if (m === 4)  return [3];
+  if (m === 9)  return [7, 8];
+  if (m === 12) return [10, 11];
+  return [m];
+}
+
+// 解析理天生日欄位（ld）中的「月份」，相容多種寫法：
+//   "1997/01/06"（西元年/月/日）、"101閏4/19"（民國年+閏月/日）、"103年2月29曰"（年+中文月日）
+function parseLdMonth(ld) {
+  if (!ld) return null;
+  let m = String(ld).match(/(\d{1,2})\/(\d{1,2})\s*$/); // 取結尾「月/日」
+  if (m) { const mm = parseInt(m[1], 10); if (mm >= 1 && mm <= 12) return mm; }
+  m = String(ld).match(/(\d{1,2})\s*月/); // 取「N月」
+  if (m) { const mm = parseInt(m[1], 10); if (mm >= 1 && mm <= 12) return mm; }
+  return null;
+}
+
+// 理天生日名單僅限 26 歲前（不含 26 歲）的學員；出生日期無法判斷者仍予保留，不因缺乏資料而被排除
+function getMonthlyLdBirthdayMembers(refMonth) {
+  const months = getMonthlyLdTargetMonths(refMonth);
+  const rows = getStudentBirthdayRows().filter(r => r.role === '學員'); // 只取「學員」身份，不含學輔
+  const list = rows.filter(r => {
+    const mm = parseLdMonth(r.ld);
+    if (mm === null || !months.includes(mm)) return false;
+    const age = computeAge(r.bd);
+    return age === null || age < 26; // 限 26 歲前的學員
+  });
+  return { months, list };
+}
+
+function buildMonthlyLdMessage(refMonth) {
+  const { months, list } = getMonthlyLdBirthdayMembers(refMonth);
+  const monthLabel = months.join('、') + '月';
+  const namesText = list.length
+    ? list.map(m => `${m.name}（${m.ld || '—'}）`).join('\n')
+    : '（本期尚無理天生日學員）';
+  return `${monthLabel}份理天生日學員名單如下：\n${namesText}`;
+}
+
+function showMonthlyLdBirthdayModal() {
+  const existing = document.getElementById('monthly-ld-modal');
+  if (existing) existing.remove();
+
+  const { months, list } = getMonthlyLdBirthdayMembers();
+  const monthLabel = months.join('、') + '月';
+  const listHtml = list.length
+    ? list.map((m, i) => `${i+1}. ${m.name}<span style="font-size:0.72rem;opacity:0.65;margin-left:4px;">（${m.ld || '—'}）</span>`).join('<br>')
+    : '（本期尚無理天生日學員）';
+
+  const modal = document.createElement('div');
+  modal.id = 'monthly-ld-modal';
+  modal.className = 'modal-overlay open';
+  modal.innerHTML = `
+    <div class="modal">
+      <div class="modal-title">🎂 ${monthLabel}份理天生日名單</div>
+      <div style="font-size:0.9rem;line-height:1.9;color:#6a1b9a;font-weight:700;background:#faf0ff;border:1px solid #d4b8e8;border-radius:10px;padding:0.8rem 1rem;margin-bottom:1.2rem;max-height:40vh;overflow-y:auto;">${listHtml}</div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="document.getElementById('monthly-ld-modal').remove()">關閉</button>
+        <button class="btn-confirm" style="background:#06c755;" onclick="shareMonthlyLdToLine()">📱 開啟LINE回報</button>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+}
+
+function shareMonthlyLdToLine() {
+  const message = buildMonthlyLdMessage();
+  const url = 'https://line.me/R/msg/text/?' + encodeURIComponent(message);
+  window.open(url, '_blank');
+}
+
 function renderRecord() {
   loadMonthlyRecord();
   const members = getFilteredRecordMembers();
-  const areaLabels = {
-    '1-1':'台中 1-1','1-2':'彰化 1-2','1-3':'太平 1-3','1-4':'坪林 1-4',
-    '2-1':'嘉義 2-1','2-2':'馬光 2-2','2-3':'斗六 2-3'
-  };
+  const areaLabels = RECORD_AREA_LABELS;
 
   let html = `<div class="record-filter-bar">
     <span style="font-size:0.82rem;color:var(--muted);">僅列學員（小學輔、資輔、學輔、家長不計入此表）。各月欄位請手動勾選，與「參班」無連動。</span>
-    <button type="button" class="record-export-btn" onclick="showFullAttendanceModal()" style="background:#c0392b;">🏆 全勤名單</button>
-    <button type="button" class="record-export-btn" onclick="clearMonthlyRecord()" style="background:#6a1b9a;">🔄 清除本表月份勾選</button>
     <button class="record-export-btn" onclick="exportRecordCSV()" style="margin-left:auto;">📥 匯出CSV</button>
+    <button class="record-export-btn" onclick="exportRecordImage(this)" style="background:#1565c0;">🖼️ 出席記錄匯出（圖片）</button>
   </div>
-  <div class="record-wrap"><table class="record-table"><thead><tr>
+  <div class="record-wrap" id="record-table-capture"><table class="record-table"><thead><tr>
     <th style="width:28px;">序</th>
     <th style="width:52px;">代號</th>
     <th style="width:68px;">姓名</th>
@@ -2846,125 +3499,100 @@ function exportRecordCSV() {
   a.click();
 }
 
-// ── 當月負責區（須在首次 syncAll / renderBento 前設定 _cachedAreaText）──
-const _areaOrder = ['太平區','台中區','坪林區'];
-const _activeMonths = [3,4,5,6,8,9,10,12,1];
-let _cachedAreaText = '';
-let _cachedAreaBg = 'var(--gold)';
-const LS_AREA_KEY = 'tmb_bento_area';
+// ══════════════════════════════════════════
+// 出席記錄 匯出（單一圖片）
+// ══════════════════════════════════════════
+function buildRecordImageHTML() {
+  loadMonthlyRecord();
+  const members = getFilteredRecordMembers();
+  const areaLabels = RECORD_AREA_LABELS;
+  const colSpan = 4 + RECORD_MONTHS.length + 1;
 
-/** 套用指定區名到 badge 與 dashboard，並快取 */
-function applyBentoArea(areaName) {
-  const badge    = document.getElementById('bento-area-badge');
-  const dashArea = document.getElementById('dash-bento-area');
-  if (areaName === '本月不輪流') {
-    _cachedAreaText = '本月不輪流';
-    _cachedAreaBg   = '#ccc';
-    if (badge)    { badge.innerHTML = '本月不輪流 <span style="font-size:0.7rem;opacity:0.7;">▾</span>'; badge.style.background = '#9e9e9e'; badge.style.color = 'white'; }
-    if (dashArea) dashArea.innerHTML = '本月負責：<strong>本月不輪流</strong>';
-  } else {
-    const text = '本月負責：' + areaName;
-    _cachedAreaText = text;
-    _cachedAreaBg   = 'var(--gold)';
-    if (badge)    { badge.innerHTML = text + ' <span style="font-size:0.7rem;opacity:0.7;">▾</span>'; badge.style.background = 'var(--gold)'; badge.style.color = 'var(--ink)'; }
-    if (dashArea) dashArea.innerHTML = '本月負責：<strong>' + areaName + '</strong>';
-  }
-}
+  let html = `<div style="font-family:'Noto Sans TC',sans-serif;background:#ffffff;padding:20px;display:inline-block;">
+    <div style="font-size:1.1rem;font-weight:900;color:#1a1a2e;margin-bottom:12px;">📅 童蒙班學員出席記錄表（2026/3～2027/1，不含 7 月、11 月）</div>
+    <table style="border-collapse:collapse;font-size:0.78rem;">
+    <thead><tr style="background:#0f6e3a;color:#ffffff;">
+      <th style="padding:6px 8px;border:1px solid #ccc;">序</th>
+      <th style="padding:6px 8px;border:1px solid #ccc;">代號</th>
+      <th style="padding:6px 8px;border:1px solid #ccc;">姓名</th>
+      <th style="padding:6px 8px;border:1px solid #ccc;">乾坤</th>`;
+  RECORD_MONTHS.forEach(m => { html += `<th style="padding:6px 8px;border:1px solid #ccc;white-space:nowrap;">${m.label}</th>`; });
+  html += `<th style="padding:6px 8px;border:1px solid #ccc;">合計</th></tr></thead><tbody>`;
 
-/** 建立下拉選項（含自動推算區 + 各區手動選項） */
-function buildAreaDropdown() {
-  const opts = document.getElementById('bento-area-options');
-  if (!opts) return;
-  const choices = ['太平區','台中區','坪林區','本月不輪流'];
-  opts.innerHTML = choices.map(a =>
-    `<div onclick="selectBentoArea('${a}')"
-      style="padding:8px 16px;font-size:0.85rem;cursor:pointer;transition:background 0.12s;font-family:'Noto Sans TC',sans-serif;"
-      onmouseover="this.style.background='#fdf8f0'" onmouseout="this.style.background=''">
-      ${a}
-    </div>`
-  ).join('');
-}
-
-function toggleAreaDropdown(e) {
-  e.stopPropagation();
-  const dd = document.getElementById('bento-area-dropdown');
-  if (!dd) return;
-  const isOpen = dd.style.display !== 'none';
-  dd.style.display = isOpen ? 'none' : 'block';
-}
-
-function selectBentoArea(areaName) {
-  applyBentoArea(areaName);
-  localStorage.setItem(LS_AREA_KEY, areaName);
-  const dd = document.getElementById('bento-area-dropdown');
-  if (dd) dd.style.display = 'none';
-}
-
-// 點擊其他地方關閉下拉
-document.addEventListener('click', function(e) {
-  const wrap = document.getElementById('bento-area-badge-wrap');
-  if (wrap && !wrap.contains(e.target)) {
-    const dd = document.getElementById('bento-area-dropdown');
-    if (dd) dd.style.display = 'none';
-  }
-});
-
-// ── init ──
-loadData();
-reorderMemberNos();
-saveData();
-loadMonthlyRecord();
-buildAreaDropdown();
-
-// 決定初始負責區：優先用 localStorage 手動設定，否則按月份自動推算
-const _savedArea = localStorage.getItem(LS_AREA_KEY);
-if (_savedArea) {
-  applyBentoArea(_savedArea);
-} else {
-  const _nowMInit = new Date().getMonth() + 1;
-  const _mIdx = _activeMonths.indexOf(_nowMInit);
-  if (_mIdx === -1) {
-    applyBentoArea('本月不輪流');
-  } else {
-    applyBentoArea(_areaOrder[_mIdx % _areaOrder.length]);
-  }
-}
-
-renderMembers();
-syncAll();
-// ── 更新日期為當月第三個禮拜日（可修改日） ──
-const _sun = getCurrentThirdSunday();
-let _customDay = null;
-const _defaultMonth = _sun ? (_sun.getMonth() + 1) : (new Date().getMonth() + 1);
-const _defaultDay   = _sun ? _sun.getDate() : 1;
-
-function getDisplayDateStr() {
-  const d = _customDay !== null ? _customDay : _defaultDay;
-  return _defaultMonth + '月' + d + '日';
-}
-function applyDateStr() {
-  const s = getDisplayDateStr();
-  ['date-attend','date-bento','date-badge'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = s;
+  let lastCode = null, idx = 0;
+  members.forEach(m => {
+    if (m.code !== lastCode) {
+      lastCode = m.code;
+      html += `<tr><td colspan="${colSpan}" style="background:#0f6e3a;color:#ffffff;font-weight:700;text-align:left;padding:5px 10px;border:1px solid #ccc;">▌ ${areaLabels[m.code]||m.code}</td></tr>`;
+    }
+    idx++;
+    const total = RECORD_MONTHS.filter(mo => monthlyRecord[m.name]?.[mo.label]).length;
+    const isFullAttend = total === RECORD_MONTHS.length;
+    const genderColor = m.gender==='乾道'?'#1565c0':'#c2185b';
+    html += `<tr style="background:${idx%2===0?'#f7f7f7':'#ffffff'};">
+      <td style="padding:5px 8px;border:1px solid #ccc;text-align:center;color:#888;">${idx}</td>
+      <td style="padding:5px 8px;border:1px solid #ccc;text-align:center;color:#888;">${m.code}</td>
+      <td style="padding:5px 8px;border:1px solid #ccc;font-weight:700;">${m.name}</td>
+      <td style="padding:5px 8px;border:1px solid #ccc;text-align:center;color:${genderColor};font-weight:700;">${m.gender==='乾道'?'乾':'坤'}</td>`;
+    RECORD_MONTHS.forEach(mo => {
+      const checked = monthlyRecord[m.name]?.[mo.label];
+      html += `<td style="padding:5px 8px;border:1px solid #ccc;text-align:center;color:#0f6e3a;font-weight:900;">${checked?'✓':''}</td>`;
+    });
+    html += `<td style="padding:5px 8px;border:1px solid #ccc;text-align:center;font-weight:900;color:${isFullAttend?'#c0392b':(total>0?'#1565c0':'#888')};">${total||'—'}</td></tr>`;
   });
-}
-applyDateStr();
 
-function openDateEdit() {
-  const cur = _customDay !== null ? _customDay : _defaultDay;
-  const val = prompt(_defaultMonth + '月 — 請輸入日期（日）', cur);
-  if (val === null) return;
-  const n = parseInt(val, 10);
-  if (!isNaN(n) && n >= 1 && n <= 31) {
-    _customDay = n;
-    applyDateStr();
-  } else if (val.trim() === '') {
-    _customDay = null;
-    applyDateStr();
-  } else {
-    alert('請輸入 1～31 的數字，或清空以恢復預設。');
+  html += `<tr><td colspan="4" style="background:#1a1a2e;color:#ffffff;font-weight:700;padding:6px 10px;border:1px solid #ccc;text-align:left;">合計人次</td>`;
+  RECORD_MONTHS.forEach(m => {
+    const cnt = members.filter(mem => monthlyRecord[mem.name]?.[m.label]).length;
+    html += `<td style="background:#1a1a2e;color:#e0b84c;font-weight:900;padding:6px 8px;border:1px solid #ccc;text-align:center;">${cnt||'—'}</td>`;
+  });
+  const grand = members.reduce((s,mem)=>s+RECORD_MONTHS.filter(m=>monthlyRecord[mem.name]?.[m.label]).length,0);
+  html += `<td style="background:#1a1a2e;color:#f5d98a;font-weight:900;padding:6px 8px;border:1px solid #ccc;text-align:center;">${grand||'—'}</td></tr>`;
+  html += `</tbody></table></div>`;
+  return html;
+}
+
+function exportRecordImage(btn) {
+  if (typeof html2canvas !== 'function') {
+    alert('圖片匯出功能尚未載入完成，請稍候再試一次');
+    return;
   }
+  const originalText = btn ? btn.innerHTML : '';
+  if (btn) { btn.innerHTML = '⏳ 產生圖片中...'; btn.disabled = true; }
+
+  const holder = document.createElement('div');
+  holder.style.position = 'fixed';
+  holder.style.left = '-99999px';
+  holder.style.top = '0';
+  holder.innerHTML = buildRecordImageHTML();
+  document.body.appendChild(holder);
+  const target = holder.firstElementChild;
+
+  html2canvas(target, {
+    backgroundColor: '#ffffff',
+    scale: 2,
+    useCORS: true
+  }).then(canvas => {
+    canvas.toBlob(blob => {
+      const url = URL.createObjectURL(blob);
+      const now = new Date();
+      const pad = n => String(n).padStart(2, '0');
+      const stamp = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}`;
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `童蒙班學員出席記錄_${stamp}.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      document.body.removeChild(holder);
+      if (btn) { btn.innerHTML = originalText; btn.disabled = false; }
+    }, 'image/png');
+  }).catch(err => {
+    document.body.removeChild(holder);
+    alert('圖片匯出失敗：' + err.message);
+    if (btn) { btn.innerHTML = originalText; btn.disabled = false; }
+  });
 }
 </script>
 </body>
