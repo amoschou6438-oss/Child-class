@@ -3354,21 +3354,45 @@ function shareFullAttendanceToLine() {
 
 // ══════════════════════════════════════════
 // 當月理天生日名單（依學員資料理天生日 ld 欄位）
-// 因童蒙班並非每月上課（缺 2、7、11 月），故部分月份需合併顯示：
-//   ‧ 當月是 4 月 → 顯示 3 月名單
-//   ‧ 當月是 9 月 → 顯示 7、8 月合併名單
-//   ‧ 當月是 12 月 → 顯示 10、11 月合併名單
-//   ‧ 當年度第一次上課月份為 3 月（承接去年最後一次上課 1 月）
-//     → 當月是 3 月時，顯示 1、2 月合併名單
-//   ‧ 其餘月份 → 顯示當月名單
+// 童蒙班並非每月上課，故改為直接依「出席記錄」(RECORD_MONTHS，見上方定義) 動態判斷：
+//   ‧ 在 RECORD_MONTHS 中找出「這次上課」對應的月份
+//   ‧ 往前找「上一次實際有上課」的月份，兩次上課之間若有缺課月份
+//     （例如目前排定 7、11 月沒有上課），缺課月份的理天生日名單
+//     會自動併入「下一次有上課」的月份一起公布（例如缺課 7 月 → 併入 8 月；
+//     缺課 11 月 → 併入 12 月）
+//   ‧ 若兩次上課緊接（中間沒有缺課月份）→ 僅顯示當月名單
+//   ‧ RECORD_MONTHS 的第一筆（目前為 2026/3）為承接「去年最後一次上課（1月）」
+//     之後的缺課月份，固定回補顯示 1、2 月合併名單
+//   ‧ 之後只要在 RECORD_MONTHS 陣列中依實際課程進度繼續新增月份
+//     （例如日後判斷明年 2 月仍不上課、下次上課為明年 3 月），此函式會自動
+//     把缺課月份併入下一次上課月份一起顯示，不需要再修改程式碼
+//   ‧ 若當月/當年不在 RECORD_MONTHS 內（例如尚未登錄的未來月份）→ 僅顯示當月名單
 // ══════════════════════════════════════════
-function getMonthlyLdTargetMonths(refMonth) {
-  const m = refMonth || (new Date().getMonth() + 1);
-  if (m === 3)  return [1, 2];
-  if (m === 4)  return [3];
-  if (m === 9)  return [7, 8];
-  if (m === 12) return [10, 11];
-  return [m];
+function getMonthlyLdTargetMonths(refMonth, refYear) {
+  const now = new Date();
+  const m = refMonth || (now.getMonth() + 1);
+  const y = refYear || now.getFullYear();
+
+  const idx = RECORD_MONTHS.findIndex(r => r.year === y && r.month === m);
+  if (idx === -1) return [m]; // 出席記錄尚未登錄此月份，僅顯示當月
+
+  if (idx === 0) return [1, 2]; // 承接去年最後一次上課（1月）之後的缺課月份
+
+  const prev = RECORD_MONTHS[idx - 1];
+  const cur = RECORD_MONTHS[idx];
+  const prevLinear = prev.year * 12 + prev.month;
+  const curLinear = cur.year * 12 + cur.month;
+
+  if (curLinear - prevLinear === 1) return [cur.month]; // 緊接上次上課，沒有缺課月份
+
+  // 兩次上課之間有缺課月份，全部併入這次一起顯示（換算月份以支援跨年）
+  const months = [];
+  for (let li = prevLinear + 1; li <= curLinear; li++) {
+    let mm = li % 12;
+    if (mm === 0) mm = 12;
+    months.push(mm);
+  }
+  return months;
 }
 
 // 解析理天生日欄位（ld）中的「月份」，相容多種寫法：
