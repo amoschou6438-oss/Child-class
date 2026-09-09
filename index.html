@@ -3406,24 +3406,50 @@ function parseLdMonth(ld) {
   return null;
 }
 
+// 判斷理天生日欄位是否代表「尚未求道」：欄位空白，或內容含「未求」二字（如「未求」「未求道」）
+function isLdUnattained(ld) {
+  const s = String(ld || '').trim();
+  return s === '' || s.includes('未求');
+}
+
+// 解析出生日期欄位（bd）中的「月份」，格式如 "1991/07/31"；
+// 僅有年份（如 "1980年（無月日資料）"）則無月份資訊，回傳 null
+function parseBdMonth(bd) {
+  if (!bd) return null;
+  const m = String(bd).match(/^\d{4}\/(\d{1,2})\/\d{1,2}$/);
+  if (m) { const mm = parseInt(m[1], 10); if (mm >= 1 && mm <= 12) return mm; }
+  return null;
+}
+
 // 理天生日名單僅限 26 歲前（不含 26 歲）的學員；出生日期無法判斷者仍予保留，不因缺乏資料而被排除
+// 求道日期（理天生日）欄位若「未求」或空白，改以「出生月份」判斷是否列入當月/當期名單
 function getMonthlyLdBirthdayMembers(refMonth) {
   const months = getMonthlyLdTargetMonths(refMonth);
   const rows = getStudentBirthdayRows().filter(r => r.role === '學員'); // 只取「學員」身份，不含學輔
-  const list = rows.filter(r => {
-    const mm = parseLdMonth(r.ld);
-    if (mm === null || !months.includes(mm)) return false;
-    const age = computeAge(r.bd);
-    return age === null || age < 26; // 限 26 歲前的學員
-  });
+  const list = rows
+    .map(r => {
+      const unattained = isLdUnattained(r.ld);
+      const mm = unattained ? parseBdMonth(r.bd) : parseLdMonth(r.ld);
+      return { ...r, __mm: mm, __unattained: unattained };
+    })
+    .filter(r => {
+      if (r.__mm === null || !months.includes(r.__mm)) return false;
+      const age = computeAge(r.bd);
+      return age === null || age < 26; // 限 26 歲前的學員
+    });
   return { months, list };
+}
+
+// 名單顯示文字：已求道者顯示理天生日；未求道者顯示「未求道」並註明出生日期（供改依出生月份判斷之用）
+function formatLdMemberLabel(m) {
+  return m.__unattained ? `未求道，出生日期 ${m.bd || '—'}` : (m.ld || '—');
 }
 
 function buildMonthlyLdMessage(refMonth) {
   const { months, list } = getMonthlyLdBirthdayMembers(refMonth);
   const monthLabel = months.join('、') + '月';
   const namesText = list.length
-    ? list.map(m => `${m.name}（${m.ld || '—'}）`).join('\n')
+    ? list.map(m => `${m.name}（${formatLdMemberLabel(m)}）`).join('\n')
     : '（本期尚無理天生日學員）';
   return `${monthLabel}份理天生日學員名單如下：\n${namesText}`;
 }
@@ -3435,7 +3461,7 @@ function showMonthlyLdBirthdayModal() {
   const { months, list } = getMonthlyLdBirthdayMembers();
   const monthLabel = months.join('、') + '月';
   const listHtml = list.length
-    ? list.map((m, i) => `${i+1}. ${m.name}<span style="font-size:0.72rem;opacity:0.65;margin-left:4px;">（${m.ld || '—'}）</span>`).join('<br>')
+    ? list.map((m, i) => `${i+1}. ${m.name}<span style="font-size:0.72rem;opacity:0.65;margin-left:4px;">（${formatLdMemberLabel(m)}）</span>`).join('<br>')
     : '（本期尚無理天生日學員）';
 
   const modal = document.createElement('div');
