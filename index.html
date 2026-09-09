@@ -3148,6 +3148,1301 @@ function getCurrentThirdSunday() {
   return getThirdSunday(now.getFullYear(), now.getMonth() + 1);
 }
 
+// ══════════════════════════════════════════
+// 內嵌備份資料（已直接寫入本檔案，首次開啟且瀏覽器尚無資料時自動載入）
+// ══════════════════════════════════════════
+const EMBEDDED_BACKUP_DATA = {
+  "exportType": "tmb_full_backup",
+  "exportVersion": 1,
+  "exportDate": "2026-09-09T13:52:28.445Z",
+  "members": [
+    {
+      "no": 1,
+      "role": "小學輔",
+      "gender": "乾道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "子暘",
+      "family": "玫芳",
+      "familyOrder": 5,
+      "attend": false
+    },
+    {
+      "no": 2,
+      "role": "小學輔",
+      "gender": "乾道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "立祐",
+      "family": "佳俊",
+      "familyOrder": 3,
+      "attend": false
+    },
+    {
+      "no": 3,
+      "role": "小學輔",
+      "gender": "坤道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "若彤",
+      "family": "玫芳",
+      "familyOrder": 6,
+      "attend": false
+    },
+    {
+      "no": 4,
+      "role": "小學輔",
+      "gender": "坤道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "詠晴",
+      "family": "皓程",
+      "familyOrder": 6,
+      "attend": false
+    },
+    {
+      "no": 5,
+      "role": "家長",
+      "gender": "乾道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "由健",
+      "family": "由健",
+      "familyOrder": 1,
+      "attend": false
+    },
+    {
+      "no": 6,
+      "role": "家長",
+      "gender": "坤道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "雅苓",
+      "family": "雅苓",
+      "familyOrder": 1,
+      "attend": false
+    },
+    {
+      "no": 7,
+      "role": "資輔",
+      "gender": "乾道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "大元",
+      "family": "大元",
+      "familyOrder": 1,
+      "attend": false
+    },
+    {
+      "no": 8,
+      "role": "資輔",
+      "gender": "乾道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "佳俊",
+      "family": "佳俊",
+      "familyOrder": 1,
+      "attend": false
+    },
+    {
+      "no": 9,
+      "role": "資輔",
+      "gender": "坤道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "春華",
+      "family": "大元",
+      "familyOrder": 2,
+      "attend": false
+    },
+    {
+      "no": 10,
+      "role": "資輔",
+      "gender": "坤道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "玫芳",
+      "family": "玫芳",
+      "familyOrder": 2,
+      "attend": false
+    },
+    {
+      "no": 11,
+      "role": "資輔",
+      "gender": "坤道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "靜兒",
+      "family": "靜兒",
+      "familyOrder": 4,
+      "attend": false
+    },
+    {
+      "no": 12,
+      "role": "資輔",
+      "gender": "坤道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "嫺雅",
+      "family": "嫺雅",
+      "familyOrder": 2,
+      "attend": false
+    },
+    {
+      "no": 13,
+      "role": "學員",
+      "gender": "乾道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "侑恩",
+      "family": "雅歆",
+      "familyOrder": 3,
+      "attend": false
+    },
+    {
+      "no": 14,
+      "role": "學員",
+      "gender": "乾道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "邑軒",
+      "family": "邑軒",
+      "familyOrder": 3,
+      "attend": false
+    },
+    {
+      "no": 15,
+      "role": "學員",
+      "gender": "乾道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "晨睿",
+      "family": "晨睿",
+      "familyOrder": 3,
+      "attend": false
+    },
+    {
+      "no": 16,
+      "role": "學員",
+      "gender": "乾道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "宥亨",
+      "family": "晨睿",
+      "familyOrder": 5,
+      "attend": false
+    },
+    {
+      "no": 17,
+      "role": "學員",
+      "gender": "坤道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "庭褘",
+      "family": "庭褘",
+      "familyOrder": 4,
+      "attend": false
+    },
+    {
+      "no": 18,
+      "role": "學員",
+      "gender": "坤道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "珈毓",
+      "family": "庭褘",
+      "familyOrder": 6,
+      "attend": false
+    },
+    {
+      "no": 19,
+      "role": "學員",
+      "gender": "坤道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "雅歆",
+      "family": "雅歆",
+      "familyOrder": 4,
+      "attend": false
+    },
+    {
+      "no": 20,
+      "role": "學輔",
+      "gender": "乾道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "安德",
+      "family": "大元",
+      "familyOrder": 3,
+      "attend": false
+    },
+    {
+      "no": 21,
+      "role": "學輔",
+      "gender": "乾道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "智憲",
+      "family": "智憲",
+      "familyOrder": 3,
+      "attend": false
+    },
+    {
+      "no": 22,
+      "role": "學輔",
+      "gender": "乾道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "皓程",
+      "family": "皓程",
+      "familyOrder": 3,
+      "attend": false
+    },
+    {
+      "no": 23,
+      "role": "學輔",
+      "gender": "乾道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "少庸",
+      "family": "玫芳",
+      "familyOrder": 3,
+      "attend": false
+    },
+    {
+      "no": 24,
+      "role": "學輔",
+      "gender": "坤道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "佩君",
+      "family": "佩君",
+      "familyOrder": 4,
+      "attend": false
+    },
+    {
+      "no": 25,
+      "role": "學輔",
+      "gender": "坤道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "宛君",
+      "family": "佩君",
+      "familyOrder": 6,
+      "attend": false
+    },
+    {
+      "no": 26,
+      "role": "學輔",
+      "gender": "坤道",
+      "area": "台中",
+      "code": "1-1",
+      "name": "沛希",
+      "family": "沛希",
+      "familyOrder": 4,
+      "attend": false
+    },
+    {
+      "no": 27,
+      "role": "小學輔",
+      "gender": "乾道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "亞奕",
+      "family": "惠雯",
+      "familyOrder": 5,
+      "attend": false
+    },
+    {
+      "no": 28,
+      "role": "家長",
+      "gender": "乾道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "宏銘",
+      "family": "宏銘",
+      "familyOrder": 1,
+      "attend": false
+    },
+    {
+      "no": 29,
+      "role": "家長",
+      "gender": "坤道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "美琪",
+      "family": "宏銘",
+      "familyOrder": 2,
+      "attend": false
+    },
+    {
+      "no": 30,
+      "role": "家長",
+      "gender": "坤道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "佳樺",
+      "family": "佳樺",
+      "familyOrder": 2,
+      "attend": false
+    },
+    {
+      "no": 31,
+      "role": "家長",
+      "gender": "坤道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "珮容",
+      "family": "珮容",
+      "familyOrder": 2,
+      "attend": false
+    },
+    {
+      "no": 32,
+      "role": "資輔",
+      "gender": "乾道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "正海",
+      "family": "正海",
+      "familyOrder": 1,
+      "attend": false
+    },
+    {
+      "no": 33,
+      "role": "資輔",
+      "gender": "乾道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "銀國",
+      "family": "銀國",
+      "familyOrder": 1,
+      "attend": false
+    },
+    {
+      "no": 34,
+      "role": "資輔",
+      "gender": "乾道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "鄭強",
+      "family": "鄭強",
+      "familyOrder": 1,
+      "attend": false
+    },
+    {
+      "no": 35,
+      "role": "資輔",
+      "gender": "坤道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "小清",
+      "family": "小清",
+      "familyOrder": 2,
+      "attend": false
+    },
+    {
+      "no": 36,
+      "role": "資輔",
+      "gender": "坤道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "碧純",
+      "family": "銀國",
+      "familyOrder": 2,
+      "attend": false
+    },
+    {
+      "no": 37,
+      "role": "資輔",
+      "gender": "坤道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "淑貞",
+      "family": "淑貞",
+      "familyOrder": 2,
+      "attend": false
+    },
+    {
+      "no": 38,
+      "role": "資輔",
+      "gender": "坤道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "麗雪",
+      "family": "麗雪",
+      "familyOrder": 2,
+      "attend": false
+    },
+    {
+      "no": 39,
+      "role": "資輔",
+      "gender": "坤道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "月嬌",
+      "family": "鄭強",
+      "familyOrder": 2,
+      "attend": false
+    },
+    {
+      "no": 40,
+      "role": "資輔",
+      "gender": "坤道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "益美",
+      "family": "益美",
+      "familyOrder": 2,
+      "attend": false
+    },
+    {
+      "no": 41,
+      "role": "資輔",
+      "gender": "坤道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "惠雯",
+      "family": "惠雯",
+      "familyOrder": 2,
+      "attend": false
+    },
+    {
+      "no": 42,
+      "role": "學員",
+      "gender": "乾道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "敬元",
+      "family": "宏銘",
+      "familyOrder": 5,
+      "attend": false
+    },
+    {
+      "no": 43,
+      "role": "學員",
+      "gender": "乾道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "馳恩",
+      "family": "佳樺",
+      "familyOrder": 5,
+      "attend": false
+    },
+    {
+      "no": 44,
+      "role": "學員",
+      "gender": "乾道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "品丞",
+      "family": "珮容",
+      "familyOrder": 3,
+      "attend": false
+    },
+    {
+      "no": 45,
+      "role": "學員",
+      "gender": "坤道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "菱恩",
+      "family": "凱鈦",
+      "familyOrder": 4,
+      "attend": false
+    },
+    {
+      "no": 46,
+      "role": "學員",
+      "gender": "坤道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "妤芯",
+      "family": "佳樺",
+      "familyOrder": 4,
+      "attend": false
+    },
+    {
+      "no": 47,
+      "role": "學員",
+      "gender": "坤道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "妤恩",
+      "family": "宏銘",
+      "familyOrder": 4,
+      "attend": false
+    },
+    {
+      "no": 48,
+      "role": "學員",
+      "gender": "坤道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "歆云",
+      "family": "宏銘",
+      "familyOrder": 6,
+      "attend": false
+    },
+    {
+      "no": 49,
+      "role": "學輔",
+      "gender": "乾道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "凱鈦",
+      "family": "凱鈦",
+      "familyOrder": 3,
+      "attend": false
+    },
+    {
+      "no": 50,
+      "role": "學輔",
+      "gender": "坤道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "婕妤",
+      "family": "婕妤",
+      "familyOrder": 2,
+      "attend": false
+    },
+    {
+      "no": 51,
+      "role": "學輔",
+      "gender": "坤道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "文君",
+      "family": "文君",
+      "familyOrder": 4,
+      "attend": false
+    },
+    {
+      "no": 52,
+      "role": "學輔",
+      "gender": "坤道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "妤嫻",
+      "family": "鄭強",
+      "familyOrder": 4,
+      "attend": false
+    },
+    {
+      "no": 53,
+      "role": "學輔",
+      "gender": "坤道",
+      "area": "太平",
+      "code": "1-3",
+      "name": "亞宸",
+      "family": "惠雯",
+      "familyOrder": 4,
+      "attend": false
+    },
+    {
+      "no": 54,
+      "role": "小學輔",
+      "gender": "乾道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "柏謙",
+      "family": "文聰",
+      "familyOrder": 5,
+      "attend": false
+    },
+    {
+      "no": 55,
+      "role": "小學輔",
+      "gender": "乾道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "立勤",
+      "family": "淵陽",
+      "familyOrder": 3,
+      "attend": false
+    },
+    {
+      "no": 56,
+      "role": "小學輔",
+      "gender": "坤道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "芊衣",
+      "family": "文聰",
+      "familyOrder": 6,
+      "attend": false
+    },
+    {
+      "no": 57,
+      "role": "小學輔",
+      "gender": "坤道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "晏瑄",
+      "family": "濬綾",
+      "familyOrder": 4,
+      "attend": false
+    },
+    {
+      "no": 58,
+      "role": "家長",
+      "gender": "乾道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "淵陽",
+      "family": "淵陽",
+      "familyOrder": 1,
+      "attend": false
+    },
+    {
+      "no": 59,
+      "role": "家長",
+      "gender": "坤道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "宜穎",
+      "family": "宜穎",
+      "familyOrder": 2,
+      "attend": false
+    },
+    {
+      "no": 60,
+      "role": "家長",
+      "gender": "坤道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "美星",
+      "family": "淵陽",
+      "familyOrder": 2,
+      "attend": false
+    },
+    {
+      "no": 61,
+      "role": "資輔",
+      "gender": "乾道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "坤財",
+      "family": "坤財",
+      "familyOrder": 1,
+      "attend": false
+    },
+    {
+      "no": 62,
+      "role": "資輔",
+      "gender": "乾道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "文聰",
+      "family": "文聰",
+      "familyOrder": 1,
+      "attend": false
+    },
+    {
+      "no": 63,
+      "role": "資輔",
+      "gender": "乾道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "明輝",
+      "family": "明輝",
+      "familyOrder": 1,
+      "attend": false
+    },
+    {
+      "no": 64,
+      "role": "資輔",
+      "gender": "坤道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "怡珍",
+      "family": "怡珍",
+      "familyOrder": 2,
+      "attend": false
+    },
+    {
+      "no": 65,
+      "role": "資輔",
+      "gender": "坤道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "湘梅",
+      "family": "湘梅",
+      "familyOrder": 4,
+      "attend": false
+    },
+    {
+      "no": 66,
+      "role": "資輔",
+      "gender": "坤道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "濬綾",
+      "family": "濬綾",
+      "familyOrder": 2,
+      "attend": false
+    },
+    {
+      "no": 67,
+      "role": "學輔",
+      "gender": "乾道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "晉德",
+      "family": "晉德",
+      "familyOrder": 1,
+      "attend": false
+    },
+    {
+      "no": 68,
+      "role": "學輔",
+      "gender": "坤道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "以心",
+      "family": "晉德",
+      "familyOrder": 2,
+      "attend": false
+    },
+    {
+      "no": 69,
+      "role": "學員",
+      "gender": "乾道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "士博",
+      "family": "文聰",
+      "familyOrder": 7,
+      "attend": false
+    },
+    {
+      "no": 70,
+      "role": "學員",
+      "gender": "乾道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "竣棠",
+      "family": "濬綾",
+      "familyOrder": 5,
+      "attend": false
+    },
+    {
+      "no": 71,
+      "role": "學員",
+      "gender": "乾道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "祐嘉",
+      "family": "濬綾",
+      "familyOrder": 5,
+      "attend": false
+    },
+    {
+      "no": 72,
+      "role": "學員",
+      "gender": "乾道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "世欣",
+      "family": "淵陽",
+      "familyOrder": 5,
+      "attend": false
+    },
+    {
+      "no": 73,
+      "role": "學員",
+      "gender": "乾道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "子榮",
+      "family": "淵陽",
+      "familyOrder": 7,
+      "attend": false
+    },
+    {
+      "no": 74,
+      "role": "學員",
+      "gender": "乾道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "奕翔",
+      "family": "珮綸",
+      "familyOrder": 5,
+      "attend": false
+    },
+    {
+      "no": 75,
+      "role": "學員",
+      "gender": "乾道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "旻劭",
+      "family": "怡珍",
+      "familyOrder": 3,
+      "attend": false
+    },
+    {
+      "no": 76,
+      "role": "學員",
+      "gender": "乾道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "奕崴",
+      "family": "濬綾",
+      "familyOrder": 3,
+      "attend": false
+    },
+    {
+      "no": 77,
+      "role": "學員",
+      "gender": "坤道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "芸滋",
+      "family": "濬綾",
+      "familyOrder": 8,
+      "attend": false
+    },
+    {
+      "no": 78,
+      "role": "學員",
+      "gender": "坤道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "珮綸",
+      "family": "珮綸",
+      "familyOrder": 4,
+      "attend": false
+    },
+    {
+      "no": 79,
+      "role": "學員",
+      "gender": "坤道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "珮瑜",
+      "family": "珮綸",
+      "familyOrder": 4,
+      "attend": false
+    },
+    {
+      "no": 80,
+      "role": "學員",
+      "gender": "坤道",
+      "area": "坪林",
+      "code": "1-4",
+      "name": "沄柔",
+      "family": "怡珍",
+      "familyOrder": 6,
+      "attend": false
+    },
+    {
+      "no": 81,
+      "role": "學輔",
+      "gender": "坤道",
+      "area": "嘉義",
+      "code": "2-1",
+      "name": "雅如",
+      "family": "雅如",
+      "familyOrder": 4,
+      "attend": false
+    },
+    {
+      "no": 82,
+      "role": "學輔",
+      "gender": "坤道",
+      "area": "嘉義",
+      "code": "2-1",
+      "name": "妙慧",
+      "family": "雅如",
+      "familyOrder": 6,
+      "attend": false
+    },
+    {
+      "no": 83,
+      "role": "資輔",
+      "gender": "乾道",
+      "area": "斗六",
+      "code": "2-3",
+      "name": "錫章",
+      "family": "錫章",
+      "familyOrder": 1,
+      "attend": false
+    },
+    {
+      "no": 84,
+      "role": "學輔",
+      "gender": "坤道",
+      "area": "斗六",
+      "code": "2-3",
+      "name": "咏恩",
+      "family": "錫章",
+      "familyOrder": 4,
+      "attend": false
+    },
+    {
+      "no": 85,
+      "role": "學輔",
+      "gender": "坤道",
+      "area": "斗六",
+      "code": "2-3",
+      "name": "珮安",
+      "family": "珮安",
+      "familyOrder": 4,
+      "attend": false
+    }
+  ],
+  "staffNames": "",
+  "noBentoNames": "",
+  "studentBirthdayExtra": {
+    "咏恩": {
+      "ld": "",
+      "bd": "2002/11/08"
+    },
+    "芊衣": {
+      "ld": "2014/2/29",
+      "bd": "2014/02/05"
+    },
+    "若彤": {
+      "ld": "2014/09/05",
+      "bd": "2014/05/27"
+    },
+    "智憲": {
+      "ld": "1999/03/09",
+      "bd": "1998/12/25"
+    },
+    "珮綸": {
+      "ld": "2014/08/27",
+      "bd": "2014/06/02"
+    },
+    "妤恩": {
+      "ld": "2015/01/10",
+      "bd": "2015/01/11"
+    },
+    "亞宸": {
+      "ld": "2008/11/16",
+      "bd": "2008/10/02"
+    },
+    "竣棠": {
+      "ld": "2015/01/10",
+      "bd": "2015/01/26"
+    },
+    "皓程": {
+      "ld": "2004/08/24",
+      "bd": "2004/08/07"
+    },
+    "妙慧": {
+      "ld": "1999/10/27",
+      "bd": "1999/09/22"
+    },
+    "子暘": {
+      "ld": "2011/03/15",
+      "bd": "2010/12/06"
+    },
+    "士博": {
+      "ld": "2015/06/03",
+      "bd": "2015/04/22"
+    },
+    "柏謙": {
+      "ld": "2013/11/12",
+      "bd": "2011/04/27"
+    },
+    "妤嫻": {
+      "ld": "2002/12/10",
+      "bd": "2001/11/30"
+    },
+    "立祐": {
+      "ld": "2012/04/30",
+      "bd": "2012/04/11"
+    },
+    "佩君": {
+      "ld": "1993/06/21",
+      "bd": "1993/05/23"
+    },
+    "詠晴": {
+      "ld": "2012/02/25",
+      "bd": "2012/02/14"
+    },
+    "亞奕": {
+      "ld": "2011/10/10",
+      "bd": "2011/09/01"
+    },
+    "沛希": {
+      "ld": "2008/07/23",
+      "bd": "2008/05/19"
+    },
+    "凱鈦": {
+      "ld": "2010/05/08",
+      "bd": "2008/03/05"
+    },
+    "少庸": {
+      "ld": "2007/06/02",
+      "bd": "2007/04/18"
+    },
+    "雅如": {
+      "ld": "1994/10/25",
+      "bd": "1994/10/12"
+    },
+    "宛君": {
+      "ld": "1993/06/21",
+      "bd": "1993/05/23"
+    },
+    "立勤": {
+      "ld": "2013/5/17",
+      "bd": "2013/2/14"
+    },
+    "安德": {
+      "ld": "1997/6/25",
+      "bd": "1997"
+    },
+    "晉德": {
+      "ld": "1991/12/30",
+      "bd": "1991/12/7"
+    },
+    "敬元": {
+      "ld": "未求",
+      "bd": "2021/3/31"
+    },
+    "馳恩": {
+      "ld": "未求",
+      "bd": "2018/12/11"
+    },
+    "世欣": {
+      "ld": "未求",
+      "bd": "2015/11/24"
+    },
+    "奕翔": {
+      "ld": "未求",
+      "bd": "2016/5/14"
+    },
+    "奕崴": {
+      "ld": "",
+      "bd": "2010/10/25"
+    },
+    "旻劭": {
+      "ld": "未求",
+      "bd": "2021/2/13"
+    },
+    "文君": {
+      "ld": "2000/5/23",
+      "bd": "2000/2/2"
+    },
+    "珮安": {
+      "ld": "2000/11/23",
+      "bd": "2000/11/3"
+    },
+    "晏瑄": {
+      "ld": "101年閏4月19日",
+      "bd": "2012/2/16"
+    },
+    "菱恩": {
+      "ld": "未求",
+      "bd": "2014/8/29"
+    },
+    "庭褘": {
+      "ld": "未求",
+      "bd": "5/13"
+    },
+    "珈毓": {
+      "ld": "未求",
+      "bd": ""
+    },
+    "雅歆": {
+      "ld": "未求",
+      "bd": "2015/11/6"
+    },
+    "妤芯": {
+      "ld": "2014/10/28",
+      "bd": "2014/10/17"
+    },
+    "沄柔": {
+      "ld": "未求",
+      "bd": "2024/9/4"
+    },
+    "歆云": {
+      "ld": "未求",
+      "bd": "2021/3/31"
+    },
+    "芸滋": {
+      "ld": "未求",
+      "bd": "2016/9/20"
+    },
+    "珮瑜": {
+      "ld": "未求",
+      "bd": "2018/11/2"
+    },
+    "以心": {
+      "ld": "2020/8/25",
+      "bd": "1991/1/14"
+    },
+    "婕妤": {
+      "ld": "未求",
+      "bd": "1995/6/25"
+    },
+    "子榮": {
+      "ld": "未求",
+      "bd": "12/9"
+    },
+    "侑恩": {
+      "ld": "未求",
+      "bd": ""
+    },
+    "晨睿": {
+      "ld": "未求",
+      "bd": "4/1"
+    },
+    "祐嘉": {
+      "ld": "2015/11/13",
+      "bd": "2014/12/2"
+    },
+    "邑軒": {
+      "ld": "未求",
+      "bd": "2018/4/30"
+    },
+    "宥亨": {
+      "ld": "",
+      "bd": "4/25"
+    }
+  },
+  "parentBirthdayExtra": {
+    "宏銘": {
+      "surname": "陳",
+      "bd": "1977/6/9"
+    },
+    "文聰": {
+      "surname": "施",
+      "bd": "1974/08/31"
+    },
+    "玫芳": {
+      "surname": "蔡",
+      "bd": "1978/06/02"
+    },
+    "坤財": {
+      "surname": "古",
+      "bd": "1967/04/01"
+    },
+    "靜兒": {
+      "surname": "林",
+      "bd": "1980年（無月日資料）"
+    },
+    "月嬌": {
+      "surname": "曾",
+      "bd": "1973/07/12"
+    },
+    "鄭強": {
+      "surname": "",
+      "bd": "1970/03/29"
+    },
+    "湘梅": {
+      "surname": "周",
+      "bd": "1975/1/17"
+    },
+    "益美": {
+      "surname": "陳",
+      "bd": "1975/02/11"
+    },
+    "濬綾": {
+      "surname": "白",
+      "bd": "1976/12/08"
+    },
+    "麗雪": {
+      "surname": "林",
+      "bd": "1965/05/23"
+    },
+    "怡珍": {
+      "surname": "劉",
+      "bd": "1969/05/26"
+    },
+    "惠雯": {
+      "surname": "詹",
+      "bd": "1981/05/26"
+    },
+    "佳俊": {
+      "surname": "陳",
+      "bd": "1980/07/18"
+    },
+    "淑貞": {
+      "surname": "黃",
+      "bd": "1975/11/10"
+    },
+    "明輝": {
+      "surname": "周",
+      "bd": "1975/3/8"
+    },
+    "小清": {
+      "surname": "邱",
+      "bd": "1969/05/03"
+    },
+    "碧純": {
+      "surname": "郭",
+      "bd": ""
+    },
+    "嫺雅": {
+      "surname": "廖",
+      "bd": "1967/7/25"
+    },
+    "春華": {
+      "surname": "李",
+      "bd": ""
+    },
+    "錫章": {
+      "surname": "蔡",
+      "bd": "1966/11/12"
+    },
+    "銀國": {
+      "surname": "洪",
+      "bd": "1966/3/6"
+    },
+    "正海": {
+      "surname": "王",
+      "bd": "1968/8/10"
+    },
+    "大元": {
+      "surname": "張",
+      "bd": ""
+    },
+    "由健": {
+      "surname": "鄭",
+      "bd": ""
+    },
+    "淵陽": {
+      "surname": "葉",
+      "bd": "1972/2/19"
+    },
+    "美琪": {
+      "surname": "傅",
+      "bd": "1978"
+    },
+    "佳樺": {
+      "surname": "詹",
+      "bd": "1982/10/31"
+    },
+    "美星": {
+      "surname": "陳",
+      "bd": "1982/11/19"
+    },
+    "宜穎": {
+      "surname": "何",
+      "bd": "1968/10/26"
+    },
+    "雅苓": {
+      "surname": "黃",
+      "bd": ""
+    }
+  },
+  "monthlyRecord": {}
+};
+(function seedFromEmbeddedBackup() {
+  try {
+    if (!localStorage.getItem(LS_KEY_QSB) && EMBEDDED_BACKUP_DATA && Array.isArray(EMBEDDED_BACKUP_DATA.members)) {
+      localStorage.setItem(LS_KEY_QSB, JSON.stringify(EMBEDDED_BACKUP_DATA));
+    }
+    if (!localStorage.getItem(LS_RECORD_KEY) && EMBEDDED_BACKUP_DATA && EMBEDDED_BACKUP_DATA.monthlyRecord && typeof EMBEDDED_BACKUP_DATA.monthlyRecord === 'object') {
+      localStorage.setItem(LS_RECORD_KEY, JSON.stringify(EMBEDDED_BACKUP_DATA.monthlyRecord));
+    }
+  } catch(e) {}
+})();
+
 // init
 loadData();
 loadMonthlyRecord();
