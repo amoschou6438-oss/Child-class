@@ -72,6 +72,33 @@
   .page { display: none; }
   .page.active { display: block; }
 
+  /* ── 主畫面獨立顯示模式：開啟時只顯示主畫面，不與導覽列/其他介面混在一起 ── */
+  body.home-mode .header,
+  body.home-mode .nav { display: none; }
+  body.home-mode .main { padding: 0; max-width: none; margin: 0; }
+  #page-home.home-standalone {
+    min-height: 100vh;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: var(--cream);
+  }
+  .home-standalone-header {
+    display: none;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--ink);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.4rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid var(--gold);
+  }
+  .home-standalone-header .dot { width: 9px; height: 9px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+  body.home-mode .home-standalone-header { display: flex; }
+
   .section-title {
     font-family: 'Noto Serif TC', serif; font-size: 1.5rem; font-weight: 700;
     color: var(--teal); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.7rem;
@@ -405,7 +432,7 @@
   .record-export-btn:hover { opacity: 0.85; }
 </style>
 </head>
-<body>
+<body class="home-mode">
 
 <div class="header">
   <div class="header-title"><span class="dot"></span>張氏童蒙班 管理系統</div>
@@ -427,7 +454,8 @@
 <div class="main">
 
   <!-- ══ PAGE 0: HOME（主畫面）══ -->
-  <div class="page active" id="page-home">
+  <div class="page active home-standalone" id="page-home">
+    <div class="home-standalone-header"><span class="dot"></span>張氏童蒙班 管理系統</div>
     <div class="section-title">🏠 管理主畫面</div>
     <div class="home-fn-grid">
 
@@ -3117,6 +3145,8 @@ function showPage(id, btn) {
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   btn.classList.add('active');
+  // 主畫面獨立顯示：進入主畫面時隱藏頂部導覽列，離開時恢復
+  document.body.classList.toggle('home-mode', id === 'home');
 }
 
 // 供主畫面卡片按鈕呼叫，透過對應的導覽按鈕id切換頁面
