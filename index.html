@@ -430,9 +430,26 @@
   .record-sep-row td { background: var(--teal) !important; color: white; font-weight: 700; font-size: 0.8rem; padding: 0.3rem 0.6rem; text-align: left; }
   .record-export-btn { padding: 6px 16px; border-radius: 20px; border: none; background: var(--green); color: white; font-size: 0.8rem; font-weight: 700; cursor: pointer; font-family: 'Noto Sans TC', sans-serif; display: inline-flex; align-items: center; gap: 4px; }
   .record-export-btn:hover { opacity: 0.85; }
+
+  /* ── 回到主畫面：右下角浮動按鈕 ── */
+  .back-home-fab {
+    position: fixed; right: 22px; bottom: 22px; z-index: 9999;
+    width: 60px; height: 60px; border-radius: 50%;
+    background: var(--ink);
+    border: 3px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.7rem; line-height: 1; cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: transform 0.15s ease;
+  }
+  .back-home-fab:hover { transform: scale(1.08); }
+  .back-home-fab:active { transform: scale(0.94); }
+  /* 已在主畫面時不顯示（避免重複） */
+  body.home-mode .back-home-fab { display: none; }
 </style>
 </head>
 <body class="home-mode">
+<button class="back-home-fab" onclick="goToPage('home')" title="回到主畫面" aria-label="回到主畫面">🏠</button>
 
 <div class="header">
   <div class="header-title"><span class="dot"></span>張氏童蒙班 管理系統</div>
