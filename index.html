@@ -2159,56 +2159,103 @@ function exportBentoImage(btn) {
 
   const dateLabel = document.getElementById('date-bento')?.textContent || '';
   const areaLabel = document.getElementById('bento-area-badge')?.textContent || '';
-  const wrap = document.querySelector('#page-bento .table-wrap');
+
+  const PORTRAIT_WIDTH = 580;
 
   const holder = document.createElement('div');
   holder.style.position = 'fixed';
   holder.style.left = '-99999px';
   holder.style.top = '0';
+  holder.style.width = PORTRAIT_WIDTH + 'px';
+  holder.style.boxSizing = 'border-box';
   holder.style.background = '#ffffff';
-  holder.style.padding = '20px';
-  holder.style.display = 'inline-block';
+  holder.style.padding = '28px 22px 32px';
   holder.style.fontFamily = "'Noto Sans TC', sans-serif";
-  holder.innerHTML = `<div style="font-family:'Noto Serif TC',serif;font-size:1.15rem;font-weight:900;color:#1a1a2e;margin-bottom:14px;">🍱 ${dateLabel} 便當分配表${areaLabel ? `　<span style="font-size:0.85rem;font-weight:600;background:#c9a84c;color:#1a1a2e;padding:3px 14px;border-radius:20px;">${areaLabel}</span>` : ''}</div>`;
 
-  if (wrap) {
-    const clone = wrap.cloneNode(true);
+  // ── 標題區 ──
+  let html = `
+    <div style="text-align:center;margin-bottom:14px;">
+      <div style="font-family:'Noto Serif TC',serif;font-size:1.35rem;font-weight:900;color:#1a1a2e;">🍱 ${dateLabel} 便當分配表</div>
+      ${areaLabel ? `<div style="margin-top:10px;"><span style="font-size:0.85rem;font-weight:600;background:#c9a84c;color:#1a1a2e;padding:4px 16px;border-radius:20px;display:inline-block;">${areaLabel}</span></div>` : ''}
+    </div>
+    <div style="height:3px;background:linear-gradient(to right,#c9a84c,#0f3460);margin:0 0 18px;border-radius:2px;"></div>
+    <div style="font-family:'Noto Serif TC',serif;font-size:1.05rem;font-weight:900;color:#0f3460;margin-bottom:12px;">便當領取明細</div>
+  `;
 
-    // 篩選按鈕在圖片中無作用，移除
-    const filterBar = clone.querySelector('#bento-filter-bar');
-    if (filterBar) filterBar.remove();
-
-    // textarea 的即時輸入值不會被 cloneNode 帶入，改用純文字呈現
-    const staffTextarea = document.getElementById('meal-staff-names');
-    const cloneStaffTextarea = clone.querySelector('#meal-staff-names');
-    if (cloneStaffTextarea) {
-      const div = document.createElement('div');
-      div.style.cssText = cloneStaffTextarea.getAttribute('style') || '';
-      div.style.whiteSpace = 'pre-wrap';
-      div.style.minHeight = '2.2em';
-      div.style.boxSizing = 'border-box';
-      div.textContent = staffTextarea ? staffTextarea.value : '';
-      cloneStaffTextarea.replaceWith(div);
-    }
-    const noBentoTextarea = document.getElementById('no-bento-names');
-    const cloneNoBentoTextarea = clone.querySelector('#no-bento-names');
-    if (cloneNoBentoTextarea) {
-      const div = document.createElement('div');
-      div.style.cssText = cloneNoBentoTextarea.getAttribute('style') || '';
-      div.style.whiteSpace = 'pre-wrap';
-      div.style.minHeight = '2.2em';
-      div.style.boxSizing = 'border-box';
-      div.textContent = noBentoTextarea ? noBentoTextarea.value : '';
-      cloneNoBentoTextarea.replaceWith(div);
-    }
-    holder.appendChild(clone);
+  // ── 各筆便當卡片（直式堆疊，取自已渲染的 bento-tbody）──
+  const tbody = document.getElementById('bento-tbody');
+  if (tbody) {
+    html += Array.from(tbody.querySelectorAll('tr')).map(tr => {
+      const tds = tr.querySelectorAll('td');
+      const no = tds[0] ? tds[0].innerHTML : '';
+      const badge = tds[1] ? tds[1].innerHTML : '';
+      const members = tds[2] ? tds[2].innerHTML : '';
+      return `
+        <div style="border:1.5px solid #e8dfc8;border-radius:12px;padding:14px 16px;margin-bottom:12px;background:#fffdf8;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <span style="font-size:0.78rem;color:#6b7280;">序號 ${no}</span>
+            ${badge}
+          </div>
+          <div style="line-height:2.1;font-size:0.95rem;color:#1a1a2e;">${members}</div>
+        </div>
+      `;
+    }).join('');
   }
+
+  // ── 小計（垂直排列）──
+  const subtotalEl = document.getElementById('bento-subtotal');
+  const subtotalItems = subtotalEl ? Array.from(subtotalEl.querySelectorAll('.subtotal-item')) : [];
+  if (subtotalItems.length) {
+    html += `<div style="height:1px;background:#d4c4a8;margin:16px 0 14px;"></div>`;
+    html += `<div style="margin-bottom:14px;">` + subtotalItems.map(div =>
+      `<div style="display:flex;justify-content:space-between;align-items:baseline;padding:7px 2px;border-bottom:1px dashed #e5ddc8;">${div.innerHTML}</div>`
+    ).join('') + `</div>`;
+  }
+
+  // ── 全部便當數量總計（大圓角標籤，置中）──
+  const grandTotalNum = document.getElementById('bento-grand-total')?.textContent || '0';
+  html += `
+    <div style="text-align:center;margin:4px 0 20px;">
+      <div style="display:inline-flex;align-items:baseline;gap:6px;background:linear-gradient(135deg,#e8c96a,#c9a84c,#e8c96a);color:#1a1a2e;padding:10px 26px;border-radius:50px;box-shadow:0 4px 16px rgba(201,168,76,0.45);">
+        <span style="font-size:1rem;font-weight:700;">🍱 全部便當數量總計：</span>
+        <span style="font-family:'Noto Serif TC',serif;font-size:2rem;font-weight:900;color:#7a3a00;line-height:1;">${grandTotalNum}</span>
+        <span style="font-size:1rem;font-weight:700;">個</span>
+      </div>
+    </div>
+  `;
+
+  // ── 備餐人員便當 ──
+  const staffTextarea = document.getElementById('meal-staff-names');
+  const staffVal = staffTextarea ? staffTextarea.value.trim() : '';
+  const staffCount = document.getElementById('meal-staff-count-display')?.textContent || '0';
+  html += `
+    <div style="background:#fff8f0;border:1px solid #f0d080;border-radius:12px;padding:14px 16px;margin-bottom:14px;">
+      <div style="font-size:0.9rem;font-weight:700;color:#8B6914;margin-bottom:8px;">🍳 備餐人員便當</div>
+      <div style="font-size:0.88rem;color:#1a1a2e;white-space:pre-wrap;min-height:1.4em;margin-bottom:8px;line-height:1.7;">${staffVal || '（無）'}</div>
+      <div style="text-align:right;font-size:0.85rem;color:#6b7280;">人數：<span style="font-family:'Noto Serif TC',serif;font-size:1.3rem;font-weight:900;color:#8B6914;">${staffCount}</span> 個</div>
+    </div>
+  `;
+
+  // ── 不要便當人員 ──
+  const noBentoTextarea = document.getElementById('no-bento-names');
+  const noBentoVal = noBentoTextarea ? noBentoTextarea.value.trim() : '';
+  const noBentoCount = document.getElementById('no-bento-count-display')?.textContent || '0';
+  html += `
+    <div style="background:#fff0f0;border:2px solid #f5c0c0;border-radius:12px;padding:14px 16px;">
+      <div style="font-size:0.9rem;font-weight:700;color:#c0392b;margin-bottom:8px;">🚫 不要便當人員</div>
+      <div style="font-size:0.88rem;color:#1a1a2e;white-space:pre-wrap;min-height:1.4em;margin-bottom:8px;line-height:1.7;">${noBentoVal || '（無）'}</div>
+      <div style="text-align:right;font-size:0.85rem;color:#6b7280;">人數：<span style="font-family:'Noto Serif TC',serif;font-size:1.3rem;font-weight:900;color:#c0392b;">${noBentoCount}</span> 人</div>
+    </div>
+  `;
+
+  holder.innerHTML = html;
   document.body.appendChild(holder);
 
   html2canvas(holder, {
     backgroundColor: '#ffffff',
     scale: 2,
-    useCORS: true
+    useCORS: true,
+    windowWidth: PORTRAIT_WIDTH
   }).then(canvas => {
     canvas.toBlob(blob => {
       const url = URL.createObjectURL(blob);
