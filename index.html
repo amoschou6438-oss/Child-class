@@ -380,6 +380,12 @@
     min-height: 48px;
   }
   .roster-area-label:last-of-type { border-bottom: none; }
+  .roster-area-label { flex-direction: row; align-items: center; }
+  .roster-area-label .ral-cnt {
+    writing-mode: horizontal-tb; letter-spacing: 0;
+    font-size: 0.68rem; font-weight: 700; margin-top: 0.35rem;
+    opacity: 0.9; white-space: nowrap;
+  }
   .roster-names-cell {
     padding: 0.55rem 0.9rem;
     border-bottom: 1px solid #e4e8ef;
@@ -2084,7 +2090,7 @@ function renderMembers() {
           : `<span style="font-size:0.62rem;opacity:0.72;margin-left:3px;">${m.role}</span>`;
         return `<span class="${chipClass}" style="${chipStyle}" ${onclick}>${m.name}${roleLabel}</span>`;
       }).join('');
-      return `<div class="roster-area-label">${area.name}</div>` +
+      return `<div class="roster-area-label"><span class="ral-name">${area.name}</span><span class="ral-cnt">${members.filter(m => m.attend).length}位</span></div>` +
              `<div class="roster-names-cell">${chips || '<span style=\"color:var(--muted);font-size:0.8rem;\">（無）</span>'}</div>`;
     }).join('');
   }
